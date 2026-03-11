@@ -1,0 +1,73 @@
+.foto-perfil-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: 3px solid #e0e0e0;
+    .foto-preview {
+        width: 100%;
+        height: 100%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .foto-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+    }
+    .foto-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+        .btn-foto {
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            i {
+                margin-right: 0.5rem;
+            }
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        }
+    }
+    &:hover .foto-overlay {
+        opacity: 1;
+    }
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.25rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+}

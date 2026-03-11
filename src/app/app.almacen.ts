@@ -19,6 +19,7 @@ import { ResponsableFormComponent } from './modules/almacen/parametrizacion/resp
 import { IngresoComponent } from './modules/almacen/parametrizacion/ingreso/ingreso.component';
 import { IngresoFormComponent } from './modules/almacen/parametrizacion/ingreso/ingreso-form/ingreso-form.component';
 import { ReportesComponent } from './modules/almacen/reportes/reportes.component';
+import { PerfilModalComponent } from './modules/perfil-modal/perfil-modal.component';
 
 
 export const AppAlmacenConfig = [
@@ -42,4 +43,5 @@ export const AppAlmacenConfig = [
     RecepcionadorComponent,
     RendererComponent,
     ReportesComponent,
+    PerfilModalComponent,
 ]

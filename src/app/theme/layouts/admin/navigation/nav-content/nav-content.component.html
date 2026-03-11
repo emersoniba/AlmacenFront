@@ -1,32 +1,75 @@
 <ng-scrollbar style="height: calc(100vh - 0px)" id="nav-ps-mantis" visibility="hover">
-    <div class="row mt-3">
+    <!-- Información del usuario -->
+    <div class="row mt-3" *ngIf="authService.currentUser$ | async as user">
+        <div class="col text-center">
+            <div class="flex-shrink-0 position-relative d-inline-block">
+                <!-- Avatar con imagen o iniciales -->
+                <div *ngIf="user.persona?.imagen; else avatarIniciales" class="user-avatar-container">
+                    <img [src]="user.persona?.imagen" alt="user-image" class="user-avatar" />
+                </div>
+                <ng-template #avatarIniciales>
+                    <div class="user-avatar-iniciales">
+                        {{ iniciales }}
+                    </div>
+                </ng-template>
+
+                <!-- Indicador de estado (opcional) -->
+                <span class="status-indicator bg-success"></span>
+            </div>
+
+            <div class="flex-grow-1 mt-2">
+                <span class="user-name f-w-600">{{ nombreCompleto }}</span>
+                <p class="user-cargo text-muted mb-0">
+                    <i class="ti ti-briefcase me-1"></i>{{ cargo }}
+                </p>
+                <p class="user-unidad text-muted small" *ngIf="unidad">
+                    <i class="ti ti-building me-1"></i>{{ unidad }}
+                </p>
+                <div class="user-roles mt-1">
+                    <span class="badge bg-light-primary text-primary me-1" *ngFor="let rol of user.roles">
+                        {{ rol.nombre }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Botón de cerrar sesión (opcional) 
+            <div class="mt-2">
+                <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+                    <i class="ti ti-logout me-1"></i>Cerrar Sesión
+                </button>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <!-- Mensaje cuando no hay usuario (por si acaso) -->
+    <div class="row mt-3" *ngIf="!(authService.currentUser$ | async)">
         <div class="col text-center">
             <div class="flex-shrink-0">
-                <img src="assets/images/user/avatar-4.jpg" alt="user-image" class="user-avatar"/>
+                <img src="assets/images/user/avatar-4.jpg" alt="user-image" class="user-avatar" />
             </div>
             <div class="flex-grow-1 mt-2">
-                <span class="mb-1">Nombre Completo</span>
-                <p><b>Cargo del Funcionario</b></p>
+                <span class="mb-1">Invitado</span>
+                <p><b>Sin sesión</b></p>
             </div>
         </div>
     </div>
+
+    <!-- Navegación -->
     <div class="navbar-content">
         <ul class="nav coded-inner-navbar" (clickOutside)="fireOutClick()" (mouseleave)="navMob()">
-            @for (item of navigation; track item) {
-            @if (item.type === 'group') {
+            @for (item of navigation; track item) { @if (item.type === 'group') {
             <app-nav-group [item]="item"></app-nav-group>
-            }
-            @if (item.type === 'collapse') {
+            } @if (item.type === 'collapse') {
             <app-nav-collapse [item]="item"></app-nav-collapse>
-            }
-            @if (item.type === 'item') {
+            } @if (item.type === 'item') {
             <app-nav-item [item]="item"></app-nav-item>
-            }
-            }
+            } }
         </ul>
 
         <div class="version">
             <label disabled class="pe-auto">v1.0.0</label>
-        </div><br><br>
+        </div>
+        <br><br>
     </div>
 </ng-scrollbar>

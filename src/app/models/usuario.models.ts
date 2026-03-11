@@ -14,10 +14,13 @@ export interface Persona {
     nombres: string;
     apellido_paterno: string | null;
     apellido_materno: string | null;
+    nombre_completo: string;
     cargo: string;
     telefono: string | null;
     correo: string | null;
     unidad: string | null;
+    imagen: string | null;
+    direccion: string | null;
 }
 
 export interface RolInfo {
@@ -29,9 +32,6 @@ export interface Usuario {
     id: number;
     username: string;
     email: string;
-    first_name: string;
-    last_name: string;
-    nombre_completo: string;
     persona: Persona | null;
     roles: RolInfo[];
     is_active: boolean;

@@ -1,6 +1,91 @@
-.user-avatar{
+.user-avatar {
     width: 110px;
     height: 110px;
     border: 3px solid #edecec;
     border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-avatar-iniciales {
+    width: 110px;
+    height: 110px;
+    border: 3px solid #edecec;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 auto;
+}
+
+.status-indicator {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid white;
+    &.bg-success {
+        background-color: #28a745;
+    }
+}
+
+.user-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    display: block;
+}
+
+.user-cargo {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0.25rem 0;
+    i {
+        font-size: 1rem;
+    }
+}
+
+.user-unidad {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0.25rem 0;
+}
+
+.user-roles {
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+        margin: 0.1rem;
+        &.bg-light-primary {
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+        &.text-primary {
+            color: #667eea !important;
+        }
+    }
+}
+
+// Estilo para el botón de logout
+.btn-outline-danger {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    i {
+        font-size: 0.9rem;
+    }
+    &:hover {
+        background-color: #dc3545;
+        color: white;
+    }
 }

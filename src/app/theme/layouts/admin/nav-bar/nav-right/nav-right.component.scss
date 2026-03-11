@@ -1,3 +1,65 @@
 .pc-head-link {
     cursor: pointer !important;
 }
+
+.user-avatar-container {
+    display: inline-block;
+    .user-avtar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.user-avtar-iniciales {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    &.small {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
+
+.wid-35 {
+    width: 35px;
+    height: 35px;
+}
+
+.badge {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.7rem;
+    &.bg-light-primary {
+        background-color: rgba(102, 126, 234, 0.1);
+    }
+    &.text-primary {
+        color: #667eea !important;
+    }
+}
+
+.dropdown-item {
+    cursor: pointer;
+    i {
+        margin-right: 0.5rem;
+    }
+    &:hover {
+        background-color: #f8f9fa;
+    }
+    &.text-danger:hover {
+        background-color: #dc3545;
+        color: white !important;
+        i {
+            color: white !important;
+        }
+    }
+}

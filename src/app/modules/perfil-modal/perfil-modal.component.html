@@ -1,0 +1,127 @@
+<div class="modal-header">
+    <h5 class="modal-title">Mi Perfil</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="cancelar()"></button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="perfilForm">
+        <!-- Foto de perfil -->
+        <div class="text-center mb-4">
+            <div class="foto-perfil-container">
+                <div *ngIf="fotoPreview; else sinFoto" class="foto-preview">
+                    <img [src]="fotoPreview" alt="Foto de perfil">
+                </div>
+                <ng-template #sinFoto>
+                    <div class="foto-placeholder">
+                        <i class="ti ti-user"></i>
+                    </div>
+                </ng-template>
+
+                <div class="foto-overlay">
+                    <label for="fotoInput" class="btn-foto">
+                        <i class="ti ti-camera"></i>
+                        Cambiar foto
+                    </label>
+                </div>
+            </div>
+            <input type="file" id="fotoInput" accept="image/*" (change)="onFileSelected($event)" style="display: none;">
+            <p class="text-muted small mt-2">Formatos: JPG, PNG, GIF. Máx 5MB</p>
+        </div>
+
+        <!-- Datos personales -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Nombres</label>
+                <input type="text" class="form-control" formControlName="nombres">
+                <div class="text-danger small" *ngIf="perfilForm.get('nombres')?.invalid && perfilForm.get('nombres')?.touched">
+                    Campo requerido
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Apellido Paterno</label>
+                <input type="text" class="form-control" formControlName="apellido_paterno">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Apellido Materno</label>
+                <input type="text" class="form-control" formControlName="apellido_materno">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Cargo</label>
+                <input type="text" class="form-control" formControlName="cargo">
+                <div class="text-danger small" *ngIf="perfilForm.get('cargo')?.invalid && perfilForm.get('cargo')?.touched">
+                    Campo requerido
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" formControlName="correo">
+                <div class="text-danger small" *ngIf="perfilForm.get('correo')?.invalid && perfilForm.get('correo')?.touched">
+                    Email válido requerido
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Teléfono</label>
+                <input type="text" class="form-control" formControlName="telefono">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Unidad</label>
+                <input type="text" class="form-control" formControlName="unidad">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">CI</label>
+                <input type="text" class="form-control" [value]="user?.persona?.ci" disabled readonly>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <textarea class="form-control" rows="2" formControlName="direccion"></textarea>
+        </div>
+
+        <!-- Cambio de contraseña -->
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <h6 class="card-title">Cambiar Contraseña</h6>
+                <p class="text-muted small">Dejar en blanco si no desea cambiar</p>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nueva contraseña</label>
+                        <input type="password" class="form-control" formControlName="password">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Confirmar contraseña</label>
+                        <input type="password" class="form-control" formControlName="confirmPassword">
+                    </div>
+                </div>
+
+                <div class="text-danger small" *ngIf="perfilForm.errors?.['notSame'] && 
+                    (perfilForm.get('confirmPassword')?.touched || perfilForm.get('password')?.touched)">
+                    Las contraseñas no coinciden
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="guardarCambios()" [disabled]="cargando">
+        <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+        Guardar cambios
+    </button>
+</div>
