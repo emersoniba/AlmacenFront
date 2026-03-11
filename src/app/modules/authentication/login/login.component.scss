@@ -1,0 +1,144 @@
+.img-mopsv {
+    width: 60% !important;
+}
+
+.img-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-main {
+    min-height: 100vh;
+    width: 100%;
+}
+
+.auth-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.auth-banner {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0d0c0c;
+    overflow: hidden;
+}
+
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    >* {
+        position: relative;
+        z-index: 2;
+        /* Aumentado para asegurar que esté sobre el overlay */
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000d4;
+        z-index: 101;
+    }
+
+}
+
+.auth-form {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 450px;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.img-center {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.img-mopsv {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .auth-banner {
+        display: none;
+        /* Banner desaparece completamente */
+    }
+
+    .auth-form {
+        width: 100%;
+        /* Formulario ocupa todo el ancho */
+        padding: 1rem;
+    }
+
+    .contenedor {
+        max-width: 100%;
+    }
+
+    .card {
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Ajustes adicionales para móviles pequeños */
+@media (max-width: 480px) {
+    .auth-form {
+        padding: 0.5rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .img-mopsv {
+        max-width: 120px;
+    }
+
+    .row.mt-4 {
+        margin-top: 1rem !important;
+    }
+
+    .px-sm-5 {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}

@@ -1,0 +1,32 @@
+<ng-scrollbar style="height: calc(100vh - 0px)" id="nav-ps-mantis" visibility="hover">
+    <div class="row mt-3">
+        <div class="col text-center">
+            <div class="flex-shrink-0">
+                <img src="assets/images/user/avatar-4.jpg" alt="user-image" class="user-avatar"/>
+            </div>
+            <div class="flex-grow-1 mt-2">
+                <span class="mb-1">Nombre Completo</span>
+                <p><b>Cargo del Funcionario</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-content">
+        <ul class="nav coded-inner-navbar" (clickOutside)="fireOutClick()" (mouseleave)="navMob()">
+            @for (item of navigation; track item) {
+            @if (item.type === 'group') {
+            <app-nav-group [item]="item"></app-nav-group>
+            }
+            @if (item.type === 'collapse') {
+            <app-nav-collapse [item]="item"></app-nav-collapse>
+            }
+            @if (item.type === 'item') {
+            <app-nav-item [item]="item"></app-nav-item>
+            }
+            }
+        </ul>
+
+        <div class="version">
+            <label disabled class="pe-auto">v1.0.0</label>
+        </div><br><br>
+    </div>
+</ng-scrollbar>

@@ -1,0 +1,60 @@
+<h3 mat-dialog-title>
+    <b>{{labelForm}} - Proveedor</b>
+</h3>
+<div class="row" mat-dialog-content>
+    <form [formGroup]="formRegistro">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>NIT (Número de Identificación Tributaria)</mat-label>
+                <mat-icon matPrefix>list</mat-icon>
+                <input matInput formControlName="nit">
+                @if(formRegistro.get('nit').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+                @if(formRegistro.get('nit').hasError('minlength')){
+                    <mat-error>Mínimo de 8 caracteres</mat-error>
+                }
+                @if(formRegistro.get('nit').hasError('maxlength')){
+                    <mat-error>Máximo de 20 caracteres</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Razón Social</mat-label>
+                <mat-icon matPrefix>description</mat-icon>
+                <input matInput formControlName="razonSocial">
+                @if(formRegistro.get('razonSocial').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+                @if(formRegistro.get('razonSocial').hasError('minlength')){
+                    <mat-error>Mínimo de 5 caracteres</mat-error>
+                }
+                @if(formRegistro.get('razonSocial').hasError('maxlength')){
+                    <mat-error>Máximo de 150 caracteres</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Dirección del Proveedor</mat-label>
+                <mat-icon matPrefix>domain</mat-icon>
+                <input matInput formControlName="direccion">
+                @if(formRegistro.get('direccion').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+                @if(formRegistro.get('direccion').hasError('minlength')){
+                    <mat-error>Mínimo de 10 caracteres</mat-error>
+                }
+                @if(formRegistro.get('direccion').hasError('maxlength')){
+                    <mat-error>Máximo de 170 caracteres</mat-error>
+                }
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions class="px-4 mb-4">
+    <button type="button" mat-button class="btn btn-primary btn-round mr-05" (click)="accionRegistrar()" [disabled]="formRegistro.invalid"><i class="ti ti-send"></i> {{labelForm}}</button>
+    <button type="button" mat-button class="btn btn-danger btn-round" (click)="accionCancel()"><i class="ti ti-loader"></i> Cancelar</button>
+</div>
+

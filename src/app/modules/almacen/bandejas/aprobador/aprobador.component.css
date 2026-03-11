@@ -1,0 +1,93 @@
+.stats-card {
+    border-radius: 0px 8px 8px 0px;
+    box-shadow: 0 10px 30px 0px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.stats-card.bg-green {
+    background: linear-gradient(145deg, #ffffff, #6abb7d);
+    border-left: 2px solid #6abb7d;
+}
+
+.stats-card.bg-orange {
+    background: linear-gradient(145deg, #ffffff, #f9a347);
+    border-left: 2px solid #f9a347;
+}
+
+.stats-card.bg-blue {
+    background: linear-gradient(145deg, #ffffff, #6796bc);
+    border-left: 2px solid #6796bc;
+}
+
+.stats-card.bg-red {
+    background: linear-gradient(145deg, #ffffff, #f26e35);
+    border-left: 2px solid #f26e35;
+}
+
+.stats-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.stats-card-title {
+    font-size: 15px;
+    font-weight: 300;
+    padding-bottom: 5px;
+    color: #464545;
+}
+
+.stats-card-body {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.modern-modal .mat-dialog-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modern-modal .modal-content {
+    border: none;
+    border-radius: 12px;
+}
+
+.cdk-global-overlay-wrapper {
+    z-index: 1000 !important;
+}
+
+.mat-dialog-container {
+    position: relative;
+    z-index: 1001 !important;
+}
+
+::ng-deep .estado-badge {
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 6px 10px;
+}
+
+.badge.bg-warning {
+    background-color: #fff3cd !important;
+    color: #856404 !important;
+}
+
+.badge.bg-danger {
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    border-radius: 8px !important;
+}
+
+.badge.bg-success {
+    background-color: #d4edda !important;
+    color: #155724 !important;
+}
+
+.h3 {
+    margin: -10px 0 10px 0 !important;
+}

@@ -1,0 +1,107 @@
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+		<app-card cardTitle="Administración y Gestión de Almacenes y Sub Almacenes" blockClass="pc-component">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 br">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<h4><b><i class="ti ti-truck fs-4"></i>Gestión de Almacenes</b></h4>
+						</div>
+
+						<div class="col-lg-6 col-md-6 col-sm-12 pull-right mb-2">
+							<button class="btn btn-primary btn-round mb-3 mt-2" (click)="accionNuevoAlmacen()" matTooltip="Nuevo Almacen">
+								<i class="ti ti-plus"></i>
+								Nuevo Almacen
+							</button>
+						</div>
+						<div *ngIf="!almacenSeleccionado" class="col-lg-12 col-md-12 col-sm-12">								<div class="alert alert-warning">
+								<i class="ti ti-info-circle me-2"></i>
+								Seleccione un almacén haciendo doble clic para ver sus sub almacenes
+							</div>
+						</div>
+					</div>
+					<hr class="separator" />
+					<div *ngIf="almacenSeleccionado" class="alert alert-info mb-3">
+						<div class="d-flex justify-content-between align-items-center">
+							<div>
+								<strong>Almacén seleccionado:</strong> {{ almacenSeleccionado.nombre }}
+								<span class="badge bg-secondary ms-2">{{ almacenSeleccionado.sigla }}</span>
+							</div>
+							<button class="btn btn-sm btn-outline-secondary" (click)="limpiarSeleccion()">
+								<i class="ti ti-x"></i> Limpiar selección
+							</button>
+						</div>
+					</div>
+					<ag-grid-angular
+						style="width: 100%; height: 400px"
+						class="ag-theme-material"
+						[advancedFilterModel]=""
+						[gridOptions]="gridOptionsAlmacen"
+						[columnDefs]="columnDefsAlmacen"
+						[rowData]="dataAlmacen"
+						[rowSelection]="rowSelection"
+						[pagination]="true"
+						[paginationPageSize]="paginationPageSize"
+						[paginationPageSizeSelector]="paginationPageSizeSelector"
+						[paginationNumberFormatter]="paginationNumberFormatter"
+						[localeText]="localEs"
+						(selectionChanged)="onSelectionChanged($event)"
+						(cellDoubleClicked)="onAlmacenDoubleClick($event)"
+						(gridReady)="onGridReadyAlmacen($event)"
+					>
+					</ag-grid-angular>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12" *ngIf="almacenSeleccionado">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<h4
+								><b><i class="ti ti-truck fs-4"></i>Sub Almacenes de: {{ almacenSeleccionado.nombre }}</b></h4
+							>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 pull-right mb-2">
+							<button
+								class="btn btn-primary btn-round mb-3 mt-2"
+								(click)="accionNuevoSubAlmacen()"
+								matTooltip="Nuevo Sub Almacen"
+							>
+								<i class="ti ti-plus"></i>
+								Nuevo Sub Almacen
+							</button>
+						</div>
+					</div>
+					<hr class="separator" />
+					<ag-grid-angular
+						style="width: 100%; height: 400px"
+						class="ag-theme-material"
+						[advancedFilterModel]=""
+						[gridOptions]="gridOptionsSubAlmacen"
+						[columnDefs]="columnDefsSubAlmacen"
+						[rowData]="dataSubAlmacenFiltrados"
+						[rowSelection]="rowSelection"
+						[pagination]="true"
+						[paginationPageSize]="paginationPageSize"
+						[paginationPageSizeSelector]="paginationPageSizeSelector"
+						[paginationNumberFormatter]="paginationNumberFormatter"
+						[localeText]="localEs"
+						(selectionChanged)="onSelectionChangedSubAlmacen($event)"
+						(gridReady)="onGridReadySubAlmacen($event)"
+					>
+					</ag-grid-angular>
+				</div>
+
+				<div class="col-lg-12 col-md-12 col-sm-12" *ngIf="!almacenSeleccionado">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<h4><b>Gestión de Sub Almacenes</b></h4>
+							<div class="alert alert-warning">
+								<i class="ti ti-info-circle me-2"></i>
+								Seleccione un almacén haciendo doble clic para ver sus sub almacenes
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</app-card>
+	</div>
+	<!---->
+</div>

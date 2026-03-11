@@ -1,0 +1,200 @@
+[
+    {
+        "id_ui": 1,
+        "nombre": "Bolígrafos",
+        "unidad_de_medida": "unidad",
+        "stock": 500,
+        "imagen": "assets/images/boligrafos.jpg",
+        "id_almacen": "1",
+        "almacen": "Almacén Central",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 2,
+        "nombre": "Cuadernos",
+        "unidad_de_medida": "unidad",
+        "stock": 120,
+        "imagen": "assets/images/cuadernos.jpg",
+        "id_almacen": "1",
+        "almacen": "Almacén Central",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 3,
+        "nombre": "Lápices",
+        "unidad_de_medida": "unidad",
+        "stock": 800,
+        "imagen": "assets/images/lapices.jpg",
+        "id_almacen": "2",
+        "almacen": "Almacén Secundario",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 4,
+        "nombre": "Carpetas",
+        "unidad_de_medida": "unidad",
+        "stock": 50,
+        "imagen": "assets/images/carpetas.jpg",
+        "id_almacen": "1",
+        "almacen": "Almacén Central",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 5,
+        "nombre": "Resaltadores",
+        "unidad_de_medida": "unidad",
+        "stock": 300,
+        "imagen": "assets/images/resaltadores.jpg",
+        "id_almacen": "2",
+        "almacen": "Almacén Secundario",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 6,
+        "nombre": "Tijeras",
+        "unidad_de_medida": "unidad",
+        "stock": 150,
+        "imagen": "assets/images/tijeras.jpg",
+        "id_almacen": "1",
+        "almacen": "Almacén Central",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 7,
+        "nombre": "Papel A4",
+        "unidad_de_medida": "paquete",
+        "stock": 80,
+        "imagen": "assets/images/papel_a4.jpg",
+        "id_almacen": "3",
+        "almacen": "Almacén A",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 8,
+        "nombre": "Grapadoras",
+        "unidad_de_medida": "unidad",
+        "stock": 40,
+        "imagen": "assets/images/grapadoras.jpg",
+        "id_almacen": "3",
+        "almacen": "Almacén A",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 9,
+        "nombre": "Perforadoras",
+        "unidad_de_medida": "unidad",
+        "stock": 20,
+        "imagen": "assets/images/perforadoras.jpg",
+        "id_almacen": "2",
+        "almacen": "Almacén Secundario",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 10,
+        "nombre": "Post-its",
+        "unidad_de_medida": "paquete",
+        "stock": 150,
+        "imagen": "assets/images/post_its.jpg",
+        "id_almacen": "1",
+        "almacen": "Almacén Central",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 11,
+        "nombre": "Gomas de borrar",
+        "unidad_de_medida": "unidad",
+        "stock": 250,
+        "imagen": "assets/images/gomas_borrar.jpg",
+        "id_almacen": "2",
+        "almacen": "Almacén Secundario",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 12,
+        "nombre": "Pegamento",
+        "unidad_de_medida": "botella",
+        "stock": 180,
+        "imagen": "assets/images/pegamento.jpg",
+        "id_almacen": "1",
+        "almacen": "Almacén Central",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 13,
+        "nombre": "Marcadores",
+        "unidad_de_medida": "unidad",
+        "stock": 60,
+        "imagen": "assets/images/marcadores.jpg",
+        "id_almacen": "3",
+        "almacen": "Almacén A",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 14,
+        "nombre": "Cinta adhesiva",
+        "unidad_de_medida": "rollo",
+        "stock": 120,
+        "imagen": "assets/images/cinta_adhesiva.jpg",
+        "id_almacen": "2",
+        "almacen": "Almacén Secundario",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 15,
+        "nombre": "Cartulinas",
+        "unidad_de_medida": "paquete",
+        "stock": 90,
+        "imagen": "assets/images/cartulinas.jpg",
+        "id_almacen": "3",
+        "almacen": "Almacén A",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 16,
+        "nombre": "Reglas",
+        "unidad_de_medida": "unidad",
+        "stock": 400,
+        "imagen": "assets/images/reglas.jpg",
+        "id_almacen": "1",
+        "almacen": "Almacén Central",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 17,
+        "nombre": "Calculadoras",
+        "unidad_de_medida": "unidad",
+        "stock": 25,
+        "imagen": "assets/images/calculadoras.jpg",
+        "id_almacen": "2",
+        "almacen": "Almacén Secundario",
+        "selected": false,
+        "cantidad": 0
+    },
+    {
+        "id_ui": 18,
+        "nombre": "Estuches",
+        "unidad_de_medida": "unidad",
+        "stock": 200,
+        "imagen": "assets/images/estuches.jpg",
+        "id_almacen": "3",
+        "almacen": "Almacén A",
+        "selected": false,
+        "cantidad": 0
+    }
+]

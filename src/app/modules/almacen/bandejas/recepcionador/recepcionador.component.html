@@ -1,0 +1,45 @@
+<div class="container-fluid mt-4">
+	<div class="card">
+	<app-card cardTitle="Recepcion de solicitudes" blockClass="pc-component"> </app-card>
+		<div class="card-body">
+			<div *ngIf="loading" class="text-center">
+				<div class="spinner-border" role="status">
+					<span class="visually-hidden">Cargando...</span>
+				</div>
+			</div>
+			<div class="card-footer text-muted">
+				<small>Total de solicitudes: {{ rowData.length }}</small>
+			</div>
+			<div class="card-body">
+				<div *ngIf="loading" class="text-center py-5">
+					<div class="spinner-border text-primary" role="status">
+						<span class="visually-hidden">Cargando solicitudes...</span>
+					</div>
+					<p class="mt-2">Cargando solicitudes aprobadas...</p>
+				</div>
+
+				<div *ngIf="!loading && rowData.length === 0" class="text-center py-5">
+					<i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+					<h5 class="text-muted">No hay solicitudes aprobadas</h5>
+					<p class="text-muted">No se encontraron solicitudes con estado "aprobado"</p>
+				</div>
+
+				<div *ngIf="!loading && rowData.length > 0" class="ag-theme-alpine grid-container">
+					<ag-grid-angular
+						style="width: 100%; height: 600px"
+						class="ag-theme-material"
+						[gridOptions]="gridOptions"
+						[advancedFilterModel]=""
+						[columnDefs]="columnDefs"
+						[rowData]="rowData"
+						[pagination]="true"
+						[localeText]="localEs"
+						[rowSelection]="'single'"
+						[paginationPageSize]="paginationPageSize"
+						[paginationPageSizeSelector]="paginationPageSizeSelector"
+					>
+					</ag-grid-angular>
+				</div>
+			</div>
+		</div> </div
+></div>

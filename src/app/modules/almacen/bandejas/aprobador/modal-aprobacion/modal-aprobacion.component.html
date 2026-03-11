@@ -1,0 +1,151 @@
+<div class="modal-content" tabindex="-1" cdkFocusInitial>
+	<div class="modal-header">
+		<h4 class="modal-title">
+			<i class="ti ti-shopping-cart me-2"></i>
+			Detalles de Solicitud
+		</h4>
+	</div>
+
+	<div class="modal-body" id="modal-description">
+		<div *ngIf="loading" class="loading-spinner" aria-live="polite">
+			<div class="spinner-border" role="status">
+				<span class="visually-hidden">Cargando detalles de la solicitud...</span>
+			</div>
+		</div>
+
+		<div *ngIf="error && !loading" class="error-message" role="alert">
+			<i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+			<h5>Error al cargar los datos</h5>
+			<p>No se pudieron cargar los detalles de la solicitud.</p>
+			<button class="btn btn-secondary mt-2" (click)="onCancel()">Cerrar</button>
+		</div>
+
+		<div *ngIf="!loading && !error && aprobacion" class="content-wrapper">
+			<div class="info-card">
+				<div class="info-row">
+					<span class="info-label">ID Solicitud:</span>
+					<span class="info-value text-primary fw-bold">{{ aprobacion.solicitud_id }}</span>
+				</div>
+
+				<div class="info-row">
+					<span class="info-label">Fecha Solicitud:</span>
+					<span class="info-value">{{ aprobacion.fecha_solicitud | date: 'dd/MM/yyyy HH:mm' }}</span>
+				</div>
+
+				<div class="info-row">
+					<span class="info-label">Solicitante:</span>
+					<span class="info-value">
+						<i class="fas fa-user me-1"></i>
+						{{ aprobacion.solicitante.usuario }}
+						<small class="text-muted ms-2">({{ aprobacion.solicitante.cargo }})</small>
+					</span>
+				</div>
+
+				<div class="info-row">
+					<span class="info-label">Almacén:</span>
+					<span class="info-value">
+						<i class="fas fa-warehouse me-1"></i>
+						{{ aprobacion.almacen.nombre }}
+					</span>
+				</div>
+
+				<div class="info-row">
+					<span class="info-label">Estado:</span>
+					<span class="info-value">
+						<span
+							[ngClass]="{
+								'badge bg-warning': aprobacion.estado === 'pendiente',
+								'badge bg-success': aprobacion.estado === 'aprobado',
+								'badge bg-danger': aprobacion.estado === 'rechazado'
+							}"
+						>
+							<i class="fas fa-circle me-1" style="font-size: 0.5rem"></i>
+							{{ aprobacion.estado }}
+						</span>
+					</span>
+				</div>
+			</div>
+
+			<!-- Objetivo -->
+			<div class="info-card">
+				<h6 class="mb-3">
+					<i class="fas fa-bullseye me-2"></i>
+					Objetivo de la Solicitud
+				</h6>
+				<div class="objetivo-text">
+					{{ aprobacion.objetivo }}
+				</div>
+			</div>
+
+			<!-- Productos -->
+			<div class="info-card">
+				<h6 class="mb-3">
+					<i class="fas fa-boxes me-2"></i>
+					Productos Solicitados
+					<span class="badge bg-primary ms-2">{{ totalProductos }} unidades totales</span>
+				</h6>
+
+				<div class="products-table">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Producto</th>
+								<th class="text-center">Cantidad</th>
+								<th class="text-center">Unidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let producto of aprobacion.productos">
+								<td>
+									<i class="fas fa-box me-2 text-muted"></i>
+									{{ producto.nombre }}
+								</td>
+								<td class="text-center fw-bold
+								">{{ producto.cantidad }}</td>
+								<td class="text-center text-muted">{{ producto.unidad_de_medida }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div *ngIf="aprobacion.fecha_aprobacion" class="info-card">
+				<h6 class="mb-3">
+					<i class="fas fa-check-circle me-2"></i>
+					Información de Aprobación
+				</h6>
+				<div class="info-row">
+					<span class="info-label">{{ aprobacion.estado | titlecase }} por :</span>
+					<span class="info-value">{{ aprobacion.aprobador }}</span>
+				</div>
+				<div class="info-row">
+					<span class="info-label">En Fecha:</span>
+					<span class="info-value">{{ aprobacion.fecha_aprobacion | date: 'dd/MM/yyyy HH:mm'}}</span>
+				</div>
+
+				<div class="info-row" *ngIf="aprobacion.comentarios">
+					<span class="info-label">Comentarios:</span>
+					<span class="info-value">{{ aprobacion.comentarios }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="loading" #closeButton>
+			<i class="ti ti-x me-2" aria-hidden="true"></i>
+			Cerrar
+		</button>
+		<ng-container *ngIf="aprobacion?.estado === 'pendiente'">
+			<button type="button" class="btn btn-danger" (click)="onRechazar()" [disabled]="loading">
+				<i class="ti ti-ban me-2" aria-hidden="true"></i>
+				Rechazar
+			</button>
+
+			<button type="button" class="btn btn-primary" (click)="onAprobar()" [disabled]="loading" #primaryAction>
+				<i class="ti ti-send me-2" aria-hidden="true"></i>
+				Aprobar
+			</button>
+		</ng-container>
+	</div>
+</div>

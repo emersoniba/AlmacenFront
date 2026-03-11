@@ -1,0 +1,39 @@
+<ul class="list-unstyled">
+    <li class="pc-h-item pc-sidebar-collapse">
+        <a href="javascript:" class="pc-head-link ms-0" id="sidebar-hide" title="click to menu Collapse"
+            [ngClass]="{ on: navCollapsed }" id="sidebar-hide mobile-collapse" (click)="navCollapse()">
+            <i class="ti ti-menu-2"></i>
+        </a>
+    </li>
+    <li class="pc-h-item pc-sidebar-popup">
+        <a href="javascript:" title="click to menu open" class="pc-head-link ms-0" id="mobile-collapse1"
+            (click)="this.NavCollapsedMob.emit()">
+            <i class="ti ti-menu-2"></i>
+        </a>
+    </li>
+    <li class="dropdown pc-h-item d-inline-flex d-md-none" ngbDropdown>
+        <a class="pc-head-link dropdown-toggle arrow-none m-0" ngbDropdownToggle>
+            <i class="ti ti-search"></i>
+        </a>
+        <div class="dropdown-menu dropdowm-menu-end pc-h-dropdown drp-search" ngbDropdownMenu>
+            <form class="px-3" [formGroup]="formBuscar" (ngSubmit)="buscar()">
+                <div class="form-group mb-0 d-flex align-items-center">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Buscar ...</mat-label>
+                        <mat-icon matIconPrefix>search</mat-icon>
+                        <input matInput formControlName="buscar" class="border-0 shadow-none" placeholder="Buscar. . ." />
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </li>
+    <li class="pc-h-item d-none d-md-inline-flex">
+        <form class="header-search" [formGroup]="formBuscar" (ngSubmit)="buscar()">
+            <mat-form-field>
+                <mat-label>Buscar ...</mat-label>
+                <mat-icon matIconPrefix>search</mat-icon>
+                <input matInput formControlName="buscar" placeholder="Buscar. . ." />
+            </mat-form-field>
+        </form>
+    </li>
+</ul>

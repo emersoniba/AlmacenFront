@@ -1,0 +1,2776 @@
+{
+  "material": [
+    {
+      "id": "1",
+      "codigo": "Xxx",
+      "nivel": "Piso 3",
+      "descripcion": "Boligrafo",
+      "almacen": "Almacén Central",
+      "material_padre": "xxx"
+    },
+    {
+      "id": "2",
+      "codigo": "yyy",
+      "nivel": "Piso 2",
+      "descripcion": "papel",
+      "almacen": "Almacén Norte",
+      "material_padre": "yyy"
+    },
+    {
+      "id": "3",
+      "codigo": "zzz",
+      "nivel": "Piso 1",
+      "descripcion": "cuaderno",
+      "almacen": "Almacén Sur",
+      "idPadre": 1
+    },
+    {
+      "id": "",
+      "idAlmacen": "1",
+      "idPadre": "",
+      "descripcion": "dfgdfgdfgdfg",
+      "codigo": "dfgdfg",
+      "nivel": "1"
+    }
+  ],
+  "login": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "123456",
+      "userData": {
+        "name": "Admin Emerson",
+        "email": "admin@example.com",
+        "roles": [
+          "administrador"
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "username": "responsable",
+      "password": "123456",
+      "userData": {
+        "name": "Responsable",
+        "email": "responsable@example.com",
+        "roles": [
+          "responsable"
+        ]
+      }
+    },
+    {
+      "id": "c00b",
+      "username": "admin",
+      "password": "1234569"
+    },
+    {
+      "id": "0d9f",
+      "username": "emerson.ibanez",
+      "password": "9903437"
+    },
+    {
+      "id": "e4e9",
+      "username": "emerson.ibanez",
+      "password": "9903437"
+    },
+    {
+      "id": "16e4",
+      "username": "emerson.ibanez",
+      "password": "9903437"
+    },
+    {
+      "id": "c91d",
+      "username": "emerson.ibanez",
+      "password": "9903437"
+    },
+    {
+      "id": "d335",
+      "username": "emerson.ibanez",
+      "password": "9903437"
+    },
+    {
+      "id": "7ba8",
+      "username": "ivan.mareno",
+      "password": "195309Ivan"
+    },
+    {
+      "id": "dcfa",
+      "username": "ivan.mareno",
+      "password": "195309Ivan"
+    }
+  ],
+  "catalogo": [
+    {
+      "id": "1",
+      "descripcion": "Suministro de material de oficina para el equipo",
+      "categoria": "Almacén Central",
+      "material_padre": "xxx"
+    },
+    {
+      "id": "2",
+      "codigo": "yyy",
+      "descripcion": "Reabastecimiento de material de oficina",
+      "categoria": "Almacén Norte"
+    },
+    {
+      "id": "3",
+      "codigo": "zzz",
+      "descripcion": "Compra de nuevos equipos de computo",
+      "categoria": "Almacén Sur"
+    },
+    {
+      "id": "",
+      "descripcion": "xxxxxxx",
+      "categoria": "xxxxxxxxxxxxxxxx"
+    },
+    {
+      "id": "",
+      "descripcion": "mmmmm",
+      "categoria": "mmmmmmmmmm"
+    }
+  ],
+  "proveedor": [
+    {
+      "id": "1",
+      "razonSocial": "ferreteria srl",
+      "nit": "11111111",
+      "direccion": "perez veleazco"
+    },
+    {
+      "id": "2",
+      "nit": "222",
+      "razonSocial": "Reabastecimiento de material de oficina",
+      "direccion": "Almacén Norte"
+    },
+    {
+      "id": "3",
+      "nit": "333",
+      "razonSocial": "Compra de nuevos equipos de computo",
+      "direccion": "Almacén Sur"
+    },
+    {
+      "id": "4",
+      "razonSocial": "vvvvvv",
+      "nit": "12345678",
+      "direccion": "ppppppppppp"
+    }
+  ],
+  "almacen": [
+    {
+      "id": "1",
+      "sigla": "Celicaasas",
+      "nombre": "Almacen primario1"
+    },
+    {
+      "id": "2",
+      "nombre": "999",
+      "sigla": "Almacén No Central"
+    },
+    {
+      "id": "3",
+      "sigla": "xxx",
+      "nombre": "nuevo almacen"
+    }
+  ],
+  "subalmacen": [
+    {
+      "id": "1",
+      "idAlmacen ": 1,
+      "nombre": "111",
+      "sigla": "Sub Almacén Central",
+      "direccion": "xxx"
+    },
+    {
+      "id": "",
+      "sigla": "pruebaaa",
+      "nombre": "pruebaa subalmacen",
+      "idAlmacen": 1
+    },
+    {
+      "id": "",
+      "sigla": "yyy",
+      "nombre": "nuevosub almacen2t",
+      "idAlmacen": 2
+    },
+    {
+      "id": "",
+      "sigla": "asdasdasd",
+      "nombre": "sadasdasda",
+      "idAlmacen": 3
+    }
+  ],
+  "responsableAlmacen": [
+    {
+      "id": "1",
+      "idAlmacen": 1,
+      "idResponsable": 1,
+      "fechaDesde": "2023-01-01",
+      "fechaHasta": "2023-12-31"
+    },
+    {
+      "id": "2",
+      "idAlmacen": 2,
+      "idResponsable": 1,
+      "fechaDesde": "2023-01-01",
+      "fechaHasta": "2023-12-31"
+    },
+    {
+      "id": "",
+      "idAlmacen": "3",
+      "idResponsable": "2",
+      "fechaDesde": "2023-01-01",
+      "fechaHasta": "2025-01-01"
+    }
+  ],
+  "responsables": [
+    {
+      "id": "1",
+      "nombre": "Admin Emerson",
+      "cargo": "Responsable General"
+    },
+    {
+      "id": "2",
+      "nombre": "Responsable Norte",
+      "cargo": "Encargado Almacén Norte"
+    }
+  ],
+  "ingresos": [
+    {
+      "id": "1",
+      "codigo": "ING-001",
+      "descripcion": "Materiales de oficina",
+      "comprobante": "FAC-12345",
+      "fechaIngreso": "2023-05-15",
+      "idProveedor": {
+        "id": "1",
+        "nombre": "Proveedor A"
+      },
+      "idAlmacen": {
+        "id": "1",
+        "nombre": "Almacén Central"
+      },
+      "idSubAlmacen": {
+        "id": "1",
+        "nombre": "Subalmacén 1"
+      },
+      "gestionInicial": 2023,
+      "estado": "Registrado",
+      "detalles": [
+        {
+          "id": "1",
+          "idMaterial": {
+            "id": "1",
+            "nombre": "Papel A4"
+          },
+          "cantidad": 10,
+          "monto": 250.5
+        }
+      ]
+    },
+    {
+      "id": "",
+      "codigo": "6666666",
+      "descripcion": "pruebaaaaaaaaaaaaaaaaaa",
+      "comprobante": "6666666",
+      "fechaIngreso": "2025-08-18",
+      "idProveedor": "2",
+      "idAlmacen": "1",
+      "idSubAlmacen": "1",
+      "detalles": [
+        {
+          "id": "",
+          "idMaterial": {
+            "id": "3"
+          },
+          "cantidad": 2,
+          "monto": 100
+        }
+      ]
+    },
+    {
+      "id": "",
+      "codigo": "ing-111",
+      "descripcion": "pruebaaa xxxxxx",
+      "comprobante": "fac-001",
+      "fechaIngreso": "2025-08-19",
+      "idProveedor": "1",
+      "idAlmacen": "1",
+      "idSubAlmacen": "1",
+      "detalles": [
+        {
+          "id": "",
+          "idMaterial": {
+            "id": "1"
+          },
+          "cantidad": 1,
+          "monto": 0.02
+        },
+        {
+          "id": "",
+          "idMaterial": {
+            "id": "2"
+          },
+          "cantidad": 1,
+          "monto": 0.03
+        }
+      ]
+    }
+  ],
+  "solicitudes": [
+    {
+      "id": "1",
+      "codigo": "SOL001",
+      "objetivo": "Suministro de material de oficina para el equipo",
+      "nombre_solicitante": "Juan Pérez",
+      "nombre_aprobador": "Carlos Sánchez",
+      "nombre_recepcionador": "Ana López",
+      "fecha_solicitud": "2025-03-20T08:30:45.000Z",
+      "fecha_envio": "2025-03-21T09:45:30.000Z",
+      "fecha_aprobacion": "2025-03-22T10:15:00.000Z",
+      "fecha_rechazo": "2025-03-23T11:00:00.000Z",
+      "fecha_recepcion": "2025-03-24T12:25:10.000Z",
+      "almacen": "Almacén Central",
+      "estado": "aprobado",
+      "detalle": [
+        {
+          "id": "1",
+          "idSolicitud": "1",
+          "nombreProducto": "Bolígrafos",
+          "unidad_medida": "unidad",
+          "cantidad_solicitada": 100,
+          "cantidad_entregada": 100
+        },
+        {
+          "id": "2",
+          "idSolicitud": "1",
+          "nombreProducto": "Cuadernos",
+          "unidad_medida": "unidad",
+          "cantidad_solicitada": 50,
+          "cantidad_entregada": 50
+        }
+      ]
+    }
+  ],
+  "producto": [
+    {
+      "id_ui": 1,
+      "nombre": "Bolígrafos",
+      "unidad_de_medida": "unidad",
+      "stock": 500,
+      "imagen": "assets/images/boligrafo.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "2241"
+    },
+    {
+      "id_ui": 2,
+      "nombre": "Cuadernos",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/boligrafo.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "8d7c"
+    },
+    {
+      "id_ui": 3,
+      "nombre": "Lápices",
+      "unidad_de_medida": "unidad",
+      "stock": 800,
+      "imagen": "assets/images/lapices.jpg",
+      "id_almacen": "2",
+      "almacen": "Almacén Secundario",
+      "id": "35f2"
+    },
+    {
+      "id_ui": 4,
+      "nombre": "Carpetas",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/boligrafo.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "51d1"
+    },
+    {
+      "id_ui": 5,
+      "nombre": "Resaltadores",
+      "unidad_de_medida": "unidad",
+      "stock": 300,
+      "imagen": "assets/images/resaltadores.jpg",
+      "id_almacen": "2",
+      "almacen": "Almacén Secundario",
+      "id": "8cf6"
+    },
+    {
+      "id_ui": 6,
+      "nombre": "Tijeras",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/boligrafo.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "selected": false,
+      "cantidad": 0,
+      "id": "0ca6"
+    },
+    {
+      "id_ui": 7,
+      "nombre": "Papel A4",
+      "unidad_de_medida": "paquete",
+      "stock": 80,
+      "imagen": "assets/images/papel_a4.jpg",
+      "id_almacen": "3",
+      "almacen": "Almacén A",
+      "selected": false,
+      "cantidad": 0,
+      "id": "a013"
+    },
+    {
+      "id_ui": 8,
+      "nombre": "pruebaaaaa",
+      "unidad_de_medida": "unidad",
+      "stock": 4,
+      "imagen": "assets/images/boligrafo.jfif",
+      "id_almacen": "1",
+      "almacen": "Toyotaasdasd",
+      "id": "7f0c"
+    },
+    {
+      "id_ui": 9,
+      "nombre": "Resmas de Papel",
+      "unidad_de_medida": "paquete",
+      "stock": 300,
+      "imagen": "assets/images/resmas.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1009"
+    },
+    {
+      "id_ui": 10,
+      "nombre": "Carpetas Archivadoras",
+      "unidad_de_medida": "unidad",
+      "stock": 250,
+      "imagen": "assets/images/carpetas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1010"
+    },
+    {
+      "id_ui": 11,
+      "nombre": "Grapadoras Manuales",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/grapadoras.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1011"
+    },
+    {
+      "id_ui": 12,
+      "nombre": "Notas Adhesivas",
+      "unidad_de_medida": "paquete",
+      "stock": 450,
+      "imagen": "assets/images/notas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1012"
+    },
+    {
+      "id_ui": 13,
+      "nombre": "Rotuladores de Pizarra",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/rotuladores.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1013"
+    },
+    {
+      "id_ui": 14,
+      "nombre": "Calculadoras Básicas",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/calculadoras.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1014"
+    },
+    {
+      "id_ui": 15,
+      "nombre": "Cajas de Archivo",
+      "unidad_de_medida": "caja",
+      "stock": 300,
+      "imagen": "assets/images/cajas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1015"
+    },
+    {
+      "id_ui": 16,
+      "nombre": "Sillas Ergonómicas",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/sillas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1016"
+    },
+    {
+      "id_ui": 17,
+      "nombre": "Escritorios Modulares",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/escritorios.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1017"
+    },
+    {
+      "id_ui": 18,
+      "nombre": "Lámparas de Escritorio",
+      "unidad_de_medida": "unidad",
+      "stock": 90,
+      "imagen": "assets/images/lamparas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1018"
+    },
+    {
+      "id_ui": 19,
+      "nombre": "Toner para Impresora",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/toner.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1019"
+    },
+    {
+      "id_ui": 20,
+      "nombre": "Cartuchos de Tinta",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/cartuchos.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1020"
+    },
+    {
+      "id_ui": 21,
+      "nombre": "Pizarras Blancas",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/pizarras.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1021"
+    },
+    {
+      "id_ui": 22,
+      "nombre": "Borradores de Pizarra",
+      "unidad_de_medida": "unidad",
+      "stock": 300,
+      "imagen": "assets/images/borradores.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1022"
+    },
+    {
+      "id_ui": 23,
+      "nombre": "Cables HDMI",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/cables.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1023"
+    },
+    {
+      "id_ui": 24,
+      "nombre": "Teclados USB",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/teclados.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1024"
+    },
+    {
+      "id_ui": 25,
+      "nombre": "Ratones Ópticos",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/ratones.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1025"
+    },
+    {
+      "id_ui": 26,
+      "nombre": "Monitores LED",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/monitores.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1026"
+    },
+    {
+      "id_ui": 27,
+      "nombre": "Impresoras Multifuncionales",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/impresoras.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1027"
+    },
+    {
+      "id_ui": 28,
+      "nombre": "Soportes para Monitor",
+      "unidad_de_medida": "unidad",
+      "stock": 60,
+      "imagen": "assets/images/soportes.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1028"
+    },
+    {
+      "id_ui": 29,
+      "nombre": "Cargadores USB",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/cargadores.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1029"
+    },
+    {
+      "id_ui": 30,
+      "nombre": "Auriculares con Micrófono",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/auriculares.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1030"
+    },
+    {
+      "id_ui": 31,
+      "nombre": "Baterías AA",
+      "unidad_de_medida": "paquete",
+      "stock": 500,
+      "imagen": "assets/images/baterias.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1031"
+    },
+    {
+      "id_ui": 32,
+      "nombre": "Baterías AAA",
+      "unidad_de_medida": "paquete",
+      "stock": 450,
+      "imagen": "assets/images/baterias_aaa.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1032"
+    },
+    {
+      "id_ui": 33,
+      "nombre": "Extensiones Eléctricas",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/extensiones.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1033"
+    },
+    {
+      "id_ui": 34,
+      "nombre": "Bombillas LED",
+      "unidad_de_medida": "unidad",
+      "stock": 300,
+      "imagen": "assets/images/bombillas.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1034"
+    },
+    {
+      "id_ui": 35,
+      "nombre": "Cables Ethernet",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/cables_ethernet.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1035"
+    },
+    {
+      "id_ui": 36,
+      "nombre": "Adaptadores USB-C",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/adaptadores.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1036"
+    },
+    {
+      "id_ui": 37,
+      "nombre": "Memorias USB",
+      "unidad_de_medida": "unidad",
+      "stock": 250,
+      "imagen": "assets/images/memorias.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1037"
+    },
+    {
+      "id_ui": 38,
+      "nombre": "Discos Duros Externos",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/discos.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1038"
+    },
+    {
+      "id_ui": 39,
+      "nombre": "Soportes para Laptop",
+      "unidad_de_medida": "unidad",
+      "stock": 60,
+      "imagen": "assets/images/soportes_laptop.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1039"
+    },
+    {
+      "id_ui": 40,
+      "nombre": "Cámaras Web",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/camaras.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1040"
+    },
+    {
+      "id_ui": 41,
+      "nombre": "Proyectores Multimedia",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/proyectores.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1041"
+    },
+    {
+      "id_ui": 42,
+      "nombre": "Pantallas de Proyección",
+      "unidad_de_medida": "unidad",
+      "stock": 15,
+      "imagen": "assets/images/pantallas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1042"
+    },
+    {
+      "id_ui": 43,
+      "nombre": "Soportes de Pared TV",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/soportes_tv.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1043"
+    },
+    {
+      "id_ui": 44,
+      "nombre": "Bolsas de Plástico",
+      "unidad_de_medida": "paquete",
+      "stock": 500,
+      "imagen": "assets/images/bolsas.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1044"
+    },
+    {
+      "id_ui": 45,
+      "nombre": "Cajas de Cartón",
+      "unidad_de_medida": "caja",
+      "stock": 300,
+      "imagen": "assets/images/cajas_carton.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1045"
+    },
+    {
+      "id_ui": 46,
+      "nombre": "Cinta de Embalaje",
+      "unidad_de_medida": "rollo",
+      "stock": 400,
+      "imagen": "assets/images/cinta_embalaje.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1046"
+    },
+    {
+      "id_ui": 47,
+      "nombre": "Guantes de Trabajo",
+      "unidad_de_medida": "par",
+      "stock": 200,
+      "imagen": "assets/images/guantes.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1047"
+    },
+    {
+      "id_ui": 48,
+      "nombre": "Mascarillas Desechables",
+      "unidad_de_medida": "caja",
+      "stock": 600,
+      "imagen": "assets/images/mascarillas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1048"
+    },
+    {
+      "id_ui": 49,
+      "nombre": "Desinfectante de Manos",
+      "unidad_de_medida": "litro",
+      "stock": 150,
+      "imagen": "assets/images/desinfectante.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1049"
+    },
+    {
+      "id_ui": 50,
+      "nombre": "Toallas de Papel",
+      "unidad_de_medida": "paquete",
+      "stock": 300,
+      "imagen": "assets/images/toallas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1050"
+    },
+    {
+      "id_ui": 51,
+      "nombre": "Cuadernos de Rayas",
+      "unidad_de_medida": "paquete",
+      "stock": 400,
+      "imagen": "assets/images/cuadernos_rayas.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1051"
+    },
+    {
+      "id_ui": 52,
+      "nombre": "Plumas Estilográficas",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/plumas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1052"
+    },
+    {
+      "id_ui": 53,
+      "nombre": "Reglas de Plástico",
+      "unidad_de_medida": "unidad",
+      "stock": 300,
+      "imagen": "assets/images/reglas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1053"
+    },
+    {
+      "id_ui": 54,
+      "nombre": "Compases de Precisión",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/compases.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1054"
+    },
+    {
+      "id_ui": 55,
+      "nombre": "Ficheros de Cartón",
+      "unidad_de_medida": "caja",
+      "stock": 250,
+      "imagen": "assets/images/ficheros.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1055"
+    },
+    {
+      "id_ui": 56,
+      "nombre": "Sellos de Goma",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/sellos.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1056"
+    },
+    {
+      "id_ui": 57,
+      "nombre": "Almohadillas de Tinta",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/almohadillas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1057"
+    },
+    {
+      "id_ui": 58,
+      "nombre": "Cutter de Precisión",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/cutter.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1058"
+    },
+    {
+      "id_ui": 59,
+      "nombre": "Cintas Métricas",
+      "unidad_de_medida": "unidad",
+      "stock": 180,
+      "imagen": "assets/images/cintas_metricas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1059"
+    },
+    {
+      "id_ui": 60,
+      "nombre": "Pegamento en Barra",
+      "unidad_de_medida": "unidad",
+      "stock": 500,
+      "imagen": "assets/images/pegamento.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1060"
+    },
+    {
+      "id_ui": 61,
+      "nombre": "Sobres de Carta",
+      "unidad_de_medida": "paquete",
+      "stock": 600,
+      "imagen": "assets/images/sobres.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1061"
+    },
+    {
+      "id_ui": 62,
+      "nombre": "Laptop Dell",
+      "unidad_de_medida": "caja",
+      "stock": 400,
+      "imagen": "assets/images/etiquetas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1062"
+    },
+    {
+      "id_ui": 63,
+      "nombre": "Perforadoras de Papel",
+      "unidad_de_medida": "unidad",
+      "stock": 90,
+      "imagen": "assets/images/perforadoras.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1063"
+    },
+    {
+      "id_ui": 64,
+      "nombre": "Cables USB",
+      "unidad_de_medida": "unidad",
+      "stock": 250,
+      "imagen": "assets/images/cables_usb.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1064"
+    },
+    {
+      "id_ui": 65,
+      "nombre": "Bandejas de Escritorio",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/bandejas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1065"
+    },
+    {
+      "id_ui": 66,
+      "nombre": "Organizadores de Cables",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/organizadores.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1066"
+    },
+    {
+      "id_ui": 67,
+      "nombre": "Protectores de Pantalla",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/protectores.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1067"
+    },
+    {
+      "id_ui": 68,
+      "nombre": "Lápices de Colores",
+      "unidad_de_medida": "caja",
+      "stock": 300,
+      "imagen": "assets/images/lapices_colores.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1068"
+    },
+    {
+      "id_ui": 69,
+      "nombre": "Pinturas Acrílicas",
+      "unidad_de_medida": "litro",
+      "stock": 80,
+      "imagen": "assets/images/pinturas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1069"
+    },
+    {
+      "id_ui": 70,
+      "nombre": "Pinceles de Arte",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/pinceles.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1070"
+    },
+    {
+      "id_ui": 71,
+      "nombre": "Lienzos para Pintura",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/lienzos.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1071"
+    },
+    {
+      "id_ui": 72,
+      "nombre": "Caballete de Madera",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/caballete.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1072"
+    },
+    {
+      "id_ui": 73,
+      "nombre": "Papel de Dibujo",
+      "unidad_de_medida": "paquete",
+      "stock": 250,
+      "imagen": "assets/images/papel_dibujo.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1073"
+    },
+    {
+      "id_ui": 74,
+      "nombre": "Gomas de Borrar",
+      "unidad_de_medida": "unidad",
+      "stock": 600,
+      "imagen": "assets/images/gomas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1074"
+    },
+    {
+      "id_ui": 75,
+      "nombre": "Sacapuntas Manuales",
+      "unidad_de_medida": "unidad",
+      "stock": 400,
+      "imagen": "assets/images/sacapuntas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1075"
+    },
+    {
+      "id_ui": 76,
+      "nombre": "Portapapeles",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/portapapeles.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1076"
+    },
+    {
+      "id_ui": 77,
+      "nombre": "Carpetas de Anillas",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/carpetas_anillas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1077"
+    },
+    {
+      "id_ui": 78,
+      "nombre": "Separadores de Plástico",
+      "unidad_de_medida": "paquete",
+      "stock": 300,
+      "imagen": "assets/images/separadores.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1078"
+    },
+    {
+      "id_ui": 79,
+      "nombre": "Cajas de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/cajas_seguridad.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1079"
+    },
+    {
+      "id_ui": 80,
+      "nombre": "Candados de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/candados.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1080"
+    },
+    {
+      "id_ui": 81,
+      "nombre": "Cámaras de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 15,
+      "imagen": "assets/images/camaras_seguridad.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1081"
+    },
+    {
+      "id_ui": 82,
+      "nombre": "Alarmas Antirrobo",
+      "unidad_de_medida": "unidad",
+      "stock": 25,
+      "imagen": "assets/images/alarmas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1082"
+    },
+    {
+      "id_ui": 83,
+      "nombre": "Extintores de Incendio",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/extintores.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1083"
+    },
+    {
+      "id_ui": 84,
+      "nombre": "Botiquines de Primeros Auxilios",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/botiquines.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1084"
+    },
+    {
+      "id_ui": 85,
+      "nombre": "Guantes de Látex",
+      "unidad_de_medida": "caja",
+      "stock": 500,
+      "imagen": "assets/images/guantes_latex.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1085"
+    },
+    {
+      "id_ui": 86,
+      "nombre": "Mascarillas de Tela",
+      "unidad_de_medida": "unidad",
+      "stock": 300,
+      "imagen": "assets/images/mascarillas_tela.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1086"
+    },
+    {
+      "id_ui": 87,
+      "nombre": "Alcohol en Gel",
+      "unidad_de_medida": "litro",
+      "stock": 200,
+      "imagen": "assets/images/alcohol_gel.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1087"
+    },
+    {
+      "id_ui": 88,
+      "nombre": "Termómetros Digitales",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/termometros.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1088"
+    },
+    {
+      "id_ui": 89,
+      "nombre": "Kits de Limpieza",
+      "unidad_de_medida": "caja",
+      "stock": 150,
+      "imagen": "assets/images/kits_limpieza.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1089"
+    },
+    {
+      "id_ui": 90,
+      "nombre": "Escobas Industriales",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/escobas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1090"
+    },
+    {
+      "id_ui": 91,
+      "nombre": "Mopas de Piso",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/mopas.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1091"
+    },
+    {
+      "id_ui": 92,
+      "nombre": "Detergentes Líquidos",
+      "unidad_de_medida": "litro",
+      "stock": 200,
+      "imagen": "assets/images/detergentes.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1092"
+    },
+    {
+      "id_ui": 93,
+      "nombre": "Esponjas de Limpieza",
+      "unidad_de_medida": "paquete",
+      "stock": 300,
+      "imagen": "assets/images/esponjas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1093"
+    },
+    {
+      "id_ui": 94,
+      "nombre": "Cubos de Basura",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/cubos.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1094"
+    },
+    {
+      "id_ui": 95,
+      "nombre": "Bolsas de Basura",
+      "unidad_de_medida": "caja",
+      "stock": 400,
+      "imagen": "assets/images/bolsas_basura.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1095"
+    },
+    {
+      "id_ui": 96,
+      "nombre": "Papel Higiénico",
+      "unidad_de_medida": "paquete",
+      "stock": 500,
+      "imagen": "assets/images/papel_higienico.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1096"
+    },
+    {
+      "id_ui": 97,
+      "nombre": "Dispensadores de Jabón",
+      "unidad_de_medida": "unidad",
+      "stock": 60,
+      "imagen": "assets/images/dispensadores.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1097"
+    },
+    {
+      "id_ui": 98,
+      "nombre": "Jabón Líquido",
+      "unidad_de_medida": "litro",
+      "stock": 200,
+      "imagen": "assets/images/jabon_liquido.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1098"
+    },
+    {
+      "id_ui": 99,
+      "nombre": "Toallitas Desinfectantes",
+      "unidad_de_medida": "caja",
+      "stock": 300,
+      "imagen": "assets/images/toallitas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1099"
+    },
+    {
+      "id_ui": 100,
+      "nombre": "Aspiradoras Industriales",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/aspiradoras.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1100"
+    },
+    {
+      "id_ui": 101,
+      "nombre": "Portafolios de Cuero",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/portafolios.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1101"
+    },
+    {
+      "id_ui": 102,
+      "nombre": "Agendas Anuales",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/agendas.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1102"
+    },
+    {
+      "id_ui": 103,
+      "nombre": "Calculadoras Científicas",
+      "unidad_de_medida": "unidad",
+      "stock": 60,
+      "imagen": "assets/images/calculadoras_cientificas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1103"
+    },
+    {
+      "id_ui": 104,
+      "nombre": "Cajas de Herramientas",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/cajas_herramientas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1104"
+    },
+    {
+      "id_ui": 105,
+      "nombre": "Destornilladores",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/destornilladores.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1105"
+    },
+    {
+      "id_ui": 106,
+      "nombre": "Llaves Inglesas",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/llaves.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1106"
+    },
+    {
+      "id_ui": 107,
+      "nombre": "Martillos de Carpintero",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/martillos.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1107"
+    },
+    {
+      "id_ui": 108,
+      "nombre": "Taladros Eléctricos",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/taladros.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1108"
+    },
+    {
+      "id_ui": 109,
+      "nombre": "Brocas de Acero",
+      "unidad_de_medida": "paquete",
+      "stock": 150,
+      "imagen": "assets/images/brocas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1109"
+    },
+    {
+      "id_ui": 110,
+      "nombre": "Cintas de Medir",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/cintas_medir.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1110"
+    },
+    {
+      "id_ui": 111,
+      "nombre": "Niveles de Burbuja",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/niveles.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1111"
+    },
+    {
+      "id_ui": 112,
+      "nombre": "Pistolas de Silicona",
+      "unidad_de_medida": "unidad",
+      "stock": 60,
+      "imagen": "assets/images/pistolas_silicona.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1112"
+    },
+    {
+      "id_ui": 113,
+      "nombre": "Barras de Silicona",
+      "unidad_de_medida": "paquete",
+      "stock": 300,
+      "imagen": "assets/images/barras_silicona.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1113"
+    },
+    {
+      "id_ui": 114,
+      "nombre": "Cables de Extensión",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/cables_extension.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1114"
+    },
+    {
+      "id_ui": 115,
+      "nombre": "Regletas Eléctricas",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/regletas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1115"
+    },
+    {
+      "id_ui": 116,
+      "nombre": "Focos Halógenos",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/focos.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1116"
+    },
+    {
+      "id_ui": 117,
+      "nombre": "Tiras LED",
+      "unidad_de_medida": "rollo",
+      "stock": 150,
+      "imagen": "assets/images/tiras_led.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1117"
+    },
+    {
+      "id_ui": 118,
+      "nombre": "Baterías Recargables",
+      "unidad_de_medida": "paquete",
+      "stock": 250,
+      "imagen": "assets/images/baterias_recargables.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1118"
+    },
+    {
+      "id_ui": 119,
+      "nombre": "Cargadores de Baterías",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/cargadores_baterias.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1119"
+    },
+    {
+      "id_ui": 120,
+      "nombre": "Adaptadores de Corriente",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/adaptadores_corriente.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1120"
+    },
+    {
+      "id_ui": 121,
+      "nombre": "Router Inalámbrico",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/routers.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1121"
+    },
+    {
+      "id_ui": 122,
+      "nombre": "Switches de Red",
+      "unidad_de_medida": "unidad",
+      "stock": 25,
+      "imagen": "assets/images/switches.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1122"
+    },
+    {
+      "id_ui": 123,
+      "nombre": "Cables de Red",
+      "unidad_de_medida": "rollo",
+      "stock": 150,
+      "imagen": "assets/images/cables_red.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1123"
+    },
+    {
+      "id_ui": 124,
+      "nombre": "Hubs USB",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/hubs_usb.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1124"
+    },
+    {
+      "id_ui": 125,
+      "nombre": "Discos SSD",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/discos_ssd.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1125"
+    },
+    {
+      "id_ui": 126,
+      "nombre": "Tarjetas de Memoria",
+      "unidad_de_medida": "unidad",
+      "stock": 200,
+      "imagen": "assets/images/tarjetas_memoria.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1126"
+    },
+    {
+      "id_ui": 127,
+      "nombre": "Laptops Empresariales",
+      "unidad_de_medida": "unidad",
+      "stock": 15,
+      "imagen": "assets/images/laptops.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1127"
+    },
+    {
+      "id_ui": 128,
+      "nombre": "Tablets Gráficas",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/tablets.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1128"
+    },
+    {
+      "id_ui": 129,
+      "nombre": "Auriculares Bluetooth",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/auriculares_bluetooth.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1129"
+    },
+    {
+      "id_ui": 130,
+      "nombre": "Parlantes Inalámbricos",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/parlantes.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1130"
+    },
+    {
+      "id_ui": 131,
+      "nombre": "Micrófonos de Escritorio",
+      "unidad_de_medida": "unidad",
+      "stock": 60,
+      "imagen": "assets/images/microfonos.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1131"
+    },
+    {
+      "id_ui": 132,
+      "nombre": "Soportes para Micrófono",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/soportes_microfono.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1132"
+    },
+    {
+      "id_ui": 133,
+      "nombre": "Cámaras de Videoconferencia",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/camaras_videoconferencia.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1133"
+    },
+    {
+      "id_ui": 134,
+      "nombre": "Pizarras Interactivas",
+      "unidad_de_medida": "unidad",
+      "stock": 10,
+      "imagen": "assets/images/pizarras_interactivas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1134"
+    },
+    {
+      "id_ui": 135,
+      "nombre": "Proyectores Portátiles",
+      "unidad_de_medida": "unidad",
+      "stock": 15,
+      "imagen": "assets/images/proyectores_portatiles.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1135"
+    },
+    {
+      "id_ui": 136,
+      "nombre": "Pantallas LED",
+      "unidad_de_medida": "unidad",
+      "stock": 12,
+      "imagen": "assets/images/pantallas_led.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1136"
+    },
+    {
+      "id_ui": 137,
+      "nombre": "Soportes de Pared",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/soportes_pared.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1137"
+    },
+    {
+      "id_ui": 138,
+      "nombre": "Cables VGA",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/cables_vga.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1138"
+    },
+    {
+      "id_ui": 139,
+      "nombre": "Cables DVI",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/cables_dvi.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1139"
+    },
+    {
+      "id_ui": 140,
+      "nombre": "Adaptadores HDMI",
+      "unidad_de_medida": "unidad",
+      "stock": 120,
+      "imagen": "assets/images/adaptadores_hdmi.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1140"
+    },
+    {
+      "id_ui": 141,
+      "nombre": "Sillas de Oficina",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/sillas_oficina.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1141"
+    },
+    {
+      "id_ui": 142,
+      "nombre": "Mesas de Reunión",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/mesas_reunion.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1142"
+    },
+    {
+      "id_ui": 143,
+      "nombre": "Archivadores Metálicos",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/archivadores.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1143"
+    },
+    {
+      "id_ui": 144,
+      "nombre": "Estanterías Modulares",
+      "unidad_de_medida": "unidad",
+      "stock": 25,
+      "imagen": "assets/images/estanterias.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1144"
+    },
+    {
+      "id_ui": 145,
+      "nombre": "Cajas Fuertes",
+      "unidad_de_medida": "unidad",
+      "stock": 15,
+      "imagen": "assets/images/cajas_fuertes.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1145"
+    },
+    {
+      "id_ui": 146,
+      "nombre": "Candados Reforzados",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/candados_reforzados.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1146"
+    },
+    {
+      "id_ui": 147,
+      "nombre": "Cámaras de Vigilancia",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/camaras_vigilancia.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1147"
+    },
+    {
+      "id_ui": 148,
+      "nombre": "Sensores de Movimiento",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/sensores.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1148"
+    },
+    {
+      "id_ui": 149,
+      "nombre": "Kits de Seguridad",
+      "unidad_de_medida": "caja",
+      "stock": 30,
+      "imagen": "assets/images/kits_seguridad.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1149"
+    },
+    {
+      "id_ui": 150,
+      "nombre": "Chalecos Reflectantes",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/chalecos.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Oeste",
+      "id": "E1150"
+    },
+    {
+      "id_ui": 151,
+      "nombre": "Cascos de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/cascos.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1151"
+    },
+    {
+      "id_ui": 152,
+      "nombre": "Guantes de Trabajo Pesado",
+      "unidad_de_medida": "par",
+      "stock": 200,
+      "imagen": "assets/images/guantes_pesados.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1152"
+    },
+    {
+      "id_ui": 153,
+      "nombre": "Botas de Seguridad",
+      "unidad_de_medida": "par",
+      "stock": 50,
+      "imagen": "assets/images/botas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1153"
+    },
+    {
+      "id_ui": 154,
+      "nombre": "Lentes de Protección",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/lentes.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1154"
+    },
+    {
+      "id_ui": 155,
+      "nombre": "Tapones para Oídos",
+      "unidad_de_medida": "caja",
+      "stock": 300,
+      "imagen": "assets/images/tapones.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1155"
+    },
+    {
+      "id_ui": 156,
+      "nombre": "Mascarillas N95",
+      "unidad_de_medida": "caja",
+      "stock": 200,
+      "imagen": "assets/images/mascarillas_n95.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1156"
+    },
+    {
+      "id_ui": 157,
+      "nombre": "Kits de Primeros Auxilios",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/kits_primeros_auxilios.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1157"
+    },
+    {
+      "id_ui": 158,
+      "nombre": "Vendas Elásticas",
+      "unidad_de_medida": "paquete",
+      "stock": 300,
+      "imagen": "assets/images/vendas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1158"
+    },
+    {
+      "id_ui": 159,
+      "nombre": "Alcohol Isopropílico",
+      "unidad_de_medida": "litro",
+      "stock": 150,
+      "imagen": "assets/images/alcohol_isopropilico.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1159"
+    },
+    {
+      "id_ui": 160,
+      "nombre": "Gasas Estériles",
+      "unidad_de_medida": "caja",
+      "stock": 200,
+      "imagen": "assets/images/gasas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1160"
+    },
+    {
+      "id_ui": 161,
+      "nombre": "Termómetros Infrarrojos",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/termometros_infrarrojos.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1161"
+    },
+    {
+      "id_ui": 162,
+      "nombre": "Oxímetros de Pulso",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/oximetros.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1162"
+    },
+    {
+      "id_ui": 163,
+      "nombre": "Desinfectantes de Superficies",
+      "unidad_de_medida": "litro",
+      "stock": 200,
+      "imagen": "assets/images/desinfectantes_superficies.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1163"
+    },
+    {
+      "id_ui": 164,
+      "nombre": "Trapos de Microfibra",
+      "unidad_de_medida": "paquete",
+      "stock": 300,
+      "imagen": "assets/images/trapos_microfibra.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1164"
+    },
+    {
+      "id_ui": 165,
+      "nombre": "Cepillos de Limpieza",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/cepillos_limpieza.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1165"
+    },
+    {
+      "id_ui": 166,
+      "nombre": "Fregonas Industriales",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/fregonas.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1166"
+    },
+    {
+      "id_ui": 167,
+      "nombre": "Cubos de Limpieza",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/cubos_limpieza.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1167"
+    },
+    {
+      "id_ui": 168,
+      "nombre": "Detergentes en Polvo",
+      "unidad_de_medida": "kg",
+      "stock": 200,
+      "imagen": "assets/images/detergentes_polvo.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1168"
+    },
+    {
+      "id_ui": 169,
+      "nombre": "Limpiavidrios",
+      "unidad_de_medida": "litro",
+      "stock": 150,
+      "imagen": "assets/images/limpiavidrios.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1169"
+    },
+    {
+      "id_ui": 170,
+      "nombre": "Aspiradoras Portátiles",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/aspiradoras_portatiles.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1170"
+    },
+    {
+      "id_ui": 171,
+      "nombre": "Bolsas de Aspiradora",
+      "unidad_de_medida": "caja",
+      "stock": 200,
+      "imagen": "assets/images/bolsas_aspiradora.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1171"
+    },
+    {
+      "id_ui": 172,
+      "nombre": "Carros de Limpieza",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/carros_limpieza.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1172"
+    },
+    {
+      "id_ui": 173,
+      "nombre": "Escaleras Plegables",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/escaleras.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1173"
+    },
+    {
+      "id_ui": 174,
+      "nombre": "Carretillas de Carga",
+      "unidad_de_medida": "unidad",
+      "stock": 25,
+      "imagen": "assets/images/carretillas.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1174"
+    },
+    {
+      "id_ui": 175,
+      "nombre": "Palets de Madera",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/palets.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1175"
+    },
+    {
+      "id_ui": 176,
+      "nombre": "Cintas de Embalaje",
+      "unidad_de_medida": "rollo",
+      "stock": 300,
+      "imagen": "assets/images/cintas_embalaje.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1176"
+    },
+    {
+      "id_ui": 177,
+      "nombre": "Cajas de Cartón Grandes",
+      "unidad_de_medida": "caja",
+      "stock": 200,
+      "imagen": "assets/images/cajas_grandes.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1177"
+    },
+    {
+      "id_ui": 178,
+      "nombre": "Bolsas de Plástico Grandes",
+      "unidad_de_medida": "caja",
+      "stock": 250,
+      "imagen": "assets/images/bolsas_grandes.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1178"
+    },
+    {
+      "id_ui": 179,
+      "nombre": "Film de Embalaje",
+      "unidad_de_medida": "rollo",
+      "stock": 150,
+      "imagen": "assets/images/film_embalaje.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1179"
+    },
+    {
+      "id_ui": 180,
+      "nombre": "Cuerdas de Embalaje",
+      "unidad_de_medida": "rollo",
+      "stock": 100,
+      "imagen": "assets/images/cuerdas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1180"
+    },
+    {
+      "id_ui": 181,
+      "nombre": "Cajas de Plástico",
+      "unidad_de_medida": "unidad",
+      "stock": 80,
+      "imagen": "assets/images/cajas_plastico.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1181"
+    },
+    {
+      "id_ui": 182,
+      "nombre": "Contenedores de Almacenaje",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/contenedores.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1182"
+    },
+    {
+      "id_ui": 183,
+      "nombre": "Estanterías Metálicas",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/estanterias_metalicas.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1183"
+    },
+    {
+      "id_ui": 184,
+      "nombre": "Carros de Transporte",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/carros_transporte.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1184"
+    },
+    {
+      "id_ui": 185,
+      "nombre": "Transpaletas Manuales",
+      "unidad_de_medida": "unidad",
+      "stock": 15,
+      "imagen": "assets/images/transpaletas.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1185"
+    },
+    {
+      "id_ui": 186,
+      "nombre": "Cintas Antideslizantes",
+      "unidad_de_medida": "rollo",
+      "stock": 100,
+      "imagen": "assets/images/cintas_antideslizantes.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1186"
+    },
+    {
+      "id_ui": 187,
+      "nombre": "Señalizaciones de Piso",
+      "unidad_de_medida": "rollo",
+      "stock": 80,
+      "imagen": "assets/images/senalizaciones.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1187"
+    },
+    {
+      "id_ui": 188,
+      "nombre": "Conos de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 150,
+      "imagen": "assets/images/conos.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1188"
+    },
+    {
+      "id_ui": 189,
+      "nombre": "Barreras de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/barreras.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1189"
+    },
+    {
+      "id_ui": 190,
+      "nombre": "Extintores de CO2",
+      "unidad_de_medida": "unidad",
+      "stock": 30,
+      "imagen": "assets/images/extintores_co2.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1190"
+    },
+    {
+      "id_ui": 191,
+      "nombre": "Detectores de Humo",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/detectores_humo.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1191"
+    },
+    {
+      "id_ui": 192,
+      "nombre": "Alarmas de Incendio",
+      "unidad_de_medida": "unidad",
+      "stock": 20,
+      "imagen": "assets/images/alarmas_incendio.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1192"
+    },
+    {
+      "id_ui": 193,
+      "nombre": "Luces de Emergencia",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/luces_emergencia.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1193"
+    },
+    {
+      "id_ui": 194,
+      "nombre": "Kits de Evacuación",
+      "unidad_de_medida": "caja",
+      "stock": 30,
+      "imagen": "assets/images/kits_evacuacion.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1194"
+    },
+    {
+      "id_ui": 195,
+      "nombre": "Señales de Salida",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/senales_salida.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1195"
+    },
+    {
+      "id_ui": 196,
+      "nombre": "Mantas Ignífugas",
+      "unidad_de_medida": "unidad",
+      "stock": 50,
+      "imagen": "assets/images/mantas.jfif",
+      "id_almacen": "1",
+      "almacen": "Almacén Central",
+      "id": "A1196"
+    },
+    {
+      "id_ui": 197,
+      "nombre": "Arneses de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 40,
+      "imagen": "assets/images/arneses.jfif",
+      "id_almacen": "2",
+      "almacen": "Almacén Norte",
+      "id": "B1197"
+    },
+    {
+      "id_ui": 198,
+      "nombre": "Cuerdas de Seguridad",
+      "unidad_de_medida": "rollo",
+      "stock": 80,
+      "imagen": "assets/images/cuerdas_seguridad.jfif",
+      "id_almacen": "3",
+      "almacen": "Almacén Sur",
+      "id": "C1198"
+    },
+    {
+      "id_ui": 199,
+      "nombre": "Mosquetones de Seguridad",
+      "unidad_de_medida": "unidad",
+      "stock": 100,
+      "imagen": "assets/images/mosquetones.jfif",
+      "id_almacen": "4",
+      "almacen": "Almacén Este",
+      "id": "D1199"
+    },
+    {
+      "id_ui": 200,
+      "nombre": "Kits de Rescate",
+      "unidad_de_medida": "caja",
+      "stock": 20,
+      "imagen": "assets/images/kits_rescate.jfif",
+      "id_almacen": "5",
+      "almacen": "Almacén Oeste",
+      "id": "E1200"
+    }
+  ],
+  "aprobaciones": [
+    {
+      "id": "1",
+      "solicitud_id": "SOL-1756218979708-01vaxdtjv",
+      "fecha_solicitud": "2025-08-26T14:36:19.708Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "3",
+        "nombre": "nuevo almacen"
+      },
+      "objetivo": "puebaa 66666666",
+      "productos": [
+        {
+          "id_ui": 7,
+          "nombre": "Papel A4",
+          "cantidad": 2,
+          "unidad_de_medida": "paquete"
+        },
+        {
+          "id_ui": 18,
+          "nombre": "Lámparas de Escritorio",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 23,
+          "nombre": "Cables HDMI",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 48,
+          "nombre": "Mascarillas Desechables",
+          "cantidad": 1,
+          "unidad_de_medida": "caja"
+        },
+        {
+          "id_ui": 98,
+          "nombre": "Jabón Líquido",
+          "cantidad": 1,
+          "unidad_de_medida": "litro"
+        }
+      ],
+      "estado": "aprobado",
+      "productos_count": 5,
+      "fecha_aprobacion": "2025-08-28T16:22:13.156Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud aprobada"
+    },
+    {
+      "id": "ff5d",
+      "solicitud_id": "SOL-1755876203141-i6o91mfs2",
+      "fecha_solicitud": "2025-08-22T15:23:23.141Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacen primario1"
+      },
+      "objetivo": "asdasdasdasd",
+      "productos": [
+        {
+          "id_ui": 2,
+          "nombre": "Cuadernos",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        }
+      ],
+      "estado": "rechazado",
+      "productos_count": 1,
+      "fecha_aprobacion": "2025-08-22T15:42:05.659Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud rechazada"
+    },
+    {
+      "id": "2",
+      "solicitud_id": "SOL-1756219694957-afvotanra",
+      "fecha_solicitud": "2025-08-26T14:48:14.957Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacen primario1"
+      },
+      "objetivo": "werwerwerwerwe",
+      "productos": [
+        {
+          "id_ui": 4,
+          "nombre": "Carpetas",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad",
+          "stock_actual": 50
+        }
+      ],
+      "estado": "rechazado",
+      "productos_count": 1,
+      "fecha_aprobacion": "2025-08-28T16:15:49.835Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud rechazada"
+    },
+    {
+      "id": "2e1c",
+      "solicitud_id": "SOL-1755895692378-mlknocg30",
+      "fecha_solicitud": "2025-08-22T20:48:12.378Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacen primario1"
+      },
+      "objetivo": "preubaaa papel",
+      "productos": [
+        {
+          "id_ui": 1,
+          "nombre": "Bolígrafos",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 4,
+          "nombre": "Carpetas",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 86,
+          "nombre": "Mascarillas de Tela",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 96,
+          "nombre": "Papel Higiénico",
+          "cantidad": 1,
+          "unidad_de_medida": "paquete"
+        }
+      ],
+      "estado": "rechazado",
+      "productos_count": 4,
+      "fecha_aprobacion": "2025-08-28T15:28:16.942Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud rechazada"
+    },
+    {
+      "id": "1",
+      "solicitud_id": "SOL-1756218979708-01vaxdtjv",
+      "fecha_solicitud": "2025-08-26T14:36:19.708Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "3",
+        "nombre": "nuevo almacen"
+      },
+      "objetivo": "puebaa 66666666",
+      "productos": [
+        {
+          "id_ui": 7,
+          "nombre": "Papel A4",
+          "cantidad": 2,
+          "unidad_de_medida": "paquete"
+        },
+        {
+          "id_ui": 18,
+          "nombre": "Lámparas de Escritorio",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 23,
+          "nombre": "Cables HDMI",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 48,
+          "nombre": "Mascarillas Desechables",
+          "cantidad": 1,
+          "unidad_de_medida": "caja"
+        },
+        {
+          "id_ui": 98,
+          "nombre": "Jabón Líquido",
+          "cantidad": 1,
+          "unidad_de_medida": "litro"
+        }
+      ],
+      "estado": "pendiente",
+      "productos_count": 5,
+      "fecha_aprobacion": "2025-08-26T18:24:03.509Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud aprobada"
+    },
+    {
+      "id": "2",
+      "solicitud_id": "SOL-1756219694957-afvotanra",
+      "fecha_solicitud": "2025-08-26T14:48:14.957Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacen primario1"
+      },
+      "objetivo": "werwerwerwerwe",
+      "productos": [
+        {
+          "id_ui": 4,
+          "nombre": "Carpetas",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad",
+          "stock_actual": 50
+        }
+      ],
+      "estado": "pendiente",
+      "productos_count": 1,
+      "fecha_aprobacion": "2025-08-26T18:13:35.358Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud aprobada"
+    },
+    {
+      "id": "3",
+      "solicitud_id": "SOL-1756228256010-1qusd07se",
+      "fecha_solicitud": "2025-08-26T17:10:56.010Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacen primario1"
+      },
+      "objetivo": "prubaa emerson25",
+      "productos": [
+        {
+          "id_ui": 4,
+          "nombre": "Carpetas",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad",
+          "stock_actual": 50
+        },
+        {
+          "id_ui": 6,
+          "nombre": "Tijeras",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad",
+          "stock_actual": 150
+        }
+      ],
+      "estado": "aprobado",
+      "productos_count": 2,
+      "fecha_aprobacion": "2025-08-28T16:15:53.211Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud aprobada",
+      "fecha_recepcion": "2025-08-28T14:43:20.314Z",
+      "recepcionista": "usuario_actual",
+      "comentarios_recepcion": "Solicitud rechazada por el almacenero",
+      "productos_entregados": []
+    }
+  ],
+  "atendidas": [
+    {
+      "id": "1",
+      "solicitud_id": "SOL-123456789",
+      "fecha_solicitud": "2024-01-15T10:30:00Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacén Central"
+      },
+      "objetivo": "Suministros para proyecto nuevo",
+      "productos": [
+        {
+          "id_ui": 62,
+          "nombre": "Laptop Dell",
+          "cantidad": 2,
+          "unidad_de_medida": "caja"
+        }
+      ],
+      "estado": "pendiente",
+      "productos_count": 2,
+      "fecha_aprobacion": "2025-08-25T18:26:14.971Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud aprobada",
+      "fecha_recepcion": "2025-08-26T19:28:20.913Z",
+      "recepcionista": "usuario_actual",
+      "comentarios_recepcion": "",
+      "productos_entregados": [
+        {
+          "id_ui": 62,
+          "nombre": "Laptop Dell",
+          "cantidad_solicitada": 2,
+          "cantidad_entregada": 2,
+          "unidad_de_medida": "caja"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "solicitud_id": "SOL-1755878729968-lp5idx4fq",
+      "fecha_solicitud": "2025-08-22T16:05:29.968Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacen primario1"
+      },
+      "objetivo": "prueba neuvoo",
+      "productos": [
+        {
+          "id_ui": 1,
+          "nombre": "Bolígrafos",
+          "cantidad": 5,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 2,
+          "nombre": "Cuadernos",
+          "cantidad": 2,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 4,
+          "nombre": "Carpetas",
+          "cantidad": 9,
+          "unidad_de_medida": "unidad"
+        }
+      ],
+      "estado": "pendiente",
+      "productos_count": 16,
+      "fecha_aprobacion": "2025-08-25T13:28:16.589Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud aprobada",
+      "fecha_recepcion": "2025-08-26T20:44:42.746Z",
+      "recepcionista": "usuario_actual",
+      "comentarios_recepcion": "",
+      "productos_entregados": [
+        {
+          "id_ui": 1,
+          "nombre": "Bolígrafos",
+          "cantidad_solicitada": 5,
+          "cantidad_entregada": 5,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 2,
+          "nombre": "Cuadernos",
+          "cantidad_solicitada": 2,
+          "cantidad_entregada": 2,
+          "unidad_de_medida": "unidad"
+        },
+        {
+          "id_ui": 4,
+          "nombre": "Carpetas",
+          "cantidad_solicitada": 9,
+          "cantidad_entregada": 9,
+          "unidad_de_medida": "unidad"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "solicitud_id": "SOL-1756228256010-1qusd07se",
+      "fecha_solicitud": "2025-08-26T17:10:56.010Z",
+      "solicitante": {
+        "usuario": "jperez",
+        "cargo": "Analista"
+      },
+      "almacen": {
+        "id": "1",
+        "nombre": "Almacen primario1"
+      },
+      "objetivo": "prubaa emerson25",
+      "productos": [
+        {
+          "id_ui": 4,
+          "nombre": "Carpetas",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad",
+          "stock_actual": 50
+        },
+        {
+          "id_ui": 6,
+          "nombre": "Tijeras",
+          "cantidad": 1,
+          "unidad_de_medida": "unidad",
+          "stock_actual": 150
+        }
+      ],
+      "estado": "pendiente",
+      "productos_count": 2,
+      "fecha_aprobacion": "2025-08-26T17:11:02.038Z",
+      "aprobador": "admin",
+      "comentarios": "Solicitud aprobada",
+      "fecha_recepcion": "2025-08-28T14:43:20.314Z",
+      "recepcionista": "usuario_actual",
+      "comentarios_recepcion": "Solicitud rechazada por el almacenero",
+      "productos_entregados": []
+    }
+  ]
+}

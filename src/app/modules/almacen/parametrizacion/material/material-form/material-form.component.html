@@ -1,0 +1,111 @@
+<h3 mat-dialog-title>
+    <b>{{labelForm}}</b>
+</h3>
+<div class="row" mat-dialog-content>
+    <form [formGroup]="formRegistro">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Seleccione Almacén</mat-label>
+                <mat-icon matPrefix>store</mat-icon>
+                <mat-select formControlName="id_almacen" (selectionChange)="onAlmacenChange($event)">
+                    @for(alm of dataAlmacen; track alm.id){
+                        <mat-option [value]="alm.id">{{alm.nombre}}</mat-option>
+                    }
+                </mat-select>
+                @if(formRegistro.get('id_almacen').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Nombre del Producto</mat-label>
+                <mat-icon matPrefix>inventory</mat-icon>
+                <input matInput formControlName="nombre">
+                @if(formRegistro.get('nombre').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+                @if(formRegistro.get('nombre').hasError('minlength')){
+                    <mat-error>Mínimo de 3 caracteres</mat-error>
+                }
+                @if(formRegistro.get('nombre').hasError('maxlength')){
+                    <mat-error>Máximo de 100 caracteres</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Unidad de Medida</mat-label>
+                    <mat-icon matPrefix>straighten</mat-icon>
+                    <input matInput formControlName="unidad_de_medida">
+                    @if(formRegistro.get('unidad_de_medida').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                    @if(formRegistro.get('unidad_de_medida').hasError('maxlength')){
+                        <mat-error>Máximo de 50 caracteres</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Stock</mat-label>
+                    <mat-icon matPrefix>numbers</mat-icon>
+                    <input matInput type="number" formControlName="stock" min="0">
+                    @if(formRegistro.get('stock').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                    @if(formRegistro.get('stock').hasError('min')){
+                        <mat-error>El stock no puede ser negativo</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Campo de carga de imagen -->
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="image-upload-container">
+                <label class="image-upload-label">
+                    <mat-icon class="upload-icon">cloud_upload</mat-icon>
+                    <span>{{ selectedFileName || 'Seleccionar imagen del producto' }}</span>
+                    <input type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" #fileInput>
+                </label>
+                @if(formRegistro.get('imagen').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+            </div>
+        </div>
+
+        <!-- Vista previa de imagen -->
+        @if(formRegistro.get('imagen').value){
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center mt-3">
+            <div class="image-preview-container">
+                <img [src]="formRegistro.get('imagen').value" 
+                 alt="Vista previa" 
+                 class="image-preview"
+                 onerror="this.src='assets/images/producto.png'">
+                <button type="button" class="btn-remove-image" (click)="removeImage()" matTooltip="Eliminacion de imagen!!!">
+                <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            </div>
+        }
+    </form>
+</div>
+
+<div mat-dialog-actions class="px-4 mb-4">
+    <button type="button" mat-button class="btn btn-primary btn-round mr-2" 
+            (click)="accionRegistrar()" [disabled]="formRegistro.invalid || uploading">
+        <i class="ti ti-send"></i> {{labelForm}}
+        @if(uploading){
+            <mat-spinner diameter="20" class="ml-2"></mat-spinner>
+        }
+    </button>
+    <button type="button" mat-button class="btn btn-danger btn-round" 
+            (click)="accionCancel()" [disabled]="uploading">
+        <i class="ti ti-x"></i> Cancelar
+    </button>
+</div>
+

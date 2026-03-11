@@ -1,0 +1,949 @@
+{
+    "material": [{
+            "id": "1",
+            "codigo": "Xxx",
+            "nivel": "Piso 3",
+            "descripcion": "Boligrafo",
+            "almacen": "Almacén Central",
+            "material_padre": "xxx"
+        },
+        {
+            "id": "2",
+            "codigo": "yyy",
+            "nivel": "Piso 2",
+            "descripcion": "papel",
+            "almacen": "Almacén Norte",
+            "material_padre": "yyy"
+        },
+        {
+            "id": "3",
+            "codigo": "zzz",
+            "nivel": "Piso 1",
+            "descripcion": "cuaderno",
+            "almacen": "Almacén Sur",
+            "idPadre": 1
+        },
+        {
+            "id": "",
+            "idAlmacen": "1",
+            "idPadre": "",
+            "descripcion": "dfgdfgdfgdfg",
+            "codigo": "dfgdfg",
+            "nivel": "1"
+        }
+    ],
+    "login": [{
+            "id": "1",
+            "username": "admin",
+            "password": "123456",
+            "userData": {
+                "name": "Admin Emerson",
+                "email": "admin@example.com",
+                "roles": [
+                    "administrador"
+                ]
+            }
+        },
+        {
+            "id": "2",
+            "username": "responsable",
+            "password": "123456",
+            "userData": {
+                "name": "Responsable",
+                "email": "responsable@example.com",
+                "roles": [
+                    "responsable"
+                ]
+            }
+        },
+        {
+            "id": "c00b",
+            "username": "admin",
+            "password": "1234569"
+        },
+        {
+            "id": "0d9f",
+            "username": "emerson.ibanez",
+            "password": "9903437"
+        },
+        {
+            "id": "e4e9",
+            "username": "emerson.ibanez",
+            "password": "9903437"
+        },
+        {
+            "id": "5267",
+            "username": "ivan.mareno",
+            "password": "195309Ivan"
+        },
+        {
+            "id": "ead7",
+            "username": "ivan.mareno",
+            "password": "195309Ivan"
+        },
+        {
+            "id": "2cc4",
+            "username": "ivan.mareno",
+            "password": "195309Ivan"
+        }
+    ],
+    "catalogo": [{
+            "id": "1",
+            "descripcion": "Suministro de material de oficina para el equipo",
+            "categoria": "Almacén Central",
+            "material_padre": "xxx"
+        },
+        {
+            "id": "2",
+            "codigo": "yyy",
+            "descripcion": "Reabastecimiento de material de oficina",
+            "categoria": "Almacén Norte"
+        },
+        {
+            "id": "3",
+            "codigo": "zzz",
+            "descripcion": "Compra de nuevos equipos de computo",
+            "categoria": "Almacén Sur"
+        }
+    ],
+    "proveedor": [{
+            "id": "1",
+            "razonSocial": "ferreteria srl",
+            "nit": "11111111",
+            "direccion": "perez veleazco"
+        },
+        {
+            "id": "2",
+            "nit": "222",
+            "razonSocial": "parte auto ltda",
+            "direccion": "ceja "
+        },
+        {
+            "id": "3",
+            "nit": "333",
+            "razonSocial": "laptop srl",
+            "direccion": "Av, 6 de agosto"
+        },
+        {
+            "id": "4",
+            "razonSocial": "papel ltda",
+            "nit": "12345678",
+            "direccion": "camacho"
+        }
+    ],
+    "Almacen": [{
+            "id": "1",
+            "sigla": "ALM-A1",
+            "nombre": "Almacén Central"
+        },
+        {
+            "id": "2",
+            "sigla": "ALM-A2",
+            "nombre": "Almacén Secundario"
+        },
+        {
+            "id": "3",
+            "sigla": "ALM-A3",
+            "nombre": "Almacén Nuevo"
+        }
+    ],
+    "subalmacen": [{
+            "id": "1",
+            "idAlmacen": 1,
+            "sigla": "SUB-1",
+            "nombre": "Subalmacén 1",
+            "direccion": "Calle Central #123"
+        },
+        {
+            "id": "2",
+            "idAlmacen": 2,
+            "sigla": "SUB-2",
+            "nombre": "Subalmacén 2",
+            "direccion": "Av. Secundaria #45"
+        },
+        {
+            "id": "3",
+            "idAlmacen": "3",
+            "sigla": "SUB-3",
+            "nombre": "Subalmacén 3",
+            "direccion": "Zona Nueva #56"
+        },
+        {
+            "id": "",
+            "sigla": "SUB-51",
+            "nombre": "sib almacen 51",
+            "idAlmacen": "3"
+        }
+    ],
+    "responsableAlmacen": [{
+            "id": "1",
+            "idAlmacen": "1",
+            "idResponsable": 1,
+            "fechaDesde": "2023-01-01",
+            "fechaHasta": "2023-12-31"
+        },
+        {
+            "id": "2",
+            "idAlmacen": 2,
+            "idResponsable": 1,
+            "fechaDesde": "2023-01-01",
+            "fechaHasta": "2023-12-31"
+        },
+        {
+            "id": "",
+            "idAlmacen": "3",
+            "idResponsable": "2",
+            "fechaDesde": "2023-01-01",
+            "fechaHasta": "2025-01-01"
+        }
+    ],
+    "responsables": [{
+            "id": "1",
+            "nombre": "Admin Emerson",
+            "cargo": "Responsable General"
+        },
+        {
+            "id": "2",
+            "nombre": "Responsable Norte",
+            "cargo": "Encargado Almacén Norte"
+        }
+    ],
+    "producto": [{
+            "id_ui": 1,
+            "nombre": "Bolígrafos",
+            "unidad_de_medida": "unidad",
+            "stock": 300,
+            "imagen": "assets/images/boligrafo.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Central",
+            "id": "2241"
+        },
+        {
+            "id_ui": 2,
+            "nombre": "Cuadernos",
+            "unidad_de_medida": "unidad",
+            "stock": 120,
+            "imagen": "assets/images/boligrafo.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Central",
+            "id": "8d7c"
+        },
+        {
+            "id_ui": 3,
+            "nombre": "Lápices",
+            "unidad_de_medida": "unidad",
+            "stock": 800,
+            "imagen": "assets/images/lapices.jpg",
+            "id_almacen": "1",
+            "almacen": "Almacén Secundario",
+            "id": "35f2"
+        },
+        {
+            "id_ui": 4,
+            "nombre": "Carpetas",
+            "unidad_de_medida": "unidad",
+            "stock": 50,
+            "imagen": "assets/images/boligrafo.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Central",
+            "id": "51d1"
+        },
+        {
+            "id_ui": 5,
+            "nombre": "Resaltadores",
+            "unidad_de_medida": "unidad",
+            "stock": 300,
+            "imagen": "assets/images/resaltadores.jpg",
+            "id_almacen": "1",
+            "almacen": "Almacén Secundario",
+            "id": "8cf6"
+        },
+        {
+            "id_ui": 6,
+            "nombre": "Tijeras",
+            "unidad_de_medida": "unidad",
+            "stock": 150,
+            "imagen": "assets/images/boligrafo.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Central",
+            "selected": false,
+            "cantidad": 0,
+            "id": "0ca6"
+        },
+        {
+            "id_ui": 7,
+            "nombre": "Papel A4",
+            "unidad_de_medida": "paquete",
+            "stock": 80,
+            "imagen": "assets/images/papel_a4.jpg",
+            "id_almacen": "1",
+            "almacen": "Almacén A",
+            "selected": false,
+            "cantidad": 0,
+            "id": "a013"
+        },
+        {
+            "id_ui": 8,
+            "nombre": "pruebaaaaa",
+            "unidad_de_medida": "unidad",
+            "stock": 1,
+            "imagen": "assets/images/boligrafo.jfif",
+            "id_almacen": "1",
+            "almacen": "Toyotaasdasd",
+            "id": "7f0c"
+        },
+        {
+            "id_ui": 9,
+            "nombre": "Resmas de Papel",
+            "unidad_de_medida": "paquete",
+            "stock": 300,
+            "imagen": "assets/images/resmas.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Central",
+            "id": "A1009"
+        },
+        {
+            "id_ui": 10,
+            "nombre": "Carpetas Archivadoras",
+            "unidad_de_medida": "unidad",
+            "stock": 250,
+            "imagen": "assets/images/carpetas.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Este",
+            "id": "D1010"
+        },
+        {
+            "id_ui": 11,
+            "nombre": "Grapadoras Manuales",
+            "unidad_de_medida": "unidad",
+            "stock": 120,
+            "imagen": "assets/images/grapadoras.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Oeste",
+            "id": "E1011"
+        },
+        {
+            "id_ui": 12,
+            "nombre": "Notas Adhesivas",
+            "unidad_de_medida": "paquete",
+            "stock": 450,
+            "imagen": "assets/images/notas.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Norte",
+            "id": "B1012"
+        },
+        {
+            "id_ui": 13,
+            "nombre": "Rotuladores de Pizarra",
+            "unidad_de_medida": "unidad",
+            "stock": 200,
+            "imagen": "assets/images/rotuladores.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Sur",
+            "id": "C1013"
+        },
+        {
+            "id_ui": 14,
+            "nombre": "Calculadoras Básicas",
+            "unidad_de_medida": "unidad",
+            "stock": 80,
+            "imagen": "assets/images/calculadoras.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Central",
+            "id": "A1014"
+        },
+        {
+            "id_ui": 15,
+            "nombre": "Cajas de Archivo",
+            "unidad_de_medida": "caja",
+            "stock": 300,
+            "imagen": "assets/images/cajas.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Este",
+            "id": "D1015"
+        },
+        {
+            "id_ui": 16,
+            "nombre": "Sillas Ergonómicas",
+            "unidad_de_medida": "unidad",
+            "stock": 50,
+            "imagen": "assets/images/sillas.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Oeste",
+            "id": "E1016"
+        },
+        {
+            "id_ui": 17,
+            "nombre": "Escritorios Modulares",
+            "unidad_de_medida": "unidad",
+            "stock": 30,
+            "imagen": "assets/images/escritorios.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Norte",
+            "id": "B1017"
+        },
+        {
+            "id_ui": 18,
+            "nombre": "Lámparas de Escritorio",
+            "unidad_de_medida": "unidad",
+            "stock": 90,
+            "imagen": "assets/images/lamparas.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Sur",
+            "id": "C1018"
+        },
+        {
+            "id_ui": 19,
+            "nombre": "Toner para Impresora",
+            "unidad_de_medida": "unidad",
+            "stock": 150,
+            "imagen": "assets/images/toner.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Central",
+            "id": "A1019"
+        },
+        {
+            "id_ui": 20,
+            "nombre": "Cartuchos de Tinta",
+            "unidad_de_medida": "unidad",
+            "stock": 200,
+            "imagen": "assets/images/cartuchos.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Este",
+            "id": "D1020"
+        },
+        {
+            "id_ui": 21,
+            "nombre": "Pizarras Blancas",
+            "unidad_de_medida": "unidad",
+            "stock": 40,
+            "imagen": "assets/images/pizarras.jfif",
+            "id_almacen": "1",
+            "almacen": "Almacén Oeste",
+            "id": "E1021"
+        }
+    ],
+    "solicitudes": [{
+        "id": "1",
+        "codigo": "SOL001",
+        "fecha_solicitud": "2023-08-01T10:00:00Z",
+        "solicitante": {
+            "usuario": "jperez",
+            "cargo": "Analista"
+        },
+        "almacen": {
+            "id": "1",
+            "nombre": "Almacen primario1"
+        },
+        "objetivo": "werwerwerwerwe",
+        "productos": [{
+            "id_ui": 4,
+            "nombre": "Carpetas",
+            "cantidad": 1,
+            "unidad_de_medida": "unidad",
+            "stock_actual": 50
+        }],
+        "estado": "pendiente",
+        "productos_count": 1,
+        "fecha_envio": "2025-08-28T16:15:49.835Z",
+        "fecha_aprobacion": "2025-08-28T16:15:49.835Z",
+        "aprobador": "admin"
+    }],
+    "aprobaciones": [{
+            "id": "2",
+            "solicitud_id": "SOL-1756219694957-afvotanra",
+            "fecha_solicitud": "2025-08-26T14:48:14.957Z",
+            "solicitante": {
+                "usuario": "jperez",
+                "cargo": "Analista"
+            },
+            "almacen": {
+                "id": "1",
+                "nombre": "Almacen primario1"
+            },
+            "objetivo": "werwerwerwerwe",
+            "productos": [{
+                "id_ui": 4,
+                "nombre": "Carpetas",
+                "cantidad": 1,
+                "unidad_de_medida": "unidad",
+                "stock_actual": 50
+            }],
+            "estado": "pendiente",
+            "productos_count": 1,
+            "fecha_aprobacion": "2025-08-28T16:15:49.835Z",
+            "aprobador": "admin",
+            "comentarios": "Solicitud rechazada"
+        },
+        {
+            "id": "3",
+            "solicitud_id": "SOL-1756399106166-kzank171p",
+            "fecha_solicitud": "2025-08-28T16:38:26.166Z",
+            "solicitante": {
+                "usuario": "jperez",
+                "cargo": "Analista"
+            },
+            "almacen": {
+                "id": "1",
+                "nombre": "Almacen primario1"
+            },
+            "objetivo": "prueba numero 1",
+            "productos": [{
+                "id_ui": 1,
+                "nombre": "Bolígrafos",
+                "cantidad": 1,
+                "unidad_de_medida": "unidad",
+                "stock_actual": 500
+            }],
+            "estado": "rechazado",
+            "productos_count": 1,
+            "fecha_aprobacion": "2025-08-28T19:56:31.809Z",
+            "aprobador": "admin",
+            "comentarios": "Solicitud rechazada"
+        },
+        {
+            "id": "4",
+            "solicitud_id": "SOL-1756411272012-ie260evct",
+            "fecha_solicitud": "2025-08-28T20:01:12.012Z",
+            "solicitante": {
+                "usuario": "jperez",
+                "cargo": "Analista"
+            },
+            "almacen": {
+                "id": "1",
+                "nombre": "Almacen primario1"
+            },
+            "objetivo": "pruebaaa3333",
+            "productos": [{
+                    "id_ui": 1,
+                    "nombre": "Bolígrafos",
+                    "cantidad": 3,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 500
+                },
+                {
+                    "id_ui": 2,
+                    "nombre": "Cuadernos",
+                    "cantidad": 3,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 120
+                }
+            ],
+            "estado": "pendiente",
+            "productos_count": 2,
+            "fecha_aprobacion": "2025-08-28T20:01:21.408Z",
+            "aprobador": "admin",
+            "comentarios": "Solicitud aprobada",
+            "fecha_recepcion": "2025-08-29T12:52:54.346Z",
+            "recepcionista": "usuario_actual",
+            "comentarios_recepcion": "por temas de logistica no se enrego mas cuadernos",
+            "productos_entregados": [{
+                    "id_ui": 1,
+                    "nombre": "Bolígrafos",
+                    "cantidad_solicitada": 3,
+                    "cantidad_entregada": 3,
+                    "unidad_de_medida": "unidad"
+                },
+                {
+                    "id_ui": 2,
+                    "nombre": "Cuadernos",
+                    "cantidad_solicitada": 3,
+                    "cantidad_entregada": 1,
+                    "unidad_de_medida": "unidad"
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "solicitud_id": "SOL-1756837840371-ivn8joryj",
+            "fecha_solicitud": "2025-09-02T18:30:40.371Z",
+            "solicitante": {
+                "usuario": "jperez",
+                "cargo": "Analista"
+            },
+            "almacen": {
+                "id": "1",
+                "nombre": "Almacen primario1"
+            },
+            "objetivo": "prueba sol 3",
+            "productos": [{
+                    "id_ui": 1,
+                    "nombre": "Bolígrafos",
+                    "cantidad": 3,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 300
+                },
+                {
+                    "id_ui": 2,
+                    "nombre": "Cuadernos",
+                    "cantidad": 2,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 120
+                }
+            ],
+            "estado": "aprobado",
+            "productos_count": 2,
+            "fecha_aprobacion": "2025-09-02T18:41:20.752Z",
+            "aprobador": "admin",
+            "comentarios": "Solicitud aprobada"
+        },
+        {
+            "id": "666",
+            "solicitud_id": "SOL-1758740388799-hlm26c567",
+            "fecha_solicitud": "2025-09-24T18:59:48.799Z",
+            "solicitante": {
+                "usuario": "jperez",
+                "cargo": "Analista"
+            },
+            "almacen": {
+                "id": "1",
+                "nombre": "Almacen primario1"
+            },
+            "objetivo": "prueba de mas 15 proyectos",
+            "productos": [{
+                    "id_ui": 1,
+                    "nombre": "Bolígrafos",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 300
+                },
+                {
+                    "id_ui": 2,
+                    "nombre": "Cuadernos",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 120
+                },
+                {
+                    "id_ui": 3,
+                    "nombre": "Lápices",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 800
+                },
+                {
+                    "id_ui": 4,
+                    "nombre": "Carpetas",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 50
+                },
+                {
+                    "id_ui": 5,
+                    "nombre": "Resaltadores",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 300
+                },
+                {
+                    "id_ui": 6,
+                    "nombre": "Tijeras",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 150
+                },
+                {
+                    "id_ui": 7,
+                    "nombre": "Papel A4",
+                    "cantidad": 1,
+                    "unidad_de_medida": "paquete",
+                    "stock_actual": 80
+                },
+                {
+                    "id_ui": 8,
+                    "nombre": "pruebaaaaa",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 1
+                },
+                {
+                    "id_ui": 9,
+                    "nombre": "Resmas de Papel",
+                    "cantidad": 1,
+                    "unidad_de_medida": "paquete",
+                    "stock_actual": 300
+                },
+                {
+                    "id_ui": 10,
+                    "nombre": "Carpetas Archivadoras",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 250
+                },
+                {
+                    "id_ui": 11,
+                    "nombre": "Grapadoras Manuales",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 120
+                },
+                {
+                    "id_ui": 12,
+                    "nombre": "Notas Adhesivas",
+                    "cantidad": 1,
+                    "unidad_de_medida": "paquete",
+                    "stock_actual": 450
+                },
+                {
+                    "id_ui": 13,
+                    "nombre": "Rotuladores de Pizarra",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 200
+                },
+                {
+                    "id_ui": 14,
+                    "nombre": "Calculadoras Básicas",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 80
+                },
+                {
+                    "id_ui": 15,
+                    "nombre": "Cajas de Archivo",
+                    "cantidad": 1,
+                    "unidad_de_medida": "caja",
+                    "stock_actual": 300
+                },
+                {
+                    "id_ui": 16,
+                    "nombre": "Sillas Ergonómicas",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 50
+                },
+                {
+                    "id_ui": 17,
+                    "nombre": "Escritorios Modulares",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 30
+                },
+                {
+                    "id_ui": 18,
+                    "nombre": "Lámparas de Escritorio",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 90
+                },
+                {
+                    "id_ui": 19,
+                    "nombre": "Toner para Impresora",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 150
+                },
+                {
+                    "id_ui": 20,
+                    "nombre": "Cartuchos de Tinta",
+                    "cantidad": 1,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 200
+                },
+                {
+                    "id_ui": 21,
+                    "nombre": "Pizarras Blancas",
+                    "cantidad": 3,
+                    "unidad_de_medida": "unidad",
+                    "stock_actual": 40
+                }
+            ],
+            "estado": "aprobado",
+            "productos_count": 21,
+            "fecha_aprobacion": "2025-09-24T18:59:58.780Z",
+            "aprobador": "admin",
+            "comentarios": "Solicitud aprobada"
+        }
+    ],
+    "atendidas": [{
+        "id": "4",
+        "solicitud_id": "SOL-1756411272012-ie260evct",
+        "fecha_solicitud": "2025-08-28T20:01:12.012Z",
+        "solicitante": {
+            "usuario": "jperez",
+            "cargo": "Analista"
+        },
+        "almacen": {
+            "id": "1",
+            "nombre": "Almacen primario1"
+        },
+        "objetivo": "pruebaaa3333",
+        "productos": [{
+                "id_ui": 1,
+                "nombre": "Bolígrafos",
+                "cantidad": 3,
+                "unidad_de_medida": "unidad",
+                "stock_actual": 500
+            },
+            {
+                "id_ui": 2,
+                "nombre": "Cuadernos",
+                "cantidad": 3,
+                "unidad_de_medida": "unidad",
+                "stock_actual": 120
+            }
+        ],
+        "estado": "recibido",
+        "productos_count": 6,
+        "fecha_aprobacion": "2025-08-28T20:01:21.408Z",
+        "aprobador": "admin",
+        "comentarios": "Solicitud aprobada",
+        "fecha_recepcion": "2025-08-29T12:52:54.346Z",
+        "recepcionista": "usuario_actual",
+        "comentarios_recepcion": "por temas de logistica no se enrego mas cuadernos",
+        "productos_entregados": [{
+                "id_ui": 1,
+                "nombre": "Bolígrafos",
+                "cantidad_solicitada": 3,
+                "cantidad_entregada": 3,
+                "unidad_de_medida": "unidad"
+            },
+            {
+                "id_ui": 2,
+                "nombre": "Cuadernos",
+                "cantidad_solicitada": 3,
+                "cantidad_entregada": 1,
+                "unidad_de_medida": "unidad"
+            }
+        ]
+    }],
+    "ingresos": [{
+            "id": "1",
+            "codigo": "ING-001",
+            "descripcion": "Materiales de oficina",
+            "comprobante": "FAC-12345",
+            "fechaIngreso": "2023-05-15",
+            "egreso": 7,
+            "idProveedor": {
+                "id": "1",
+                "nombre": "Proveedor A"
+            },
+            "idAlmacen": {
+                "id": "1",
+                "nombre": "Almacén Central"
+            },
+            "idSubAlmacen": {
+                "id": "1",
+                "nombre": "Subalmacén 1"
+            },
+            "gestionInicial": 2023,
+            "estado": "Registrado",
+            "detalles": [{
+                    "id": "1",
+                    "idMaterial": {
+                        "id": "1",
+                        "nombre": "Papel A4",
+                        "unidad": "paquete"
+                    },
+                    "cantidad": 10,
+                    "monto": 250
+                },
+                {
+                    "id": "40",
+                    "idMaterial": {
+                        "id": "1",
+                        "nombre": "Papel carta",
+                        "unidad": "paquete"
+                    },
+                    "cantidad": 5,
+                    "monto": 10
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "codigo": "ING-002",
+            "descripcion": "Equipos de computo",
+            "comprobante": "FAC-67890",
+            "fechaIngreso": "2023-06-20",
+            "egreso": 1,
+            "idProveedor": {
+                "id": "2",
+                "nombre": "Proveedor B"
+            },
+            "idAlmacen": {
+                "id": "2",
+                "nombre": "Almacén Secundario"
+            },
+            "idSubAlmacen": {
+                "id": "2",
+                "nombre": "Subalmacén 2"
+            },
+            "gestionInicial": 2023,
+            "estado": "Registrado",
+            "detalles": [{
+                    "id": "2",
+                    "idMaterial": {
+                        "id": "2",
+                        "nombre": "Laptop",
+                        "unidad": "UNIDAD"
+                    },
+                    "cantidad": 5,
+                    "monto": 35
+                },
+                {
+                    "id": "3",
+                    "idMaterial": {
+                        "id": "3",
+                        "nombre": "Monitor",
+                        "unidad": "UNIDAD"
+                    },
+                    "cantidad": 5,
+                    "monto": 15
+                },
+                {
+                    "id": "23",
+                    "idMaterial": {
+                        "id": "2",
+                        "nombre": "marcador",
+                        "unidad": "paquete"
+                    },
+                    "cantidad": 2,
+                    "monto": 5
+                },
+                {
+                    "id": "40",
+                    "idMaterial": {
+                        "id": "3",
+                        "nombre": "goma",
+                        "unidad": "paquete"
+                    },
+                    "cantidad": 3,
+                    "monto": 20
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "codigo": "ING-003",
+            "descripcion": "Materiales de escritorio",
+            "comprobante": "FAC-12345",
+            "fechaIngreso": "2023-05-15",
+            "egreso": 0,
+            "idProveedor": {
+                "id": "1",
+                "nombre": "Proveedor B"
+            },
+            "idAlmacen": {
+                "id": "1",
+                "nombre": "Almacén Central"
+            },
+            "idSubAlmacen": {
+                "id": "1",
+                "nombre": "Subalmacén 3"
+            },
+            "gestionInicial": 2023,
+            "estado": "Registrado",
+            "detalles": [{
+                "id": "1",
+                "idMaterial": {
+                    "id": "1",
+                    "nombre": "cinta teflon",
+                    "unidad": "caja"
+                },
+                "cantidad": 100,
+                "monto": 3
+            }]
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+<div class="container-fluid mt-4">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<app-card
+					cardTitle="						Solicitudes atendidas
+"
+					blockClass="pc-component"
+				>
+				</app-card>
+
+				<div class="card-body">
+					<div class="table-responsive">
+						<ag-grid-angular
+							style="width: 100%; height: 600px"
+							class="ag-theme-material"
+							[gridOptions]="gridOptions"
+							[columnDefs]="columnDefs"
+							[rowData]="rowData"
+							[pagination]="true"
+							[localeText]="gridOptions.localeText"
+							[rowSelection]="'single'"
+							[paginationPageSize]="gridOptions.paginationPageSize"
+							[paginationPageSizeSelector]="gridOptions.paginationPageSizeSelector"
+							[paginationNumberFormatter]="gridOptions.paginationNumberFormatter"
+						>
+						</ag-grid-angular>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

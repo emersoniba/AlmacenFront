@@ -1,0 +1,251 @@
+.modal-content {
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    background: #fff;
+    padding: 0;
+    border: none;
+    max-width: 540px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #f7f7f7;
+    color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    margin: 0;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    background: #f8fafc;
+}
+
+.table {
+    margin-bottom: 0.5rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(19, 115, 204, 0.06);
+}
+
+.table th {
+    //background: #eaf3fb;
+    //color: #1373cc;
+    background: #B9DCF8;
+    color: #000;
+    border-bottom: 2px solid #d1e3f8;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.98rem;
+}
+
+ng-container p,
+.modal-body p {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.modal-footer {
+    background: #f4f6f8;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn-secondary {
+    background: #1373cc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background: #0d5ca6;
+    color: #fff;
+}
+
+//**/
+
+/* Responsive Styles */
+
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 95%;
+        margin: 1rem auto;
+    }
+    .modal-body {
+        padding: 1rem;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+    // Estilos para tarjetas de productos en móvil
+    .product-card {
+        background: white;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e9ecef;
+        overflow: hidden;
+    }
+    .product-card-header {
+        background: #B9DCF8;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        color: #000;
+        border-bottom: 1px solid #d1e3f8;
+    }
+    .product-card-body {
+        padding: 1rem;
+    }
+    .product-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        padding: 0.25rem 0;
+    }
+    .product-info .label {
+        font-weight: 600;
+        color: #495057;
+        min-width: 100px;
+    }
+    .product-info .value {
+        color: #212529;
+        text-align: right;
+    }
+    .product-status {
+        background: #fff3cd;
+        color: #856404;
+        padding: 0.5rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        text-align: center;
+        border: 1px solid #ffeaa7;
+        &.complete {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+    }
+}
+
+.text-success {
+    color: #198754 !important;
+}
+
+.text-warning {
+    color: #fd7e14 !important;
+}
+
+// Mejoras generales para móvil
+.modal-header {
+    padding: 0.75rem 1rem;
+}
+
+.modal-title {
+    font-size: 1.1rem;
+}
+
+.modal-footer {
+    padding: 0.75rem 1rem;
+}
+
+.btn-secondary {
+    // width: 100%;
+    width: 34%;
+    padding: 0.75rem;
+}
+
+// Estilos para mejorar la legibilidad en móviles pequeños
+@media (max-width: 576px) {
+    .modal-content {
+        border-radius: 6px;
+    }
+    .product-card-header {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+    }
+    .product-card-body {
+        padding: 0.75rem;
+    }
+    .product-info {
+        flex-direction: column;
+        margin-bottom: 0.75rem;
+    }
+    .product-info .label {
+        margin-bottom: 0.25rem;
+        min-width: auto;
+    }
+    .product-info .value {
+        text-align: left;
+    }
+}
+
+// Animación suave para las tarjetas
+.product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+// Scroll suave para el modal en móvil
+.modal-body {
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+// Estilos para la tabla en vista normal
+.table {
+    th,
+    td {
+        vertical-align: middle;
+    }
+    .badge {
+        font-size: 0.7rem;
+    }
+}

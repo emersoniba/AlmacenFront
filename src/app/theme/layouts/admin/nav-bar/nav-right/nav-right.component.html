@@ -1,0 +1,92 @@
+<!-- [Mobile Media Block end] -->
+<ul class="list-unstyled">
+    <li class="dropdown pc-h-item" ngbDropdown>
+        <a class="pc-head-link dropdown-toggle arrow-none me-0" title="Mi carrito de compras">
+            <i class="ti ti-shopping-cart"></i>
+            <span class="badge bg-warning pc-h-badge">0</span>
+        </a>
+        <a class="pc-head-link dropdown-toggle arrow-none me-0" ngbDropdownToggle title="Notificaciones">
+            <i class="ti ti-bell"></i>
+            <span class="badge bg-success pc-h-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown" ngbDropdownMenu>
+            <div class="dropdown-header d-flex align-items-center justify-content-between">
+                <h5 class="m-0">Notificación</h5>
+                <a href="javascript:" class="pc-head-link bg-transparent">
+                    <i class="ti ti-circle-check text-success"></i>
+                </a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <ng-scrollbar style="height: calc(100vh - 300px)" visibility="hover">
+                <div class="dropdown-header px-0 text-wrap header-notification-scroll">
+                    <div class="list-group list-group-flush w-100">
+                        <a class="list-group-item list-group-item-action">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="user-avtar bg-light-success">
+                                        <i class="ti ti-gift"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-1">
+                                    <span class="float-end text-muted">3:00 AM</span>
+                                    <p class="text-body mb-1"> Mi <b>notificacion</b> de aviso. </p>
+                                    <span class="text-muted">2 min ago</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </ng-scrollbar>
+            <div class="dropdown-divider"></div>
+            <div class="text-center py-2">
+                <a href="javascript:" class="link-primary">Ver Todos</a>
+            </div>
+        </div>
+    </li>
+    <li class="dropdown pc-h-item header-user-profile" ngbDropdown>
+        <a class="pc-head-link dropdown-toggle arrow-none me-0" ngbDropdownToggle>
+            <img src="assets/images/user/avatar-4.jpg" alt="user-image" class="user-avtar" />
+            <span class="fw-lighter">Nombre completo del usuario</span>
+        </a>
+        <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown" ngbDropdownMenu>
+            <div class="dropdown-header">
+                <div class="d-flex mb-1">
+                    <div class="flex-shrink-0">
+                        <img src="assets/images/user/avatar-4.jpg" alt="user-image" class="user-avtar wid-35" />
+                    </div>
+                    <div class="flex-grow-1">
+                        <p class="mb-1 fw-lighter">Nombre Completo</p>
+                        <span class="fw-lighter">Cargo del Funcionario</span>
+                    </div>
+                </div>
+            </div>
+            <ul ngbNav #nav="ngbNav" class="nav drp-tabs nav-fill nav-tabs">
+                <li ngbNavItem="1">
+                    <hr>
+                    <ng-template ngbNavContent>
+                        <div>
+                            <a href="javascript:" class="dropdown-item">
+                                <i class="ti ti-user"></i>
+                                <span class="fw-lighter">Mi Perfil</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="javascript:" class="dropdown-item">
+                                <i class="ti ti-file-invoice"></i>
+                                <span class="fw-lighter">Guía rápida</span>
+                            </a>
+                        </div>
+                        <hr>
+                        <div>
+                            <a href="javascript:" class="dropdown-item">
+                                <i class="ti ti-power text-danger"></i>
+                                <span class="fw-lighter" (click)="logout()">Salir del Sistema</span>
+                            </a>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+    </li>
+</ul>

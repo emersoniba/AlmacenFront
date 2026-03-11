@@ -1,0 +1,32 @@
+<app-navigation class="coded-navbar pc-sidebar" [ngClass]="{
+    'navbar-collapsed': navCollapsed,
+    'mob-open': navCollapsedMob
+  }" (NavCollapse)="this.navCollapsed = !this.navCollapsed" (NavCollapsedMob)="navMobClick()"></app-navigation>
+<app-nav-bar (NavCollapsedMob)="navMobClick()" (NavCollapse)="this.navCollapsed = !this.navCollapsed"></app-nav-bar>
+<div class="pc-container">
+    <div class="coded-wrapper">
+        <div class="coded-content">
+            <div class="coded-inner-content">
+                <app-breadcrumb></app-breadcrumb>
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="pc-footer">
+    <div class="footer-wrapper container-fluid">
+        <div class="row">
+            <div class="col my-1">
+                <p class="m-0">
+                    Copyright &copy;
+                    <i class="ti ti-link" style="font-size: 1rem;" ></i> 
+                    <a href="https://www.oopp.gob.bo" target="_blank">Ministerio de Obras Públicas, Servicios y Vivienda</a> | Unidad de Desarrollo Tecnológico e Información
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

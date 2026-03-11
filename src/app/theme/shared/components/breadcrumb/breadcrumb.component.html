@@ -1,0 +1,44 @@
+@for (breadcrumb of navigationList; track breadcrumb; let last = $last) {
+	@if (last && breadcrumb.breadcrumbs !== false) {
+		<div class="page-header">
+			<div class="page-block">
+				<div class="row align-items-center mt-1">
+					<div class="col-lg-6 col-md-6 col-sm-12">
+						<ul class="breadcrumb px-2 py-0">
+							<li class="breadcrumb-item">
+								@if (type === 'theme1') {
+									<a class="fw-lighter" [routerLink]="['/dashboard/default']"><i class="ti ti-home"></i> Principal</a>
+								}
+							</li>
+							@for (breadcrumb of navigationList; track breadcrumb) {
+								@if (breadcrumb.url !== false) {
+									<li class="breadcrumb-item"
+										><a class="fw-lighter" [routerLink]="breadcrumb.url"
+											><i [class]="breadcrumb.icon"></i> {{ breadcrumb.title }}</a
+										></li
+									>
+								}
+								@if (breadcrumb.url === false && breadcrumb.type !== 'group') {
+									<li class="breadcrumb-item"
+										><a class="fw-lighter" href="javascript:"
+											><i [class]="breadcrumb.icon"></i> {{ breadcrumb.title }}</a
+										></li
+									>
+								}
+							}
+						</ul>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-12 text-right">
+						<div class="page-header-title text-right px-2 mt-2">
+							@for (breadcrumb of navigationList; track breadcrumb; let last = $last) {
+								@if (last) {
+									<h2 class="m-b-10" class="fw-lighter"><i class="{{ breadcrumb.icon }}"></i> {{ breadcrumb.title }}</h2>
+								}
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}

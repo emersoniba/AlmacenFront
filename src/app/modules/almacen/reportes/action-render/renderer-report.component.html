@@ -1,0 +1,28 @@
+<div class="btn-group" role="group">
+      <button 
+        class="btn btn-md btn-outline-primary" 
+        (click)="ingresoMaterial()"
+        title="Ingreso de Material"
+        [disabled]="isDisabled"
+      >
+        <i class="ti ti-arrow-up" style="font-size: 1.3rem;"></i>
+      </button>
+      
+      <button 
+        class="btn btn-lg btn-outline-success" 
+        (click)="egresoMaterial()"
+        title="Egreso de Material"
+        [disabled]="isDisabled"
+      >
+        <i class="ti ti-arrow-down" style="font-size: 1.3rem;"></i>
+      </button>
+      
+      <button 
+        class="btn btn-lg btn-outline-info" 
+        (click)="kardexMaterial()"
+        title="Kardex Material"
+        [disabled]="isDisabled"
+      >
+        <i class="ti ti-folder" style="font-size: 1.3rem;"></i>
+      </button>
+    </div>

@@ -1,0 +1,253 @@
+.modal-header {
+    background: #ffffff;
+    padding: 0.5rem;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    padding: 2rem;
+    background: #f8f9fa;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 1.5rem 2rem;
+    background: #fff;
+    border-top: 2px solid #e9ecef;
+    border-radius: 0 0 8px 8px;
+    gap: 0.75rem;
+    /* separación entre botones */
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.btn i {
+    font-size: 0.9rem;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    /* Separación entre botones */
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.info-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #495057;
+    min-width: 120px;
+}
+
+.info-value {
+    color: #212529;
+    text-align: right;
+    flex: 1;
+}
+
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.bg-warning {
+    //background: linear-gradient(135deg, #ffc107, #ff8f00);
+    background: #ffc107;
+    border-radius: 8px;
+}
+
+.bg-success {
+    // background: linear-gradient(135deg, #28a745, #20c997);
+    background: #28a745;
+    border-radius: 8px;
+}
+
+.bg-danger {
+    //background: linear-gradient(135deg, #dc3545, #fd7e14);
+    background: #dc3545;
+    border-radius: 8px;
+}
+
+.objetivo-text {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin: 1rem 0;
+    line-height: 1.6;
+    color: #495057;
+    font-style: italic;
+}
+
+.products-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.products-table .table {
+    margin-bottom: 0;
+}
+
+.products-table th {
+    //background: linear-gradient(135deg, #667eea 0%, #1c49ef 100%);
+    background: #1890FF;
+    font-weight: 600;
+    color: white;
+}
+
+.products-table td {
+    padding: 1rem;
+    border-color: #e9ecef;
+    vertical-align: middle;
+}
+
+.products-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.products-table tr:hover {
+    background-color: #e3f2fd;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:hover:not(:focus) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    color: #667eea;
+}
+
+.error-message {
+    text-align: center;
+    color: #dc3545;
+    padding: 2rem;
+}
+
+.error-message i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+
+/* Animaciones */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content {
+    animation: fadeIn 0.3s ease-out;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .modal-body {
+        padding: 1rem;
+    }
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .info-value {
+        text-align: left;
+    }
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .modal-footer .btn {
+        min-width: auto;
+        width: auto;
+        padding: 0.5rem;
+        margin-bottom: 0;
+    }
+    .modal-footer .btn .ti {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+    .modal-footer .btn span:not(.ti) {
+        display: none;
+    }
+    .modal-footer {
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    .button-group {
+        flex-direction: row;
+        justify-content: center;
+    }
+}

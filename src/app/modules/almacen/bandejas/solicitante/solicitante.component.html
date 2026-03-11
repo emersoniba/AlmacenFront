@@ -1,0 +1,95 @@
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12">
+		@if (!showForm) {
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-12">
+					<div class="card bg-green">
+						<span class="card-title">Total Solicitudes</span>
+						<div class="card-body">
+							{{ totalSolicitudes }}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-12">
+					<div class="card bg-blue">
+						<span class="card-title">Solicitudes Enviadas</span>
+						<div class="card-body">
+							{{ solicitudesEnviadas }}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-12">
+					<div class="card bg-orange">
+						<span class="card-title">Solicitudes Aprobadas</span>
+						<div class="card-body">
+							{{ solicitudesAprobadas }}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-12">
+					<div class="card bg-red">
+						<span class="card-title">Solicitudes Rechazadas</span>
+						<div class="card-body">
+							{{ solicitudesRechazadas }}
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+		<div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <app-card cardTitle="Bandeja de Solicitudes"> </app-card>
+                <!--<app-card cardTitle="Bandeja de Solicitudes" blockClass="pc-component"> </app-card>-->
+				@if (!showForm) {
+					<div class="row">
+						<div class="col-lg-2 col-md-2 col-sm-12 text-end">
+							<form [formGroup]="formGestion">
+								<mat-form-field class="w-100">
+									<mat-label>Gestión</mat-label>
+									<mat-icon matIconPrefix>calendar_today</mat-icon>
+									<mat-select formControlName="gestion" (selectionChange)="onChangeGestion($event)">
+										@for (g of dataGestiones; track g) {
+											<mat-option [value]="g">{{ g }}</mat-option>
+										}
+									</mat-select>
+								</mat-form-field>
+							</form>
+						</div>
+
+						<div class="col-lg-6 col-md-6 col-sm-12 py-3">
+							<span class="fw-lighter fs-5"><i class="ti ti-shopping-cart fs-4"></i> Bandeja de Solicitudes</span>
+						</div>
+						<div class="col-lg-4 col-md-3 col-sm-12 text-end">
+							<button
+								class="btn btn-primary btn-round mb-3 mt-2"
+								matTooltip="Solicitar nuevo material"
+								(click)="onActionNuevo()"
+							>
+								<i class="ti ti-plus"></i> Nueva Solicitud
+							</button>
+						</div>
+					</div>
+					<ag-grid-angular
+						style="width: 100%; height: 600px"
+						class="ag-theme-material"
+						[gridOptions]="gridOptions"
+						[advancedFilterModel]=""
+						[columnDefs]="columnDefs"
+						[rowData]="rowData"
+						[pagination]="true"
+						[localeText]="localEs"
+						[rowSelection]="'single'"
+						[paginationPageSize]="paginationPageSize"
+						[paginationPageSizeSelector]="paginationPageSizeSelector"
+						[paginationNumberFormatter]="paginationNumberFormatter"
+						(selectionChanged)="onSelectionChangedSolicitud($event)"
+						(gridReady)="onGridReadySolicitud($event)"
+					>
+					</ag-grid-angular>
+				} @else {
+					<app-solicitante-form [pk]="dataObjetoSolicitud?.id" [objeto]="dataObjetoSolicitud"></app-solicitante-form>
+				}
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,239 @@
+<form [formGroup]="solicitudForm">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <mat-form-field class="w-100">
+                <mat-label>Seleccionar Almacen</mat-label>
+                <mat-icon matIconPrefix>storage</mat-icon>
+                <mat-select formControlName="almacen_id" (selectionChange)="onChangeAlmacen($event)">
+                    @for (alm of dataAlmacen; track alm) {
+                        <mat-option [value]="alm.id">{{ alm.nombre }}</mat-option>
+                    }
+                </mat-select>
+                @if (solicitudForm.get('almacen_id').hasError('required')) {
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12">
+            <mat-form-field class="w-100">
+                <mat-label>Descripción de la Solicitud</mat-label>
+                <mat-icon matIconPrefix>keyboard</mat-icon>
+                <input matInput formControlName="objetivo" />
+                @if (solicitudForm.get('objetivo').hasError('required')) {
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+                @if (solicitudForm.get('objetivo').hasError('minlength')) {
+                    <mat-error>Descripción mínimo de 10 caracteres</mat-error>
+                }
+                @if (solicitudForm.get('objetivo').hasError('maxlength')) {
+                    <mat-error>Descripción máximo de 1500 caracteres</mat-error>
+                }
+            </mat-form-field>
+        </div>
+    </div>
+
+    @if (solicitudForm.get('almacen_id').valid && solicitudForm.get('objetivo').valid) {
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="d-flex align-items-center gap-2">
+                    <mat-form-field class="flex-grow-1">
+                        <mat-label>Buscar material en el almacen seleccionado</mat-label>
+                        <mat-icon matIconPrefix>search</mat-icon>
+                        <input matInput formControlName="buscar" (keyup)="onActionBuscar()" />
+                    </mat-form-field>
+                    @if (solicitudForm.get('buscar').value) {
+                        <button 
+                            class="btn btn-outline-secondary btn-sm mt-3" 
+                            (click)="limpiarBusqueda()"
+                            title="Limpiar búsqueda"
+                        >
+                            <i class="ti ti-x"></i>
+                        </button>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <button class="btn btn-sm btn-primary btn-round btn-space mt-3 px-3" (click)="onActionBuscar()">
+                            <i class="ti ti-search"></i> Buscar
+                        </button>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-end">
+                        <button
+                            class="btn btn-sm btn-success btn-round btn-space mt-3 px-3"
+                            [disabled]="solicitudForm.invalid || getTotalCarritoItems() === 0"
+                            (click)="onActionSolicitar()"
+                        >
+                            <i class="ti ti-send"></i> Solicitar
+                        </button>
+                        <button
+                            class="btn btn-sm btn-danger btn-round text-white btn-space mt-3 px-3 position-relative"
+                            title="Mi carrito de pedido"
+                            (click)="abrirModalCarrito()"
+                            [disabled]="getTotalCarritoItems() === 0">
+                            
+                            @if (getTotalCarritoCantidad() > 0) {
+                                <span class="badge badge-custom position-absolute top-0 start-0 bg-warning">
+                                    {{ getTotalCarritoCantidad() }}
+                                </span>
+                            }
+                            
+                            <i class="ti ti-shopping-cart"></i>
+                            Mi carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</form>
+
+@if (solicitudForm.get('almacen_id').valid && solicitudForm.get('objetivo').valid) {
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-paginator
+                [pageSize]="pageSize"
+                [length]="dataProductosFiltrados.length"
+                [pageSizeOptions]="pageSizeOptions"
+                (page)="actualizarPaginatorData()"
+            ></mat-paginator>
+        </div>
+    </div>
+    
+    <!-- Mensaje cuando no hay resultados de búsqueda -->
+    @if (dataProductosFiltrados.length === 0) {
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <i class="ti ti-search-off"></i> No se encontraron productos que coincidan con la búsqueda
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div class="row mt-4">
+        @for (prod of dataProductosPaginados; track prod.id_ui; let position = $index) {
+            <div class="col-12 col-sm-8 col-md-6 col-lg-3">
+                <div class="card product-card">
+                    <div class="p-0 image-container">
+                        <img
+                            [src]="prod.imagen"
+                            onerror="this.onerror=null; this.src='assets/images/producto.png';"
+                            class="card-img-top"
+                            alt="{{ prod.nombre }}"
+                        />
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ prod.nombre }}</h3>
+                        <p class="card-text">
+                            Stock: <b>{{ prod.stock }}</b> {{ prod.unidad_de_medida }}
+                        </p>
+                        <p class="card-text small text-muted">
+                            ID: {{ prod.id_ui }}
+                        </p>
+
+                        @if (prod.selected) {
+                            <div class="quantity-controls">
+                                <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+                                    <button
+                                        class="btn btn-danger btn-sm"
+                                        (click)="decrementarCantidad(position)"
+                                        style="border-radius: 8px;"
+                                        [disabled]="prod.cantidad <= 0"
+                                        type="button"
+                                    >
+                                        <i class="ti ti-minus"></i>
+                                    </button>
+                                    
+                                    <div class="quantity-display">
+                                        <span class="fw-bold">{{ prod.cantidad }}</span>
+                                    </div>
+                                    
+                                    <button
+                                        class="btn btn-success btn-sm"
+                                        (click)="incrementarCantidad(position)"
+                                        style="border-radius: 8px;"
+                                        [disabled]="prod.cantidad >= prod.stock"
+                                        type="button"
+                                    >
+                                        <i class="ti ti-plus"></i>
+                                    </button>
+                                </div>
+                                
+                                <button 
+                                    class="btn btn-outline-danger btn-sm w-100"
+                                    (click)="quitarDelCarrito(position)"
+                                    title="Quitar del carrito"
+                                >
+                                    <i class="ti ti-trash"></i> Quitar
+                                </button>
+                                
+                                <div class="text-center mt-2">
+                                    <small class="text-muted">
+                                        {{ prod.cantidad }} de {{ prod.stock }} disponibles
+                                    </small>
+                                </div>
+                                
+                                @if (prod.cantidad === 0 && prod.selected) {
+                                    <div class="text-center mt-1">
+                                        <small class="text-danger">
+                                            <i class="ti ti-alert-circle"></i> La cantidad debe ser mayor a 0
+                                        </small>
+                                    </div>
+                                }
+                                @if (prod.cantidad > prod.stock) {
+                                    <div class="text-center mt-1">
+                                        <small class="text-danger">
+                                            <i class="ti ti-alert-circle"></i> Excede el stock disponible
+                                        </small>
+                                    </div>
+                                }
+                            </div>
+                        } @else {
+                            <div class="text-center">
+                                <button 
+                                    class="btn btn-outline-primary btn-sm w-100"
+                                    (click)="agregarAlCarrito(position)"
+                                    [disabled]="prod.stock <= 0"
+                                >
+                                    <i class="ti ti-shopping-cart-plus"></i> Agregar al carrito
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <!-- Contador de resultados -->
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="alert alert-light">
+                <small>
+                    <i class="ti ti-info-circle"></i> 
+                    Mostrando {{ dataProductosPaginados.length }} de {{ dataProductosFiltrados.length }} productos
+                    @if (solicitudForm.get('buscar').value) {
+                        (filtrados por búsqueda)
+                    }
+                </small>
+            </div>
+        </div>
+    </div>
+} @else {
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <!-- Mensaje actualizado para indicar qué falta -->
+            @if (!solicitudForm.get('almacen_id').valid) {
+                <div class="alert alert-warning">
+                    <i class="ti ti-package"></i> Selecciona un almacén para ver los productos disponibles
+                </div>
+            } @else if (!solicitudForm.get('objetivo').valid) {
+                <div class="alert alert-info">
+                    <i class="ti ti-edit"></i> Completa la descripción de la solicitud (mínimo 10 caracteres) para ver los productos
+                </div>
+            }
+        </div>
+    </div>
+}

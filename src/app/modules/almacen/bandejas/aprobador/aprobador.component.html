@@ -1,0 +1,78 @@
+<div class="container-fluid mt-4">
+	<div class="row mb-4">
+		<div class="col-lg-3 col-md-3 col-sm-12">
+			<div class="stats-card bg-green">
+				<span class="stats-card-title">Total Solicitudes</span>
+				<div class="stats-card-body">
+					{{ totalSolicitudes }}
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-12">
+			<div class="stats-card bg-blue">
+				<span class="stats-card-title">Solicitudes Pendientes</span>
+				<div class="stats-card-body">
+					{{ solicitudesPendientes }}
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-12">
+			<div class="stats-card bg-orange">
+				<span class="stats-card-title">Solicitudes Aprobadas</span>
+				<div class="stats-card-body">
+					{{ solicitudesAprobadas }}
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-12">
+			<div class="stats-card bg-red">
+				<span class="stats-card-title">Solicitudes Rechazadas</span>
+				<div class="stats-card-body">
+					{{ solicitudesRechazadas }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<app-card cardTitle="Solicitudes Pendientes de Aprobación"> </app-card>
+		<div class="col-lg-2 col-md-2 col-sm-12 text-end">
+			<form [formGroup]="formGestion">
+				<mat-form-field class="w-100">
+					<mat-label>Gestión</mat-label>
+					<mat-icon matIconPrefix>calendar_today</mat-icon>
+					<mat-select formControlName="gestion" (selectionChange)="onChangeGestion($event)">
+						@for (g of dataGestiones; track g) {
+							<mat-option [value]="g">{{ g }}</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+			</form>
+		</div>
+		<div class="card-body">
+			<div *ngIf="loading" class="text-center">
+				<div class="spinner-border" role="status">
+					<span class="visually-hidden">Cargando...</span>
+				</div>
+			</div>
+
+			<ag-grid-angular
+				*ngIf="!loading"
+				style="width: 100%; height: 600px"
+				class="ag-theme-material"
+				[gridOptions]="gridOptions"
+				[columnDefs]="columnDefs"
+				[rowData]="rowData"
+				[pagination]="true"
+				[localeText]="gridOptions.localeText"
+				[rowSelection]="'single'"
+				[paginationPageSize]="gridOptions.paginationPageSize"
+				[paginationPageSizeSelector]="gridOptions.paginationPageSizeSelector"
+				[paginationNumberFormatter]="gridOptions.paginationNumberFormatter"
+			></ag-grid-angular>
+		</div>
+		<div class="card-footer text-muted">
+			<small>Total de solicitudes: {{ rowData.length }}</small>
+		</div>
+	</div>
+</div>

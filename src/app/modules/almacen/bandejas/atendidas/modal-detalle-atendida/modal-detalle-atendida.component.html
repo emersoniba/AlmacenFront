@@ -1,0 +1,84 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">
+			<i class="ti ti-shopping-cart me-2"></i>
+			Detalles de Productos Entregados
+		</h4>
+	</div>
+
+	<div class="modal-body">
+		<!-- Vista de tabla para escritorio -->
+		<div class="d-none d-md-block">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Producto</th>
+						<th>Cantidad Solicitada</th>
+						<th>Cantidad Entregada</th>
+						<th>Unidad</th>
+						<th>Estado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let prod of data.atendida.productos_entregados">
+						<td>{{ prod.nombre }}</td>
+						<td>{{ prod.cantidad_solicitada }}</td>
+						<td>{{ prod.cantidad_entregada }}</td>
+						<td>{{ prod.unidad_de_medida }}</td>
+						<td>
+							<span *ngIf="prod.cantidad_entregada < prod.cantidad_solicitada" 
+									class="badge bg-warning text-dark">
+								Entrega parcial
+							</span>
+							<span *ngIf="prod.cantidad_entregada === prod.cantidad_solicitada" 
+									class="badge bg-success">
+								Completo
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Vista de tarjetas para móvil -->
+		<div class="d-md-none">
+			<div *ngFor="let prod of data.atendida.productos_entregados" class="product-card">
+				<div class="product-card-header">
+					<strong>{{ prod.nombre }}</strong>
+				</div>
+				<div class="product-card-body">
+					<div class="product-info">
+						<span class="label">Solicitada:</span>
+						<span class="value">{{ prod.cantidad_solicitada }}</span>
+					</div>
+					<div class="product-info">
+						<span class="label">Entregada:</span>
+						<span class="value" [class.text-success]="prod.cantidad_entregada === prod.cantidad_solicitada"
+									[class.text-warning]="prod.cantidad_entregada < prod.cantidad_solicitada">
+							{{ prod.cantidad_entregada }}
+						</span>
+					</div>
+					<div class="product-info">
+						<span class="label">Unidad:</span>
+						<span class="value">{{ prod.unidad_de_medida }}</span>
+					</div>
+					<div class="product-status" *ngIf="prod.cantidad_entregada < prod.cantidad_solicitada">
+						<i class="ti ti-alert-triangle me-1"></i>
+						Entrega parcial
+					</div>
+					<div class="product-status complete" *ngIf="prod.cantidad_entregada === prod.cantidad_solicitada">
+						<i class="ti ti-check me-1"></i>
+						Entrega completa
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<ng-container *ngIf="data.atendida.productos_entregados.length === 0">
+			<p>No se entregaron productos (solicitud rechazada).</p>
+		</ng-container>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="onClose()">Cerrar</button>
+	</div>
+</div>

@@ -1,0 +1,154 @@
+<h3 mat-dialog-title>
+    <b>{{labelForm}} - Ingreso de material</b>
+</h3>
+<div class="row" mat-dialog-content>
+    <form [formGroup]="formRegistro">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Seleccione Almacen</mat-label>
+                    <mat-icon matPrefix>reorder</mat-icon>
+                    <mat-select formControlName="idAlmacen" (selectionChange)="onChangeAlmacen($event)">
+                        @for(a of dataAlmacen; track a){
+                            <mat-option [value]="a.id">{{a.sigla}} - {{ a.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                    @if(formRegistro.get('idAlmacen')?.hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Seleccione Sub Almacen</mat-label>
+                    <mat-icon matPrefix>reorder</mat-icon>
+                    <mat-select formControlName="idSubAlmacen">
+                        @for(sa of dataSubAlmacen; track sa){
+                            <mat-option [value]="sa.id">{{sa.sigla}} - {{ sa.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                    @if(formRegistro.get('idSubAlmacen')?.hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Seleccione un Proveedor</mat-label>
+                    <mat-icon matPrefix>person</mat-icon>
+                    <mat-select formControlName="idProveedor">
+                        @for(p of dataProveedor; track p){
+                            <mat-option [value]="p.id">{{p.nit}} - {{ p.razonSocial }}</mat-option>
+                        }
+                    </mat-select>
+                    @if(formRegistro.get('idProveedor')?.hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Código</mat-label>
+                    <mat-icon matPrefix>reorder</mat-icon>
+                    <input matInput formControlName="codigo"/>
+                    @if(formRegistro.get('codigo').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                    @if(formRegistro.get('codigo').hasError('minlength')){
+                        <mat-error>Mínimo de 5 caracteres</mat-error>
+                    }
+                    @if(formRegistro.get('codigo').hasError('maxlength')){
+                        <mat-error>Máximo de 50 caracteres</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label># Comprabante</mat-label>
+                    <mat-icon matPrefix>reorder</mat-icon>
+                    <input matInput formControlName="comprobante"/>
+                    @if(formRegistro.get('comprobante').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                    @if(formRegistro.get('comprobante').hasError('minlength')){
+                        <mat-error>Mínimo de 5 caracteres</mat-error>
+                    }
+                    @if(formRegistro.get('comprobante').hasError('maxlength')){
+                        <mat-error>Máximo de 300 caracteres</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Descripción del Ingreso</mat-label>
+                <mat-icon matPrefix>reorder</mat-icon>
+                <input matInput formControlName="descripcion"/>
+                @if(formRegistro.get('descripcion').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                }
+                @if(formRegistro.get('descripcion').hasError('minlength')){
+                    <mat-error>Mínimo de 10 caracteres</mat-error>
+                }
+                @if(formRegistro.get('descripcion').hasError('maxlength')){
+                    <mat-error>Máximo de 300 caracteres</mat-error>
+                }
+            </mat-form-field>
+        </div>
+      <!--  <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Seleccione un Material</mat-label>
+                    <mat-icon matPrefix>reorder</mat-icon>
+                    <mat-select formControlName="idProducto">
+                        @for(m of dataMaterial; track m) {
+                            <mat-option [value]="m.id_ui">{{ m.unidad_de_medida }} - {{ m.nombre }}</mat-option>
+                        }
+                    </mat-select>   
+                    @if(formRegistro.get('idProducto').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Cantidad</mat-label>
+                    <mat-icon matPrefix>reorder</mat-icon>
+                    <input matInput formControlName="cantidad"/>
+                    @if(formRegistro.get('cantidad').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                    @if(formRegistro.get('cantidad').hasError('pattern')){
+                        <mat-error>Solo números enteros (+)</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Monto (Bs)</mat-label>
+                    <mat-icon matPrefix>reorder</mat-icon>
+                    <input matInput formControlName="monto"/>
+                    @if(formRegistro.get('monto').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                    }
+                    @if(formRegistro.get('monto').hasError('pattern')){
+                        <mat-error>Número no valido (Ej. 50.26)</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <button type="button" mat-button class="btn btn-success btn-round mr-05" (click)="accionAdicionarMaterial()" [disabled]="formRegistro.invalid"><i class="ti ti-plus"></i> Agregar Material</button>
+                <button type="button" mat-button class="btn btn-danger btn-round mr-05" (click)="accionEliminarMaterial()"><i class="ti ti-trash"></i> Eliminar</button>
+            </div>
+        </div>-->
+    </form>
+</div>
+<div mat-dialog-actions class="px-4 mb-4">
+    <hr class="separator py-2"/>
+    <button type="button" mat-button class="btn btn-primary btn-round mr-05" (click)="accionRegistrar()" ><i class="ti ti-send"></i> {{labelForm}}</button>
+    <button type="button" mat-button class="btn btn-danger btn-round" (click)="accionCancel()"><i class="ti ti-loader"></i> Cancelar</button>
+</div>

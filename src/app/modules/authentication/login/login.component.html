@@ -1,0 +1,67 @@
+
+<div class="auth-main">
+    <div class="auth-wrapper v3">
+
+        <div class="auth-banner">
+            <img src="/assets/images/fondo-izquierdo.jpg" class="banner-image">
+        </div>
+
+        <div class="auth-form">
+            <div class="contenedor">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="formAuth" (ngSubmit)="authLogin()">
+                            <div class="img-center">
+                                <img src="/assets/images/mopsv.png" class="img-mopsv" alt="vs">
+                            </div>
+                            <div class="row text-center">
+                                <div class="saprator mt-3"></div>
+                                <h2 class="mt-3"><b class="text-primary">Plataforma de Gestión de Almacen</b></h2>
+                            </div>
+                            <div class="row mt-4 px-3 px-sm-5">
+                                <mat-form-field class="col-12" appearance="fill">
+                                    <mat-label>Cuenta de usuario</mat-label>
+                                    <mat-icon matPrefix>person</mat-icon>
+                                    <input matInput formControlName="username">
+                                    @if(formAuth.controls['username'].hasError('required')){
+                                    <mat-error>Este campo es requerido</mat-error>
+                                    }
+                                    @if(formAuth.controls['username'].hasError('minlength')){
+                                    <mat-error>Minimo de 5 caracteres</mat-error>
+                                    }
+                                    @if(formAuth.controls['username'].hasError('maxlength')){
+                                    <mat-error>Maximo de 20 caracteres</mat-error>
+                                    }
+                                </mat-form-field>
+                                <mat-form-field class="col-12" appearance="fill">
+                                    <mat-label>Contraseña</mat-label>
+                                    <mat-icon matPrefix>lock</mat-icon>
+                                    <input type="password" matInput formControlName="password">
+                                    @if(formAuth.controls['password'].hasError('required')){
+                                    <mat-error>Este campo es requerido</mat-error>
+                                    }
+                                    @if(formAuth.controls['password'].hasError('minlength')){
+                                    <mat-error>Minimo de 5 caracteres</mat-error>
+                                    }
+                                    @if(formAuth.controls['password'].hasError('maxlength')){
+                                    <mat-error>Maximo de 20 caracteres</mat-error>
+                                    }
+                                </mat-form-field>
+                                <div class="d-grid mt-4">
+                                    <button class="btn btn-primary" mat-button [disabled]="formAuth.invalid">
+                                        <i class="ti ti-login"></i> INGRESAR
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="saprator mt-5"></div>
+                            <div class="text-center">
+                                <p class="mt-4">Copyright © {{fecha}}| Unidad de Desarrollo Tecnológico e Información | UDTI</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

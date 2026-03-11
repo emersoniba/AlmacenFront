@@ -1,0 +1,258 @@
+[
+    {
+        "id": "1",
+        "codigo": "SOL001",
+        "objetivo": "Suministro de material de oficina para el equipo",
+        "nombre_solicitante": "Juan Pérez",
+        "nombre_aprobador": "Carlos Sánchez",
+        "nombre_recepcionador": "Ana López",
+        "fecha_solicitud": "2025-03-20T08:30:45.000Z",
+        "fecha_envio": "2025-03-21T09:45:30.000Z",
+        "fecha_aprobacion": "2025-03-22T10:15:00.000Z",
+        "fecha_rechazo": "2025-03-23T11:00:00.000Z",
+        "fecha_recepcion": "2025-03-24T12:25:10.000Z",
+        "almacen": "Almacén Central",
+        "detalle": [
+            {
+                "id": "1",
+                "idSolicitud": "1",
+                "nombreProducto": "Bolígrafos",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 100,
+                "cantidad_entregada": 100
+            },
+            {
+                "id": "2",
+                "idSolicitud": "1",
+                "nombreProducto": "Cuadernos",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 50,
+                "cantidad_entregada": 50
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "codigo": "SOL002",
+        "objetivo": "Reabastecimiento de material de oficina",
+        "nombre_solicitante": "Ana López",
+        "nombre_aprobador": "Carlos Sánchez",
+        "nombre_recepcionador": "Juan Pérez",
+        "fecha_solicitud": "2025-03-22T08:00:30.000Z",
+        "fecha_envio": "2025-03-23T09:50:15.000Z",
+        "fecha_aprobacion": "2025-03-24T10:30:45.000Z",
+        "fecha_rechazo": "2025-03-25T11:20:05.000Z",
+        "fecha_recepcion": "2025-03-26T12:40:25.000Z",
+        "almacen": "Almacén Norte",
+        "detalle": [
+            {
+                "id": "3",
+                "idSolicitud": "2",
+                "nombreProducto": "Lápices",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 200,
+                "cantidad_entregada": 200
+            },
+            {
+                "id": "4",
+                "idSolicitud": "2",
+                "nombreProducto": "Resaltadores",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 150,
+                "cantidad_entregada": 100
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "codigo": "SOL003",
+        "objetivo": "Suministro de herramientas de oficina para nuevos empleados",
+        "nombre_solicitante": "Carlos García",
+        "nombre_aprobador": "Luis Martínez",
+        "nombre_recepcionador": "Ana López",
+        "fecha_solicitud": "2025-03-23T10:20:00.000Z",
+        "fecha_envio": "2025-03-24T11:30:10.000Z",
+        "fecha_aprobacion": "2025-03-25T12:45:00.000Z",
+        "fecha_rechazo": "2025-03-26T13:00:25.000Z",
+        "fecha_recepcion": "2025-03-27T14:10:30.000Z",
+        "almacen": "Almacén Sur",
+        "detalle": [
+            {
+                "id": "5",
+                "idSolicitud": "3",
+                "nombreProducto": "Carpetas",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 30,
+                "cantidad_entregada": 30
+            },
+            {
+                "id": "6",
+                "idSolicitud": "3",
+                "nombreProducto": "Tijeras",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 10,
+                "cantidad_entregada": 10
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "codigo": "SOL004",
+        "objetivo": "Compra de material para el evento de capacitación",
+        "nombre_solicitante": "Lucía Gómez",
+        "nombre_aprobador": "Carlos Sánchez",
+        "nombre_recepcionador": "Juan Pérez",
+        "fecha_solicitud": "2025-03-25T08:10:50.000Z",
+        "fecha_envio": "2025-03-26T09:00:15.000Z",
+        "fecha_aprobacion": "2025-03-27T10:30:20.000Z",
+        "fecha_rechazo": "2025-03-28T11:40:25.000Z",
+        "fecha_recepcion": "2025-03-29T12:50:30.000Z",
+        "almacen": "Almacén Central",
+        "detalle": [
+            {
+                "id": "7",
+                "idSolicitud": "4",
+                "nombreProducto": "Proyectores",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 5,
+                "cantidad_entregada": 5
+            },
+            {
+                "id": "8",
+                "idSolicitud": "4",
+                "nombreProducto": "Pantallas",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 5,
+                "cantidad_entregada": 5
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "codigo": "SOL005",
+        "objetivo": "Reposición de material para el departamento de marketing",
+        "nombre_solicitante": "Mariana Díaz",
+        "nombre_aprobador": "Luis Martínez",
+        "nombre_recepcionador": "Ana López",
+        "fecha_solicitud": "2025-03-30T08:15:00.000Z",
+        "fecha_envio": "2025-03-31T09:05:30.000Z",
+        "fecha_aprobacion": "2025-04-01T10:45:50.000Z",
+        "fecha_rechazo": "2025-04-02T11:25:20.000Z",
+        "fecha_recepcion": "2025-04-03T12:35:40.000Z",
+        "almacen": "Almacén Norte",
+        "detalle": [
+            {
+                "id": "9",
+                "idSolicitud": "5",
+                "nombreProducto": "Plumas",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 100,
+                "cantidad_entregada": 100
+            },
+            {
+                "id": "10",
+                "idSolicitud": "5",
+                "nombreProducto": "Papel",
+                "unidad_medida": "paquete",
+                "cantidad_solicitada": 20,
+                "cantidad_entregada": 20
+            }
+        ]
+    },
+    {
+        "id": "6",
+        "codigo": "SOL006",
+        "objetivo": "Material para la construcción del nuevo laboratorio",
+        "nombre_solicitante": "Ricardo Fernández",
+        "nombre_aprobador": "Carlos Sánchez",
+        "nombre_recepcionador": "Juan Pérez",
+        "fecha_solicitud": "2025-04-01T09:00:00.000Z",
+        "fecha_envio": "2025-04-02T10:10:30.000Z",
+        "fecha_aprobacion": "2025-04-03T11:25:45.000Z",
+        "fecha_rechazo": "2025-04-04T12:40:15.000Z",
+        "fecha_recepcion": "2025-04-05T13:55:00.000Z",
+        "almacen": "Almacén Sur",
+        "detalle": [
+            {
+                "id": "11",
+                "idSolicitud": "6",
+                "nombreProducto": "Ladrillos",
+                "unidad_medida": "caja",
+                "cantidad_solicitada": 100,
+                "cantidad_entregada": 100
+            },
+            {
+                "id": "12",
+                "idSolicitud": "6",
+                "nombreProducto": "Cemento",
+                "unidad_medida": "saco",
+                "cantidad_solicitada": 50,
+                "cantidad_entregada": 50
+            }
+        ]
+    },
+    {
+        "id": "7",
+        "codigo": "SOL007",
+        "objetivo": "Reabastecimiento de material para el departamento de ventas",
+        "nombre_solicitante": "Pedro Sánchez",
+        "nombre_aprobador": "Luis Martínez",
+        "nombre_recepcionador": "Ana López",
+        "fecha_solicitud": "2025-04-05T08:50:30.000Z",
+        "fecha_envio": "2025-04-06T09:40:20.000Z",
+        "fecha_aprobacion": "2025-04-07T10:30:45.000Z",
+        "fecha_rechazo": "2025-04-08T11:25:10.000Z",
+        "fecha_recepcion": "2025-04-09T12:15:50.000Z",
+        "almacen": "Almacén Central",
+        "detalle": [
+            {
+                "id": "13",
+                "idSolicitud": "7",
+                "nombreProducto": "Mochilas",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 60,
+                "cantidad_entregada": 60
+            },
+            {
+                "id": "14",
+                "idSolicitud": "7",
+                "nombreProducto": "Carteras",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 40,
+                "cantidad_entregada": 40
+            }
+        ]
+    },
+    {
+        "id": "8",
+        "codigo": "SOL008",
+        "objetivo": "Material para la nueva campaña publicitaria",
+        "nombre_solicitante": "Laura Gómez",
+        "nombre_aprobador": "Carlos Sánchez",
+        "nombre_recepcionador": "Juan Pérez",
+        "fecha_solicitud": "2025-04-10T00:00:00.000Z",
+        "fecha_envio": "2025-04-11T00:00:00.000Z",
+        "fecha_aprobacion": "2025-04-12T00:00:00.000Z",
+        "fecha_rechazo": "2025-04-13T00:00:00.000Z",
+        "fecha_recepcion": "2025-04-14T00:00:00.000Z",
+        "almacen": "Almacén Norte",
+        "detalle": [
+            {
+                "id": "15",
+                "idSolicitud": "8",
+                "nombreProducto": "Folletos",
+                "unidad_medida": "paquete",
+                "cantidad_solicitada": 500,
+                "cantidad_entregada": 500
+            },
+            {
+                "id": "16",
+                "idSolicitud": "8",
+                "nombreProducto": "Posters",
+                "unidad_medida": "unidad",
+                "cantidad_solicitada": 100,
+                "cantidad_entregada": 100
+            }
+        ]
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+      "id_almacen": "1",
+      "almacen": "Almacén Central"
+    },
+    {
+      "id_almacen": "2",
+      "almacen": "Almacén Secundario"
+    },
+    {
+      "id_almacen": "3",
+      "almacen": "Almacén A"
+    }
+]

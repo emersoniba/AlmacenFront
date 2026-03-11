@@ -1,0 +1,175 @@
+.info-card {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    margin-bottom: 1.5rem;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #495057;
+    background-color: #f8f9fa;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.badge {
+    font-size: 0.75em;
+}
+
+.alert {
+    border-radius: 0.5rem;
+}
+
+.text-success {
+    color: #198754 !important;
+}
+
+.text-danger {
+    color: #fd0019 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.bg-success {
+    background-color: #198754 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+@media (max-width: 768px) {
+    .info-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .table-responsive {
+        border: 1px solid #e9ecef;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    .table-hover tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #e9ecef;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background: white;
+    }
+    .table-hover td {
+        display: block;
+        border: none;
+        padding: 0.5rem;
+        text-align: left;
+    }
+    .table-hover td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.25rem;
+        color: #495057;
+    }
+    .card-footer .btn {
+        width: 100%;
+    }
+    .card-footer .d-flex {
+        gap: 0.5rem;
+    }
+    .table-hover tr {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .table-hover td:first-child {
+        padding-top: 1rem;
+    }
+    .table-hover td:last-child {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #f1f1f1;
+        margin-bottom: 0.5rem;
+    }
+    .d-flex.align-items-center.justify-content-center {
+        justify-content: center !important;
+    }
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container-fluid {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .fs-5 {
+        font-size: 1rem !important;
+    }
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+    .btn i {
+        margin-right: 0.25rem;
+    }
+}
+
+.table-hover {
+    @media (max-width: 768px) {
+        thead {
+            display: none;
+        }
+        tbody,
+        tr,
+        td {
+            display: block;
+            width: 100%;
+        }
+        tr {
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        td {
+            text-align: right;
+            padding: 0.5rem;
+            position: relative;
+            padding-left: 50%;
+        }
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0.5rem;
+            width: 45%;
+            padding-right: 0.5rem;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: bold;
+        }
+    }
+}
