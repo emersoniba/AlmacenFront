@@ -1,20 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario.models';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-//
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SwalAlertService } from 'src/app/utils/util.swal';
+import { HandleErrorMessage } from 'src/app/utils/handle.errors';
+import Swal from 'sweetalert2';
+
 @Component({
     selector: 'app-perfil-modal',
     templateUrl: './perfil-modal.component.html',
     styleUrls: ['./perfil-modal.component.scss']
 })
 export class PerfilModalComponent implements OnInit {
-    @Input() user: Usuario | null = null;
-
+    user: Usuario | null = null;
     perfilForm: FormGroup;
     fotoPreview: string | ArrayBuffer | null = null;
     fotoFile: File | null = null;
@@ -22,12 +24,16 @@ export class PerfilModalComponent implements OnInit {
     apiUrl = environment.apiUrl;
 
     constructor(
-        public activeModal: NgbActiveModal,
+        public dialogRef: MatDialogRef<PerfilModalComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
         private fb: FormBuilder,
         private authService: AuthService,
         private toastr: ToastrService,
-        private http: HttpClient
+        private http: HttpClient,
+        private alertService: SwalAlertService
     ) {
+        this.user = data.user;
+        
         this.perfilForm = this.fb.group({
             nombres: ['', Validators.required],
             apellido_paterno: [''],
@@ -55,7 +61,6 @@ export class PerfilModalComponent implements OnInit {
                 unidad: this.user.persona.unidad || ''
             });
 
-            // Cargar foto si existe
             if (this.user.persona.imagen) {
                 this.fotoPreview = this.user.persona.imagen;
             }
@@ -97,13 +102,29 @@ export class PerfilModalComponent implements OnInit {
 
     guardarCambios() {
         if (this.perfilForm.invalid) {
-            this.toastr.warning('Complete correctamente el formulario', 'Validación');
+            this.toastr.warning('Verificar los campos del formulario', 'Validación');
             return;
         }
 
-        this.cargando = true;
+        this.alertService.showConfirmationDialog(
+            'Actualizar Perfil', 
+            '¿Está seguro de realizar esta acción?'
+        ).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Espere un momento . . .',
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
 
-        // Actualizar persona
+                this.cargando = true;
+                this.procesarActualizacion();
+            }
+        });
+    }
+
+    procesarActualizacion() {
         const datosPersona: any = {
             nombres: this.perfilForm.get('nombres')?.value,
             apellido_paterno: this.perfilForm.get('apellido_paterno')?.value,
@@ -115,7 +136,6 @@ export class PerfilModalComponent implements OnInit {
             unidad: this.perfilForm.get('unidad')?.value
         };
 
-        // Si hay foto, usar FormData
         if (this.fotoFile) {
             const formData = new FormData();
             Object.keys(datosPersona).forEach(key => {
@@ -126,14 +146,14 @@ export class PerfilModalComponent implements OnInit {
             formData.append('imagen', this.fotoFile);
 
             this.http.patch(`${this.apiUrl}/personas/${this.user?.persona?.ci}/`, formData).subscribe({
-                next: (response: any) => {
+                next: () => {
                     this.actualizarContraseña();
                 },
                 error: (error) => this.manejarError(error)
             });
         } else {
             this.http.patch(`${this.apiUrl}/personas/${this.user?.persona?.ci}/`, datosPersona).subscribe({
-                next: (response: any) => {
+                next: () => {
                     this.actualizarContraseña();
                 },
                 error: (error) => this.manejarError(error)
@@ -148,7 +168,7 @@ export class PerfilModalComponent implements OnInit {
             const datosUsuario = { password: password };
             
             this.http.patch(`${this.apiUrl}/usuarios/${this.user?.id}/`, datosUsuario).subscribe({
-                next: (response: any) => {
+                next: () => {
                     this.obtenerUsuarioActualizado();
                 },
                 error: (error) => this.manejarError(error)
@@ -161,25 +181,28 @@ export class PerfilModalComponent implements OnInit {
     obtenerUsuarioActualizado() {
         this.http.get(`${this.apiUrl}/usuarios/${this.user?.id}/`).subscribe({
             next: (response: any) => {
+                Swal.close();
                 this.cargando = false;
-                this.toastr.success('Perfil actualizado correctamente', 'Éxito');
                 
                 const updatedUser = response.data || response;
                 localStorage.setItem('user-almacen', JSON.stringify(updatedUser));
                 this.authService['currentUserSubject'].next(updatedUser);
-                this.activeModal.close(updatedUser);
+                
+                this.toastr.success('Perfil actualizado correctamente', 'Éxito');
+                this.dialogRef.close(updatedUser);
             },
             error: (error) => this.manejarError(error)
         });
     }
 
     manejarError(error: any) {
+        Swal.close();
         this.cargando = false;
         console.error('Error al actualizar perfil:', error);
-        this.toastr.error('Error al actualizar el perfil', 'Error');
+        this.toastr.error(HandleErrorMessage(error), 'Error');
     }
 
     cancelar() {
-        this.activeModal.dismiss('cancel');
+        this.dialogRef.close();
     }
 }

@@ -1,12 +1,11 @@
-<div class="modal-header">
-    <h5 class="modal-title">Mi Perfil</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="cancelar()"></button>
-</div>
+<h3 mat-dialog-title>
+    <b>Mi Perfil</b>
+</h3>
 
-<div class="modal-body">
+<div class="row" mat-dialog-content>
     <form [formGroup]="perfilForm">
         <!-- Foto de perfil -->
-        <div class="text-center mb-4">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center mb-4">
             <div class="foto-perfil-container">
                 <div *ngIf="fotoPreview; else sinFoto" class="foto-preview">
                     <img [src]="fotoPreview" alt="Foto de perfil">
@@ -29,99 +28,137 @@
         </div>
 
         <!-- Datos personales -->
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Nombres</label>
-                <input type="text" class="form-control" formControlName="nombres">
-                <div class="text-danger small" *ngIf="perfilForm.get('nombres')?.invalid && perfilForm.get('nombres')?.touched">
-                    Campo requerido
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Nombres</mat-label>
+                        <mat-icon matPrefix>person</mat-icon>
+                        <input matInput formControlName="nombres"> @if(perfilForm.get('nombres').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Apellido Paterno</mat-label>
+                        <mat-icon matPrefix>person_outline</mat-icon>
+                        <input matInput formControlName="apellido_paterno">
+                    </mat-form-field>
                 </div>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Apellido Paterno</label>
-                <input type="text" class="form-control" formControlName="apellido_paterno">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Apellido Materno</label>
-                <input type="text" class="form-control" formControlName="apellido_materno">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Cargo</label>
-                <input type="text" class="form-control" formControlName="cargo">
-                <div class="text-danger small" *ngIf="perfilForm.get('cargo')?.invalid && perfilForm.get('cargo')?.touched">
-                    Campo requerido
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Apellido Materno</mat-label>
+                        <mat-icon matPrefix>person_outline</mat-icon>
+                        <input matInput formControlName="apellido_materno">
+                    </mat-form-field>
                 </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" formControlName="correo">
-                <div class="text-danger small" *ngIf="perfilForm.get('correo')?.invalid && perfilForm.get('correo')?.touched">
-                    Email válido requerido
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Cargo</mat-label>
+                        <mat-icon matPrefix>work</mat-icon>
+                        <input matInput formControlName="cargo"> @if(perfilForm.get('cargo').hasError('required')){
+                        <mat-error>Este campo es requerido</mat-error>
+                        }
+                    </mat-form-field>
                 </div>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Teléfono</label>
-                <input type="text" class="form-control" formControlName="telefono">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <mat-icon matPrefix>email</mat-icon>
+                        <input matInput type="email" formControlName="correo"> @if(perfilForm.get('correo').hasError('email')){
+                        <mat-error>Email válido requerido</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Teléfono</mat-label>
+                        <mat-icon matPrefix>phone</mat-icon>
+                        <input matInput formControlName="telefono">
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Unidad</label>
-                <input type="text" class="form-control" formControlName="unidad">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Unidad</mat-label>
+                        <mat-icon matPrefix>business</mat-icon>
+                        <input matInput formControlName="unidad">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>CI</mat-label>
+                        <mat-icon matPrefix>badge</mat-icon>
+                        <input matInput [value]="user?.persona?.ci" disabled readonly>
+                    </mat-form-field>
+                </div>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">CI</label>
-                <input type="text" class="form-control" [value]="user?.persona?.ci" disabled readonly>
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Dirección</mat-label>
+                    <mat-icon matPrefix>location_on</mat-icon>
+                    <textarea matInput formControlName="direccion" rows="2"></textarea>
+                </mat-form-field>
             </div>
-        </div>
 
-        <div class="mb-3">
-            <label class="form-label">Dirección</label>
-            <textarea class="form-control" rows="2" formControlName="direccion"></textarea>
-        </div>
+            <!-- Cambio de contraseña -->
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="ti ti-lock me-2"></i>Cambiar Contraseña</h6>
+                    <p class="text-muted small">Dejar en blanco si no desea cambiar</p>
 
-        <!-- Cambio de contraseña -->
-        <div class="card bg-light mb-3">
-            <div class="card-body">
-                <h6 class="card-title">Cambiar Contraseña</h6>
-                <p class="text-muted small">Dejar en blanco si no desea cambiar</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Nueva contraseña</mat-label>
+                                <mat-icon matPrefix>lock</mat-icon>
+                                <input matInput type="password" formControlName="password">
+                            </mat-form-field>
+                        </div>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nueva contraseña</label>
-                        <input type="password" class="form-control" formControlName="password">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>Confirmar contraseña</mat-label>
+                                <mat-icon matPrefix>lock</mat-icon>
+                                <input matInput type="password" formControlName="confirmPassword">
+                            </mat-form-field>
+                        </div>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Confirmar contraseña</label>
-                        <input type="password" class="form-control" formControlName="confirmPassword">
+                    <div class="text-danger small" *ngIf="perfilForm.errors?.['notSame'] && 
+                        (perfilForm.get('confirmPassword')?.touched || perfilForm.get('password')?.touched)">
+                        <i class="ti ti-alert-circle me-1"></i>Las contraseñas no coinciden
                     </div>
-                </div>
-
-                <div class="text-danger small" *ngIf="perfilForm.errors?.['notSame'] && 
-                    (perfilForm.get('confirmPassword')?.touched || perfilForm.get('password')?.touched)">
-                    Las contraseñas no coinciden
                 </div>
             </div>
         </div>
     </form>
 </div>
 
-<div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-    <button type="button" class="btn btn-primary" (click)="guardarCambios()" [disabled]="cargando">
-        <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
-        Guardar cambios
+<div mat-dialog-actions class="px-4 mb-4">
+    <button type="button" mat-button class="btn btn-primary btn-round mr-05" (click)="guardarCambios()" [disabled]="cargando">
+        <i class="ti ti-send"></i> 
+        <span *ngIf="!cargando">Guardar Cambios</span>
+        <span *ngIf="cargando">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Guardando...
+        </span>
+    </button>
+    <button type="button" mat-button class="btn btn-danger btn-round" (click)="cancelar()">
+        <i class="ti ti-loader"></i> Cancelar
     </button>
 </div>

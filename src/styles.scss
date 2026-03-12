@@ -1,123 +1,122 @@
-// main framework
-@import 'scss/settings/preset-variables';
-@import 'node_modules/bootstrap/scss/functions';
-@import 'node_modules/bootstrap/scss/variables';
-$pc-body-bg: map-get($preset-colors, 'preset-1', 'body');
-$pc-blue: map-get($preset-colors, 'preset-1', 'primary');
-$pc-secondary: map-get($preset-colors, 'preset-1', 'secondary');
-@import 'scss/settings/custom-variables';
-@import 'scss/settings/theme-variables';
-@import 'node_modules/bootstrap/scss/bootstrap';
-@import 'node_modules/bootstrap/scss/utilities';
-@import 'node_modules/bootstrap/scss/utilities/api';
-// main framework
-@import 'scss/themes/generic';
-@import 'scss/themes/general';
-// menu
-@import 'scss/menu/menu-lite';
-// Layouts
-@import 'scss/themes/layouts/layouts.scss';
-// Componants
-@import 'scss/themes/components/components';
-// pages
-@import 'scss/themes/pages/page';
-// font
-@import 'scss/fonts/tabler-icons.min.css';
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-@import 'material-icons/iconfont/material-icons.css';
-@import 'ag-grid-community/styles/ag-grid.css';
-
-/* Quartz Theme Specific CSS */
-
-@import 'ag-grid-community/styles/ag-theme-material.css';
-.pull-right {
-    text-align: right;
-}
-
-.mr-05 {
-    margin-right: 0.5em !important;
-}
-
-.ml-05 {
-    margin-left: 0.5em !important;
-}
-
-.mat-mdc-form-field-focus-overlay {
-    background-color: white !important;
-}
-
-.mat-mdc-form-field .mdc-text-field--filled {
-    background-color: white !important;
-}
-
-.mdc-text-field--filled {
-    background-color: white !important;
-}
-
-.mat-mdc-form-field-flex {
-    background-color: white !important;
-}
-
-.mat-mdc-select-panel {
-    background-color: white !important;
-}
-
-.mat-mdc-form-field .mat-mdc-form-field-focus-overlay {
-    opacity: 0 !important;
-}
-
-.br {
-    border-right: 1px solid #ededed;
-}
-
-.separator {
-    margin-top: 0.8rem;
-    border-bottom: 1px solid #e8e6e6;
-    margin-bottom: 0rem;
-}
-
-.btn-round {
-    border-radius: 20px !important;
-}
-
-.btn-space {
-    margin-left: 0.3rem;
-}
-
-::ng-deep .mat-mdc-dialog-container {
-    width: 80%;
-    height: 60%;
-    max-width: 800px;
-    max-height: 600px;
-    margin: auto;
-}
-
-@media (max-width: 600px) {
-     ::ng-deep .mat-mdc-dialog-container {
-        width: 95%;
-        height: 80%;
-    }
-}
-
-@media (max-width: 1024px) {
-     ::ng-deep .mat-mdc-dialog-container {
-        width: 85%;
-        height: 70%;
-    }
-}
-
-@media (min-width: 1025px) {
-     ::ng-deep .mat-mdc-dialog-container {
-        width: 70%;
-        height: 60%;
-    }
-}
+        // main framework
+        @import 'scss/settings/preset-variables';
+        @import 'node_modules/bootstrap/scss/functions';
+        @import 'node_modules/bootstrap/scss/variables';
+        $pc-body-bg: map-get($preset-colors, 'preset-1', 'body');
+        $pc-blue: map-get($preset-colors, 'preset-1', 'primary');
+        $pc-secondary: map-get($preset-colors, 'preset-1', 'secondary');
+        @import 'scss/settings/custom-variables';
+        @import 'scss/settings/theme-variables';
+        @import 'node_modules/bootstrap/scss/bootstrap';
+        @import 'node_modules/bootstrap/scss/utilities';
+        @import 'node_modules/bootstrap/scss/utilities/api';
+        // main framework
+        @import 'scss/themes/generic';
+        @import 'scss/themes/general';
+        // menu
+        @import 'scss/menu/menu-lite';
+        // Layouts
+        @import 'scss/themes/layouts/layouts.scss';
+        // Componants
+        @import 'scss/themes/components/components';
+        // pages
+        @import 'scss/themes/pages/page';
+        // font
+        @import 'scss/fonts/tabler-icons.min.css';
+        html,
+        body {
+            height: 100%;
+        }
+        
+        body {
+            margin: 0;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+        }
+        
+        @import 'material-icons/iconfont/material-icons.css';
+        @import 'ag-grid-community/styles/ag-grid.css';
+        /* Quartz Theme Specific CSS */
+        
+        @import 'ag-grid-community/styles/ag-theme-material.css';
+        .pull-right {
+            text-align: right;
+        }
+        
+        .mr-05 {
+            margin-right: 0.5em !important;
+        }
+        
+        .ml-05 {
+            margin-left: 0.5em !important;
+        }
+        
+        .mat-mdc-form-field-focus-overlay {
+            background-color: white !important;
+        }
+        
+        .mat-mdc-form-field .mdc-text-field--filled {
+            background-color: white !important;
+        }
+        
+        .mdc-text-field--filled {
+            background-color: white !important;
+        }
+        
+        .mat-mdc-form-field-flex {
+            background-color: white !important;
+        }
+        
+        .mat-mdc-select-panel {
+            background-color: white !important;
+        }
+        
+        .mat-mdc-form-field .mat-mdc-form-field-focus-overlay {
+            opacity: 0 !important;
+        }
+        
+        .br {
+            border-right: 1px solid #ededed;
+        }
+        
+        .separator {
+            margin-top: 0.8rem;
+            border-bottom: 1px solid #e8e6e6;
+            margin-bottom: 0rem;
+        }
+        
+        .btn-round {
+            border-radius: 20px !important;
+        }
+        
+        .btn-space {
+            margin-left: 0.3rem;
+        }
+        
+         ::ng-deep .mat-mdc-dialog-container {
+            width: 80%;
+            height: 60%;
+            max-width: 800px;
+            max-height: 600px;
+            margin: auto;
+        }
+        
+        @media (max-width: 600px) {
+             ::ng-deep .mat-mdc-dialog-container {
+                width: 95%;
+                height: 80%;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+             ::ng-deep .mat-mdc-dialog-container {
+                width: 85%;
+                height: 70%;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+             ::ng-deep .mat-mdc-dialog-container {
+                width: 70%;
+                height: 60%;
+            }
+        }
