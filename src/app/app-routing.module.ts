@@ -36,7 +36,7 @@ const routes: Routes = [
             {
                 path: 'catalogo',
                 component: CatalogoComponent,
-                //canActivate: [AuthGuard, ],
+                canActivate: [AuthGuard, ],
                 data: { roles: ['administrador', 'responsable'] }
             },
             {

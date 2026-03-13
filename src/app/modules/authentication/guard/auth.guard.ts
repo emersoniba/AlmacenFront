@@ -1,30 +1,41 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-    constructor(private authService: AuthService, private router: Router) { }
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): boolean {
-        // Verificar si está autenticado
+    constructor(
+        private authService: AuthService,
+        private router: Router,
+        private toastr: ToastrService
+    ) {}
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+
         if (!this.authService.verificarToken()) {
-            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+
+            this.toastr.warning(
+                'Su sesión ha expirado. Por favor inicie sesión nuevamente.',
+                'Sesión expirada'
+            );
+
+            this.authService.logout();
+            this.router.navigate(['/login']);
+
             return false;
         }
 
-        // Verificar roles si están especificados en la ruta
         const requiredRoles = route.data['roles'] as string[];
+
         if (requiredRoles && requiredRoles.length > 0) {
             const hasRole = this.authService.hasAnyRole(requiredRoles);
+
             if (!hasRole) {
-                this.router.navigate(['/dashboard/default']); // o a una página de acceso denegado
+                this.router.navigate(['/dashboard/default']);
                 return false;
             }
         }

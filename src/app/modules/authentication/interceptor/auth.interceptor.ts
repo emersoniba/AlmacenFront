@@ -1,3 +1,4 @@
+// services/auth.interceptor.ts
 import { Injectable } from '@angular/core';
 import {
     HttpInterceptor,
@@ -10,6 +11,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, filter, take, switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +22,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     constructor(
         private authService: AuthService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private router: Router
     ) { }
 
     intercept(
@@ -28,13 +31,13 @@ export class AuthInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         let newReq = req.clone();
-        
+
         // Agregar token si existe y no es login
         if (this.authService.verificarToken() && !req.url.includes('/auth/login')) {
             const token = this.authService.accessToken();
             if (token) {
                 newReq = req.clone({
-                    setHeaders: { 
+                    setHeaders: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
@@ -44,13 +47,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
         return next.handle(newReq).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status === 401 && !req.url.includes('/auth/login')) {
-                    // Token expirado, intentar refrescar
-                    return this.handle401Error(newReq, next);
+                if (error.status === 401) {
+                    const errorMsg = error.error?.messages?.[0]?.message || '';
+                    if (errorMsg.includes('expired') || error.error?.code === 'token_not_valid') {
+                        return this.handle401Error(newReq, next);
+                    }
                 } else if (error.status === 403) {
                     this.toastr.error('No tiene permisos para realizar esta acción', 'Acceso Denegado');
                 } else if (error.status === 400) {
-                    // Mostrar errores de validación del backend
                     const errorMsg = error.error?.message || 'Error en la solicitud';
                     this.toastr.error(errorMsg, 'Error');
                 } else if (error.status === 500) {
@@ -67,29 +71,44 @@ export class AuthInterceptor implements HttpInterceptor {
             this.refreshTokenSubject.next(null);
 
             const refreshToken = this.authService.refreshToken();
-            
+
             if (refreshToken) {
                 return this.authService.refreshTokenRequest(refreshToken).pipe(
+                    /*  switchMap((response: any) => {
+                          this.isRefreshing = false;
+          
+                          localStorage.setItem('tkn-almacen', response.access);//cambio gpt
+                          this.refreshTokenSubject.next(response.data.access);
+                          
+                          // Reintentar la petición original
+                          return next.handle(this.addTokenToRequest(request, response.access));//cambio gpt
+                      }),*/
                     switchMap((response: any) => {
                         this.isRefreshing = false;
-                        
-                        // Guardar nuevo token
-                        localStorage.setItem('tkn-almacen', response.data.access);
-                        this.refreshTokenSubject.next(response.data.access);
-                        
-                        // Reintentar la petición original
-                        return next.handle(this.addTokenToRequest(request, response.data.access));
+
+                        const newAccess = response.access;
+
+                        localStorage.setItem('tkn-almacen', newAccess);
+                        this.refreshTokenSubject.next(newAccess);
+
+                        return next.handle(this.addTokenToRequest(request, newAccess));
                     }),
                     catchError((err) => {
                         this.isRefreshing = false;
+
+                        // Si el refresh token también expiró, cerrar sesión
+                        this.toastr.warning('Su sesión ha expirado. Por favor, inicie sesión nuevamente.', 'Sesión Expirada');
                         this.authService.logout();
-                        this.toastr.error('Sesión expirada, por favor inicie sesión nuevamente', 'Sesión Expirada');
+                        this.router.navigate(['/login']);
+
                         return throwError(() => err);
                     })
                 );
             } else {
                 this.isRefreshing = false;
+                this.toastr.warning('Su sesión ha expirado. Por favor, inicie sesión nuevamente.', 'Sesión Expirada');
                 this.authService.logout();
+                this.router.navigate(['/login']);
                 return throwError(() => new Error('No hay token de refresco'));
             }
         } else {

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, throwError, tap, map } from 'rxjs';
 import { AuthUser, LoginResponse, Usuario } from 'src/app/models/usuario.models';
 import { environment } from 'src/environments/environment';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private router: Router
-    ) {}
+    ) { }
 
     private getUserFromStorage(): Usuario | null {
         const userData = localStorage.getItem('user-almacen');
@@ -66,7 +67,7 @@ export class AuthService {
 
     logout() {
         const refreshToken = localStorage.getItem('refresh-tkn-almacen');
-        
+
         if (refreshToken) {
             this.http.post(`${this.apiUrl}/auth/logout/`, { refresh: refreshToken }).subscribe({
                 error: (err) => console.error('Error en logout:', err)
@@ -89,9 +90,19 @@ export class AuthService {
         return localStorage.getItem('refresh-tkn-almacen');
     }
 
-    public verificarToken(): boolean {
+    /*public verificarToken(): boolean {
         const token = localStorage.getItem('tkn-almacen');
         return !!token;
+    }*/
+    public verificarToken(): boolean {
+        const token = localStorage.getItem('tkn-almacen');
+
+        if (!token) return false;
+
+        const decoded: any = jwtDecode(token);
+        const exp = decoded.exp * 1000;
+
+        return Date.now() < exp;
     }
 
     public getCurrentUser(): Usuario | null {
