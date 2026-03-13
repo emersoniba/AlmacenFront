@@ -16,7 +16,7 @@ import { RecepcionadorComponent } from './modules/almacen/bandejas/recepcionador
 import { EntregaProductosComponent } from './modules/almacen/bandejas/recepcionador/entrega-productos/entrega-productos.component';
 import { AtendidasComponent } from './modules/almacen/bandejas/atendidas/atendidas.component';
 import { ReportesComponent } from './modules/almacen/reportes/reportes.component';
-
+import { PersonalComponent} from './modules/almacen/personal/personal.component';
 
 const routes: Routes = [
     {
@@ -33,11 +33,17 @@ const routes: Routes = [
                 loadComponent: () => import('./modules/dashboard/dashboard.component'),
                 canActivate: [AuthGuard,]
             },
+             {
+                path: 'usuario',
+                component: PersonalComponent,
+                canActivate: [AuthGuard, ],
+                data: { roles: ['Admin', 'Almacenero'] }
+            },
             {
                 path: 'catalogo',
                 component: CatalogoComponent,
                 canActivate: [AuthGuard, ],
-                data: { roles: ['administrador', 'responsable'] }
+                data: { roles: ['administrador', 'Almacenero'] }
             },
             {
                 path: 'proveedor',

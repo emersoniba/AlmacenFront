@@ -36,6 +36,24 @@ export const NavigationItems: NavigationItem[] = [
         ]
     },
     {
+        id: 'personal',
+        title: 'Personal',
+        type: 'group',
+        icon: 'icon-navigation',
+        children: [
+            {
+                id: 'usuario',
+                title: 'Usuarios',
+                type: 'item',
+                classes: 'nav-item',
+                url: '/usuario',
+                icon: 'ti ti-user',
+                target: false,
+                breadcrumbs: true
+            }
+        ]
+    },
+    {
         id: 'parametrizacion',
         title: 'Parametrizaciones',
         type: 'group',
@@ -67,7 +85,7 @@ export const NavigationItems: NavigationItem[] = [
                 type: 'item',
                 classes: 'nav-item',
                 url: '/almacen',
-                icon :'ti ti-truck',
+                icon: 'ti ti-truck',
                 target: false,
                 breadcrumbs: true
             },
@@ -135,7 +153,7 @@ export const NavigationItems: NavigationItem[] = [
             },
             {
                 id: 'atender',
-                title:'Solicitudes Atendidas',
+                title: 'Solicitudes Atendidas',
                 type: 'item',
                 classes: 'nav-item',
                 url: '/atender',

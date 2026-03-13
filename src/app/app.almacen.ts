@@ -20,7 +20,8 @@ import { IngresoComponent } from './modules/almacen/parametrizacion/ingreso/ingr
 import { IngresoFormComponent } from './modules/almacen/parametrizacion/ingreso/ingreso-form/ingreso-form.component';
 import { ReportesComponent } from './modules/almacen/reportes/reportes.component';
 import { PerfilModalComponent } from './modules/perfil-modal/perfil-modal.component';
-
+import { PersonalComponent } from './modules/almacen/personal/personal.component';
+import { PersonalFormComponent } from './modules/almacen/personal/personal-form/personal-form.component';
 
 export const AppAlmacenConfig = [
     LoginComponent,
@@ -44,4 +45,7 @@ export const AppAlmacenConfig = [
     RendererComponent,
     ReportesComponent,
     PerfilModalComponent,
+    //nuevos components
+    PersonalComponent,
+    PersonalFormComponent,
 ]

@@ -1,0 +1,209 @@
+<h3 mat-dialog-title>
+    <b>{{labelForm}} - Usuario</b>
+</h3>
+
+<div class="row" mat-dialog-content>
+    <form [formGroup]="formRegistro">
+        <!-- Sección: Datos de Persona -->
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+            <h5 class="text-primary"><i class="ti ti-user me-2"></i>Datos de la Persona</h5>
+            <hr class="separator" />
+        </div>
+
+        <!-- CI y Búsqueda -->
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>CI / Carnet de Identidad</mat-label>
+                    <mat-icon matPrefix>badge</mat-icon>
+                    <input matInput formControlName="ci" [readonly]="modoEdicion"> @if(formRegistro.get('ci').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                    } @if(formRegistro.get('ci').hasError('minlength')){
+                    <mat-error>Mínimo 5 caracteres</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="!modoEdicion">
+                <button mat-button class="btn btn-info btn-round w-100" (click)="buscarPersonaPorCI()" [disabled]="!formRegistro.get('ci')?.value">
+                    <i class="ti ti-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+
+        <!-- Nombres y Apellidos -->
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Nombres</mat-label>
+                    <mat-icon matPrefix>person</mat-icon>
+                    <input matInput formControlName="nombres"> @if(formRegistro.get('nombres').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Apellido Paterno</mat-label>
+                    <mat-icon matPrefix>person_outline</mat-icon>
+                    <input matInput formControlName="apellido_paterno">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Apellido Materno</mat-label>
+                    <mat-icon matPrefix>person_outline</mat-icon>
+                    <input matInput formControlName="apellido_materno">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Cargo y Email -->
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Cargo</mat-label>
+                    <mat-icon matPrefix>work</mat-icon>
+                    <input matInput formControlName="cargo"> @if(formRegistro.get('cargo').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <mat-icon matPrefix>email</mat-icon>
+                    <input matInput type="email" formControlName="correo"> @if(formRegistro.get('correo').hasError('email')){
+                    <mat-error>Email válido requerido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Teléfono y Unidad -->
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Teléfono</mat-label>
+                    <mat-icon matPrefix>phone</mat-icon>
+                    <input matInput formControlName="telefono">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Unidad</mat-label>
+                    <mat-icon matPrefix>business</mat-icon>
+                    <input matInput formControlName="unidad">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Dirección -->
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Dirección</mat-label>
+                <mat-icon matPrefix>location_on</mat-icon>
+                <textarea matInput formControlName="direccion" rows="2"></textarea>
+            </mat-form-field>
+        </div>
+
+        <!-- Sección: Datos de Usuario -->
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-3 mt-3">
+            <h5 class="text-primary"><i class="ti ti-lock me-2"></i>Datos de Usuario</h5>
+            <hr class="separator" />
+        </div>
+
+        <!-- Username y Password -->
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Nombre de Usuario</mat-label>
+                    <mat-icon matPrefix>account_circle</mat-icon>
+                    <input matInput formControlName="username"> @if(formRegistro.get('username').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                    } @if(formRegistro.get('username').hasError('minlength')){
+                    <mat-error>Mínimo 5 caracteres</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>{{modoEdicion ? 'Nueva Contraseña (opcional)' : 'Contraseña'}}</mat-label>
+                    <mat-icon matPrefix>lock</mat-icon>
+                    <input matInput type="password" formControlName="password"> @if(!modoEdicion && formRegistro.get('password').hasError('required')){
+                    <mat-error>Este campo es requerido</mat-error>
+                    } @if(formRegistro.get('password').hasError('minlength')){
+                    <mat-error>Mínimo 6 caracteres</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Confirmar Password (solo en creación) -->
+        <div class="row" *ngIf="!modoEdicion">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Confirmar Contraseña</mat-label>
+                    <mat-icon matPrefix>lock</mat-icon>
+                    <input matInput type="password" formControlName="password2"> @if(formRegistro.hasError('notSame')){
+                    <mat-error>Las contraseñas no coinciden</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Email del Usuario (solo lectura) -->
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Email (del usuario)</mat-label>
+                <mat-icon matPrefix>email</mat-icon>
+                <input matInput formControlName="email" readonly>
+                <mat-hint>Se toma del correo de la persona</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <!-- Sección: Roles -->
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-3 mt-3">
+            <h5 class="text-primary"><i class="ti ti-tag me-2"></i>Asignación de Roles</h5>
+            <hr class="separator" />
+        </div>
+
+        <!-- Selector de Roles -->
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Seleccionar Roles</mat-label>
+                <mat-icon matPrefix>group</mat-icon>
+                <mat-select formControlName="rolesSeleccionados" multiple>
+                    <mat-option *ngFor="let rol of listaRoles" [value]="rol.id">
+                        {{ rol.nombre }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <small class="text-muted">Puede seleccionar múltiples roles</small>
+        </div>
+
+        <!-- Roles actuales (en modo edición) -->
+        <div class="col-lg-12 col-md-12 col-sm-12 mt-2" *ngIf="modoEdicion && rolesActuales.length > 0">
+            <label class="form-label">Roles actuales:</label>
+            <div class="mt-1">
+                <span class="badge bg-primary me-1" *ngFor="let rol of rolesActuales">
+                    {{ rol.nombre }}
+                    <i class="ti ti-x cursor-pointer ms-1" (click)="quitarRol(rol.id)"></i>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div mat-dialog-actions class="px-4 mb-4">
+    <button type="button" mat-button class="btn btn-primary btn-round mr-05" (click)="accionRegistrar()" [disabled]="formRegistro.invalid || cargando">
+        <i class="ti ti-send"></i> 
+        <span *ngIf="!cargando">{{labelForm}}</span>
+        <span *ngIf="cargando">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Procesando...
+        </span>
+    </button>
+    <button type="button" mat-button class="btn btn-danger btn-round" (click)="accionCancel()">
+        <i class="ti ti-loader"></i> Cancelar
+    </button>
+</div>
