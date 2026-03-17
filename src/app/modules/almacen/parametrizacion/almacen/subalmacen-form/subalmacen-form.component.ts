@@ -36,20 +36,40 @@ export class SubAlmacenFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if (this.data.almacenPadre) {
+        // Verificar si es edición o creación
+        if (this.data?.id) {
+            // Es edición - data es un SubAlmacen
+            this.labelForm = 'Actualizar';
+            this.getAllAlmacenes(false);
+        } else if (this.data?.almacenPadre) {
+            // Es nuevo subalmacén desde almacén seleccionado
             this.almacenPadre = this.data.almacenPadre;
             this.getAllAlmacenes(true);
-        } else if (this.data.id) {
-            this.labelForm = 'Actualizar Datos';
-            this.getAllAlmacenes(false);
         } else {
+            // Es nuevo subalmacén sin almacén padre
             this.getAllAlmacenes(false);
         }
-        
+
         this.getFormBuilderRegistro();
         this.patchFormValues();
     }
 
+    private patchFormValues(): void {
+        if (this.data?.id) {
+            // Es edición - data es un SubAlmacen
+            this.formRegistro.patchValue({
+                id: this.data.id,
+                sigla: this.data.sigla,
+                nombre: this.data.nombre,
+                idAlmacen: this.data.almacen  // El campo se llama 'almacen' en el modelo
+            });
+        } else if (this.almacenPadre) {
+            // Es nuevo subalmacén desde almacén seleccionado
+            this.formRegistro.patchValue({
+                idAlmacen: this.almacenPadre.id
+            });
+        }
+    }
     public getAllAlmacenes(desdeAlmacenSeleccionado: boolean = false) {
         this.almacenService.getAlmacenes().subscribe({
             next: (response: any) => {
@@ -65,7 +85,7 @@ export class SubAlmacenFormComponent implements OnInit, OnDestroy {
                 if (desdeAlmacenSeleccionado && this.almacenPadre) {
                     this.seleccionarAlmacenPadre();
                 }
-            }, 
+            },
             error: (err) => {
                 this.dataAlmacen = [] as Almacen[];
                 this.toastr.error(HandleErrorMessage(err), 'Error');
@@ -78,12 +98,12 @@ export class SubAlmacenFormComponent implements OnInit, OnDestroy {
             this.formRegistro.patchValue({
                 idAlmacen: this.almacenPadre.id
             });
-            
+
             // Opcional: deshabilitar el campo si viene del almacén seleccionado
             // this.formRegistro.get('idAlmacen')?.disable();
         }
     }
-
+/*
     private patchFormValues(): void {
         if (this.data.id) {
             // Es edición de subalmacén existente
@@ -100,7 +120,7 @@ export class SubAlmacenFormComponent implements OnInit, OnDestroy {
             });
         }
     }
-
+*/
     public getFormBuilderRegistro() {
         this.formRegistro = this.fb.group({
             id: [''],
@@ -131,7 +151,7 @@ export class SubAlmacenFormComponent implements OnInit, OnDestroy {
                                     Swal.close();
                                     this.toastr.success('Subalmacén actualizado correctamente', 'Éxito');
                                     this.actionClose(response);
-                                }, 
+                                },
                                 error: (err) => {
                                     Swal.close();
                                     this.toastr.error(HandleErrorMessage(err), this.labelForm);
@@ -144,7 +164,7 @@ export class SubAlmacenFormComponent implements OnInit, OnDestroy {
                                     Swal.close();
                                     this.toastr.success('Subalmacén creado correctamente', 'Éxito');
                                     this.actionClose(response);
-                                }, 
+                                },
                                 error: (err) => {
                                     Swal.close();
                                     this.toastr.error(HandleErrorMessage(err), this.labelForm);
@@ -183,21 +203,21 @@ export class SubAlmacenFormComponent implements OnInit, OnDestroy {
     // Método para obtener mensajes de error
     getErrorMessage(controlName: string): string {
         const control = this.formRegistro.get(controlName);
-        
+
         if (control?.hasError('required')) {
             return 'Este campo es requerido';
         }
-        
+
         if (control?.hasError('minlength')) {
             const minLength = control.errors?.['minlength']?.requiredLength;
             return `Mínimo ${minLength} caracteres`;
         }
-        
+
         if (control?.hasError('maxlength')) {
             const maxLength = control.errors?.['maxlength']?.requiredLength;
             return `Máximo ${maxLength} caracteres`;
         }
-        
+
         return '';
     }
 

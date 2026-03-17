@@ -148,7 +148,7 @@ export class ReportesComponent {
       }
     });
   }
-
+/*
   public getSubAlmacenes(idAlmacen: string) {
     this.subAlmacenService.getSubAlmacenesAlmacen(idAlmacen).subscribe({
       next: (response) => {
@@ -160,6 +160,7 @@ export class ReportesComponent {
       }
     });
   }
+    */
   //
   public async inventarioFisico() {
     // Comenta la validación temporalmente para probar sin filtros
@@ -229,7 +230,7 @@ export class ReportesComponent {
     }
   }
   */
-
+/*
   private async obtenerIngresosFiltrados(idAlmacen: string, idSubAlmacen: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
       this.ingresoServce.getIngresos().subscribe({
@@ -250,7 +251,7 @@ export class ReportesComponent {
       });
     });
   }
-
+*/
   private calcularInventario(ingresos: Ingreso[]): any[] {
     const inventarioMap = new Map();
 
@@ -284,12 +285,13 @@ export class ReportesComponent {
 
     return Array.from(inventarioMap.values());
   }
-
+/*
   public onChangeAlmacen(e: any) {
     if (e.value) {
       this.getSubAlmacenes(e.value);
     }
   }
+    */
   //fisicos valorados
   public async inventarioFisicoValorado() {
     try {

@@ -15,8 +15,7 @@ import Swal from 'sweetalert2';
     styleUrl: './almacen-form.component.scss'
 })
 export class AlmacenFormComponent implements OnInit, OnDestroy {
-
-    public labelForm: string = 'Registrar Datos';
+    public labelForm: string = 'Registrar';
     public formRegistro: FormGroup;
     private formSubscription: Subscription | undefined;
 
@@ -30,14 +29,16 @@ export class AlmacenFormComponent implements OnInit, OnDestroy {
     ) {
         this.formRegistro = this.fb.group({
             id: [''],
-            Sigla: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-            Nombre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]]
+            sigla: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
+            nombre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+            ubicacion: [''],
+            activo: [true]
         });
     }
 
     ngOnInit(): void {
-        if (this.data && this.data.id) {
-            this.labelForm = 'Actualizar Datos';
+        if (this.data?.id) {
+            this.labelForm = 'Actualizar';
             this.cargarDatosFormulario();
         }
     }
@@ -45,76 +46,63 @@ export class AlmacenFormComponent implements OnInit, OnDestroy {
     private cargarDatosFormulario(): void {
         this.formRegistro.patchValue({
             id: this.data.id,
-            Sigla: this.data.sigla,  
-            Nombre: this.data.nombre 
+            sigla: this.data.sigla,
+            nombre: this.data.nombre,
+            ubicacion: this.data.ubicacion || '',
+            activo: this.data.activo !== undefined ? this.data.activo : true
         });
     }
-    
+
     public accionRegistrar() {
-        if (this.formRegistro.valid) {
-            this.alertService.showConfirmationDialog(this.labelForm, '¿Está seguro de realizar esta acción?')
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: 'Espere un momento...',
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        });
-
-                        const formData = this.formRegistro.value;
-
-                        if (this.data && this.data.id) {
-                            // Actualizar
-                            this.formSubscription = this.almacenService.putAlmacen(formData, this.data.id).subscribe({
-                                next: (response) => {
-                                    Swal.close();
-                                    this.toastr.success('Almacén actualizado correctamente', 'Éxito');
-                                    if (response && response.data) {
-                                        this.dialogRef.close(response.data);
-                                    } else if (response) {
-                                        this.dialogRef.close(response);
-                                    } else {
-                                        this.dialogRef.close(formData);
-                                    }
-                                },
-                                error: (err) => {
-                                    Swal.close();
-                                    this.toastr.error(HandleErrorMessage(err), this.labelForm);
-                                }
-                            });
-                        } else {
-                            // Crear nuevo
-                            const { id, ...dataWithoutId } = formData;
-
-                            this.formSubscription = this.almacenService.postAlmacen(dataWithoutId).subscribe({
-                                next: (response) => {
-                                    Swal.close();
-                                    this.toastr.success('Almacén creado correctamente', 'Éxito');
-
-                                    if (response && response.data) {
-                                        this.dialogRef.close(response.data);
-                                    } else if (response) {
-                                        this.dialogRef.close(response);
-                                    } else {
-                                        this.dialogRef.close(dataWithoutId);
-                                    }
-                                },
-                                error: (err) => {
-                                    Swal.close();
-                                    console.error('Error completo:', err);
-                                    this.toastr.error(HandleErrorMessage(err), this.labelForm);
-                                }
-                            });
-                        }
-                    }
-                });
-        } else {
+        if (this.formRegistro.invalid) {
             this.marcarCamposInvalidos();
             this.toastr.warning('Verificar los campos del formulario', this.labelForm);
+            return;
         }
+
+        this.alertService.showConfirmationDialog(this.labelForm, '¿Está seguro de realizar esta acción?')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Procesando...',
+                        didOpen: () => Swal.showLoading()
+                    });
+
+                    const formData = this.formRegistro.value;
+
+                    if (this.data?.id) {
+                        // Actualizar
+                        this.formSubscription = this.almacenService.putAlmacen(formData, this.data.id).subscribe({
+                            next: (response) => {
+                                Swal.close();
+                                this.toastr.success('Almacén actualizado correctamente', 'Éxito');
+                                this.dialogRef.close(response);
+                            },
+                            error: (err) => {
+                                Swal.close();
+                                this.toastr.error(HandleErrorMessage(err), this.labelForm);
+                            }
+                        });
+                    } else {
+                        // Crear nuevo
+                        const { id, ...dataWithoutId } = formData;
+                        this.formSubscription = this.almacenService.postAlmacen(dataWithoutId).subscribe({
+                            next: (response) => {
+                                Swal.close();
+                                this.toastr.success('Almacén creado correctamente', 'Éxito');
+                                this.dialogRef.close(response);
+                            },
+                            error: (err) => {
+                                Swal.close();
+                                console.error('Error completo:', err);
+                                this.toastr.error(HandleErrorMessage(err), this.labelForm);
+                            }
+                        });
+                    }
+                }
+            });
     }
-    
+
     private marcarCamposInvalidos(): void {
         Object.keys(this.formRegistro.controls).forEach(key => {
             const control = this.formRegistro.get(key);
@@ -124,12 +112,8 @@ export class AlmacenFormComponent implements OnInit, OnDestroy {
         });
     }
 
-    public actionClose(data: Almacen | null) {
-        this.dialogRef.close(data);
-    }
-
     public accionCancel() {
-        this.actionClose(null);
+        this.dialogRef.close(null);
     }
 
     ngOnDestroy(): void {

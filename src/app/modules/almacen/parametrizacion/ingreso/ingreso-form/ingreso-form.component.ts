@@ -72,7 +72,7 @@ export class IngresoFormComponent implements OnInit, OnDestroy {
             }
         });
     }
-
+/*
     public getSubAlmacenes(idAlmacen: string){
         this.subAlmacenService.getSubAlmacenesAlmacen(idAlmacen).subscribe({
             next: (response) => {
@@ -83,13 +83,13 @@ export class IngresoFormComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     public onChangeAlmacen(e: any){
         if (e.value) {
             this.getSubAlmacenes(e.value);
         }
+        
     }
-
+*/
     public getFormBuilderRegistro() {
         this.formRegistro = this.fb.group({
             id          : [''],

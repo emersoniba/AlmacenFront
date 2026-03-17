@@ -59,8 +59,9 @@ export class AlmacenComponent implements OnInit, OnDestroy {
 
     columnDefsAlmacen: ColDef[] = [
         { field: 'id', headerName: 'Opciones', filter: false, minWidth: 115, maxWidth: 115, cellRenderer: RendererComponent, pinned: true },
-        { field: 'nombre', headerName: 'Denominacion de Almacen', filter: true, minWidth: 450, maxWidth: 550, floatingFilter: true },
+        { field: 'nombre', headerName: 'Denominacion de Almacen', filter: true, minWidth: 250, maxWidth: 250, floatingFilter: true },
         { field: 'sigla', headerName: 'Sigla del Almacen', filter: true, minWidth: 250, maxWidth: 250, floatingFilter: true },
+        { field: 'ubicacion', headerName: 'Ubicacion del Almacen', filter: true, minWidth: 350, maxWidth: 550, floatingFilter: true },
     ];
 
     columnDefsSubAlmacen: ColDef[] = [
@@ -102,7 +103,7 @@ export class AlmacenComponent implements OnInit, OnDestroy {
     private filtrarSubAlmacenes(): void {
         if (this.almacenSeleccionado) {
             this.dataSubAlmacenFiltrados = this.dataSubAlmacen.filter(
-                subAlmacen => subAlmacen.idAlmacen === this.almacenSeleccionado!.id
+                subAlmacen => subAlmacen.almacen === this.almacenSeleccionado!.id
             );
         } else {
             this.dataSubAlmacenFiltrados = [];
@@ -143,6 +144,7 @@ export class AlmacenComponent implements OnInit, OnDestroy {
 		});
         this.formSubscription = this.subAlmacenService.getSubAlmacenes().subscribe({
             next: (response) => {
+                console.log('Respuesta del servicio getSubAlmacenes:', response);
                 Swal.close();
                 this.dataSubAlmacen = response;
                 if (this.almacenSeleccionado) {
@@ -223,7 +225,7 @@ export class AlmacenComponent implements OnInit, OnDestroy {
             this.onActionEliminarSubAlmacen(rowId, data);
         }
     }
-
+/*
     public onActionEditarAlmacen(pk: string, data: Almacen) {
         const dialogRef = this.dialog.open(AlmacenFormComponent, {
             width: '500px',
@@ -274,11 +276,11 @@ export class AlmacenComponent implements OnInit, OnDestroy {
                             Swal.showLoading()
                         }
                     });
-                    this.almacenService.deleteAlmacen(pk).subscribe({
+                    this.almacenService.deleteAlmacen(Number(pk)).subscribe({
                         next: (response) => {
                             this.toastr.success('Acción realizada de manera correcta', 'Registro eliminado');
                             this.getAllAlmacenes();
-                            if (this.almacenSeleccionado && this.almacenSeleccionado.id === pk) {
+                            if (this.almacenSeleccionado && this.almacenSeleccionado.id === Number(pk)) {
                                 this.limpiarSeleccion();
                             }
                             Swal.close();
@@ -302,7 +304,7 @@ export class AlmacenComponent implements OnInit, OnDestroy {
                             Swal.showLoading()
                         }
                     });
-                    this.subAlmacenService.deleteSubAlmacen(pk).subscribe({
+                    this.subAlmacenService.deleteSubAlmacen(Number(pk)).subscribe({
                         next: (response) => {
                             this.toastr.success('Acción realizada de manera correcta', 'Registro eliminado');
                             this.getAllSubAlmacenes();
@@ -316,7 +318,88 @@ export class AlmacenComponent implements OnInit, OnDestroy {
                 }
             });
     }
+*/
+// Métodos de acción para almacenes
+public onActionEditarAlmacen(pk: string, data: Almacen) {
+    const dialogRef = this.dialog.open(AlmacenFormComponent, {
+        width: '550px',
+        disableClose: true,
+        data: data
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            this.getAllAlmacenes();
+        }
+    });
+}
+
+public onActionEliminarAlmacen(pk: string, data: Almacen) {
+    this.alertService.showConfirmationDialog('Eliminar Almacén', '¿Está seguro de eliminar este almacén?')
+        .then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Eliminando...',
+                    didOpen: () => Swal.showLoading()
+                });
+
+                this.almacenService.deleteAlmacen(Number(pk)).subscribe({
+                    next: () => {
+                        Swal.close();
+                        this.toastr.success('Almacén eliminado correctamente', 'Éxito');
+                        this.getAllAlmacenes();
+                        
+                        if (this.almacenSeleccionado && this.almacenSeleccionado.id === Number(pk)) {
+                            this.limpiarSeleccion();
+                        }
+                    },
+                    error: (err) => {
+                        Swal.close();
+                        this.toastr.error(HandleErrorMessage(err), 'Error');
+                    }
+                });
+            }
+        });
+}
+
+// Métodos de acción para subalmacenes
+public onActionEditarSubAlmacen(pk: string, data: SubAlmacen) {
+    const dialogRef = this.dialog.open(SubAlmacenFormComponent, {
+        width: '550px',
+        disableClose: true,
+        data: data  // Pasar directamente el subalmacen
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            this.getAllSubAlmacenes();
+        }
+    });
+}
+
+public onActionEliminarSubAlmacen(pk: string, data: SubAlmacen) {
+    this.alertService.showConfirmationDialog('Eliminar SubAlmacén', '¿Está seguro de eliminar este subalmacén?')
+        .then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Eliminando...',
+                    didOpen: () => Swal.showLoading()
+                });
+
+                this.subAlmacenService.deleteSubAlmacen(Number(pk)).subscribe({
+                    next: () => {
+                        Swal.close();
+                        this.toastr.success('Subalmacén eliminado correctamente', 'Éxito');
+                        this.getAllSubAlmacenes();
+                    },
+                    error: (err) => {
+                        Swal.close();
+                        this.toastr.error(HandleErrorMessage(err), 'Error');
+                    }
+                });
+            }
+        });
+}
     onGridReadyAlmacen(params: GridReadyEvent<Almacen>) {
         this.gridApiAlmacen = params.api;
         this.gridApiAlmacen.sizeColumnsToFit();

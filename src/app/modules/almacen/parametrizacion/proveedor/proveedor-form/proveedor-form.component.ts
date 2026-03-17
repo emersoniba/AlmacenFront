@@ -9,15 +9,13 @@ import { HandleErrorMessage } from 'src/app/utils/handle.errors';
 import { SwalAlertService } from 'src/app/utils/util.swal';
 import Swal from 'sweetalert2';
 
-
 @Component({
     selector: 'app-proveedor-form',
     templateUrl: './proveedor-form.component.html',
     styleUrl: './proveedor-form.component.scss'
 })
 export class ProveedorFormComponent implements OnInit, OnDestroy {
-
-    public labelForm: string = 'Registrar Datos';
+    public labelForm: string = 'Registrar';
     public formRegistro: FormGroup;
     private formSubscription: Subscription | undefined;
 
@@ -29,78 +27,87 @@ export class ProveedorFormComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: Proveedor,
         public dialogRef: MatDialogRef<ProveedorFormComponent>
     ) {
-        this.formRegistro = new FormGroup({});
-    }
-
-    ngOnInit(): void {
-        this.getFormBuilderRegistro();
-        if (this.data.id) {
-            this.labelForm = 'Actualizar Datos';
-            this.formRegistro.controls['id'].setValue(this.data.id);
-            this.formRegistro.controls['razonSocial'].setValue(this.data.razonSocial);
-            this.formRegistro.controls['nit'].setValue(this.data.nit);
-            this.formRegistro.controls['direccion'].setValue(this.data.direccion);
-        }
-    }
-
-    public getFormBuilderRegistro() {
         this.formRegistro = this.fb.group({
-            id          : [''],
-            razonSocial : ['', [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
-            nit         : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
-            direccion   : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(170)]]
+            id: [''],
+            nit: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+            razon_social: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
+            direccion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]],
+            telefono: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(20)]],
+            email: ['', [Validators.required, Validators.email]], // Cambiado a Validators.email
+            contacto: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
         });
     }
 
+    ngOnInit(): void {
+        if (this.data?.id) {
+            this.labelForm = 'Actualizar';
+            this.formRegistro.patchValue({
+                id: this.data.id,
+                nit: this.data.nit,
+                razon_social: this.data.razon_social,
+                direccion: this.data.direccion,
+                telefono: this.data.telefono,
+                email: this.data.email,
+                contacto: this.data.contacto
+            });
+        }
+    }
+
     public accionRegistrar() {
-        if (this.formRegistro.valid) {
-            this.alertService.showConfirmationDialog(this.labelForm, 'Esta usted seguro de realizar esta acción?')
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: 'Espere un momento . .  .',
-                            didOpen: () => {
-                                Swal.showLoading()
+        if (this.formRegistro.invalid) {
+            this.formRegistro.markAllAsTouched();
+            this.toastr.warning('Verificar los campos del formulario', this.labelForm);
+            return;
+        }
+
+        this.alertService.showConfirmationDialog(this.labelForm, '¿Está seguro de realizar esta acción?')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Procesando...',
+                        didOpen: () => Swal.showLoading()
+                    });
+
+                    if (this.data?.id) {
+                        // Actualizar
+                        this.formSubscription = this.proveedorService.putProveedor(
+                            this.formRegistro.value, 
+                            Number(this.data.id)
+                        ).subscribe({
+                            next: (response) => {
+                                Swal.close();
+                                this.toastr.success('Proveedor actualizado correctamente', 'Éxito');
+                                this.actionClose(response);
+                            },
+                            error: (err) => {
+                                Swal.close();
+                                this.toastr.error(HandleErrorMessage(err), 'Error');
                             }
                         });
-                        if (this.data.id) {
-                            this.formSubscription = this.proveedorService.putProveedor(this.formRegistro.value, this.data.id).subscribe({
-                                next: (response) => {
-                                    Swal.close();
-                                    this.actionClose(response);
-                                }, error: (err) => {
-                                    Swal.close();
-                                    this.toastr.error(HandleErrorMessage(err), this.labelForm);
-                                }
-                            });
-                        } else {
-                            this.formSubscription = this.proveedorService.postProveedor(this.formRegistro.value).subscribe({
-                                next: (response) => {
-                                    Swal.close();
-                                    this.actionClose(response);
-                                }, error: (err) => {
-                                    Swal.close();
-                                    this.toastr.error(HandleErrorMessage(err), this.labelForm);
-                                }
-                            });
-                        }
+                    } else {
+                        // Crear
+                        this.formSubscription = this.proveedorService.postProveedor(this.formRegistro.value).subscribe({
+                            next: (response) => {
+                                Swal.close();
+                                this.toastr.success('Proveedor creado correctamente', 'Éxito');
+                                this.actionClose(response);
+                            },
+                            error: (err) => {
+                                Swal.close();
+                                this.toastr.error(HandleErrorMessage(err), 'Error');
+                            }
+                        });
                     }
-                });
-        } else {
-            this.toastr.warning('Verificar los campos del formulario', this.labelForm);
-        }
+                }
+            });
     }
 
     public actionClose(data: Proveedor | null) {
-        if (data) {
-            this.dialogRef.close(data);
-        } else {
-            this.dialogRef.close(null);
-        }
+        this.dialogRef.close(data);
     }
 
     public accionCancel() {
-        this.actionClose(null);
+        this.dialogRef.close(null);
     }
 
     ngOnDestroy(): void {

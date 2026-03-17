@@ -1,6 +1,14 @@
 export interface Proveedor {
-    id          : string,
-    razonSocial : string,
+    id          : number,
+    razon_social : string,
     nit         : string,
-    direccion   : string
+    direccion   : string,
+    telefono   : string,
+    email   : string,
+    contacto: string
+}/*
+export interface ProveedorResponse {
+    message: string;
+    data: Proveedor;
 }
+    */

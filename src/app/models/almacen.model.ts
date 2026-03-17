@@ -1,20 +1,25 @@
 export interface Almacen {
-    id      : string,
+    id      : number,
     nombre  : string,
     sigla   : string,
-    //logo?   : string
     entity?: string 
 }
-// Interface para la respuesta del backend
-export interface AlmacenResponse {
-    data: Almacen;
+export interface Almacen {
+    id: number;           // El backend usa number, no string
+    nombre: string;
+    sigla: string;
+    ubicacion?: string;
+    activo?: boolean;
 }
 
 export interface SubAlmacen {
-    id          : string,
-    idAlmacen   : string,
-    almacen     : Almacen,
-    nombre      : string,
-    sigla       : string,
-   // logo?       : string
+    id: number;           // El backend usa number, no string
+    almacen: number;      // ID del almacén padre (esto es lo que necesitas para filtrar)
+    nombre: string;
+    sigla: string;
+    ubicacion?: string;
+    activo?: boolean;
+    // Propiedades de solo lectura para mostrar en el grid
+    almacen_nombre?: string;
+    almacen_sigla?: string;
 }

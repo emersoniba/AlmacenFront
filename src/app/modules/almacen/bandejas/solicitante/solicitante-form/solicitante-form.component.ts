@@ -100,7 +100,7 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
     getControlsProductosParaFiltrar() {
         return (this.productosParaFiltrarForm.get('productosSeleccionados') as FormArray).controls;
     }
-
+/*
     public abrirModalCarrito(): void {
         const productosSeleccionados = this.dataProductos.filter(p =>
             p.selected && p.cantidad > 0
@@ -124,7 +124,7 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
                 this.onActionSolicitar();
             }
         });
-    }
+    }*/
 
     public cargarAlmacen() {
         this.loadingAlmacenes = true;
@@ -214,7 +214,7 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
             this.productosFormArray.push(productoForm);
         }
     }
-
+/*
     public onActionSolicitar() {
         const productosSeleccionados = this.dataProductos.filter(p => p.selected && p.cantidad > 0);
 
@@ -239,7 +239,8 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
                 }
             });
     }
-
+            */
+/*
     private procesarSolicitud(productosSeleccionados: any[]) {
         const usuario = this.solicitudService.obtenerUsuarioActual();
         const almacenSeleccionado = this.dataAlmacen.find(a => a.id === this.solicitudForm.get('almacen_id').value);
@@ -294,7 +295,7 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
             }
         });
     }
-   
+   */
     private generarIdSolicitud(): string {
         return 'SOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
     }

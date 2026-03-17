@@ -3,19 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { Catalogo } from 'src/app/models/catalogo.model';
-import { CatalogoService } from 'src/app/services/catalogo.service';
+import { Categoria } from 'src/app/models/categoria.model';
+import { CategoriaService } from 'src/app/services/categoria.service';
 import { HandleErrorMessage } from 'src/app/utils/handle.errors';
 import { SwalAlertService } from 'src/app/utils/util.swal';
 import Swal from 'sweetalert2';
 
 
 @Component({
-    selector: 'app-catalogo-form',
-    templateUrl: './catalogo-form.component.html',
-    styleUrl: './catalogo-form.component.scss'
+    selector: 'app-categoria-form',
+    templateUrl: './categoria-form.component.html',
+    styleUrl: './categoria-form.component.scss'
 })
-export class CatalogoFormComponent implements OnInit, OnDestroy {
+export class CategoriaFormComponent implements OnInit, OnDestroy {
 
     public labelForm: string = 'Registrar Datos';
     public formRegistro: FormGroup;
@@ -24,10 +24,10 @@ export class CatalogoFormComponent implements OnInit, OnDestroy {
     constructor(
         private fb: FormBuilder,
         private toastr: ToastrService,
-        private catologoService: CatalogoService,
+        private categoriaService: CategoriaService,
         private alertService: SwalAlertService,
-        @Inject(MAT_DIALOG_DATA) public data: Catalogo,
-        public dialogRef: MatDialogRef<CatalogoFormComponent>
+        @Inject(MAT_DIALOG_DATA) public data: Categoria,
+        public dialogRef: MatDialogRef<CategoriaFormComponent>
     ) {
         this.formRegistro = new FormGroup({});
     }
@@ -38,15 +38,15 @@ export class CatalogoFormComponent implements OnInit, OnDestroy {
             this.labelForm = 'Actualizar Datos';
             this.formRegistro.controls['id'].setValue(this.data.id);
             this.formRegistro.controls['descripcion'].setValue(this.data.descripcion);
-            this.formRegistro.controls['categoria'].setValue(this.data.categoria);
+            this.formRegistro.controls['nombre'].setValue(this.data.nombre);
         }
     }
 
     public getFormBuilderRegistro() {
         this.formRegistro = this.fb.group({
             id: [''],
+            nombre: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
             descripcion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
-            categoria: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
         });
     }
 
@@ -62,7 +62,8 @@ export class CatalogoFormComponent implements OnInit, OnDestroy {
                             }
                         });
                         if (this.data.id) {
-                            this.formSubscription = this.catologoService.putCatalogo(this.formRegistro.value, this.data.id).subscribe({
+                            this.formSubscription = this.categoriaService.putCategoria(this.formRegistro.value, Number(this.data.id)
+                            ).subscribe({
                                 next: (response) => {
                                     Swal.close();
                                     this.actionClose(response);
@@ -72,7 +73,7 @@ export class CatalogoFormComponent implements OnInit, OnDestroy {
                                 }
                             });
                         } else {
-                            this.formSubscription = this.catologoService.postCatalogo(this.formRegistro.value).subscribe({
+                            this.formSubscription = this.categoriaService.postCategoria(this.formRegistro.value).subscribe({
                                 next: (response) => {
                                     Swal.close();
                                     this.actionClose(response);
@@ -89,7 +90,7 @@ export class CatalogoFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    public actionClose(data: Catalogo | null) {
+    public actionClose(data: Categoria | null) {
         if (data) {
             this.dialogRef.close(data);
         } else {

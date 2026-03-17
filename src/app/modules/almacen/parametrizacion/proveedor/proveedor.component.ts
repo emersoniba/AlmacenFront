@@ -42,8 +42,11 @@ export class ProveedorComponent implements OnInit, OnDestroy {
     columnDefs: ColDef[] = [
         { field: 'id', headerName: 'Opciones', filter: false, minWidth: 115, maxWidth: 115, cellRenderer: RendererComponent, pinned: true },
         { field: 'nit', headerName: 'NIT', filter: true, minWidth: 150, maxWidth: 250, floatingFilter: true },
-        { field: 'razonSocial', headerName: 'Razón Social', filter: true, minWidth: 350, maxWidth: 550, floatingFilter: true },
+        { field: 'razon_social', headerName: 'Razón Social', filter: true, minWidth: 350, maxWidth: 550, floatingFilter: true },
         { field: 'direccion', headerName: 'Dirección del Proveedor', filter: true, minWidth: 450, maxWidth: 600, floatingFilter: true },
+        { field: 'telefono', headerName: 'Teléfono', filter: true, minWidth: 150, maxWidth: 250, floatingFilter: true },
+        { field: 'email', headerName: 'Correo', filter: true, minWidth: 250, maxWidth: 350, floatingFilter: true },
+        { field: 'contacto', headerName: 'Contacto', filter: true, minWidth: 250, maxWidth: 350, floatingFilter: true },
     ];
 
     constructor(
@@ -62,6 +65,7 @@ export class ProveedorComponent implements OnInit, OnDestroy {
         this.formSubscription = this.proveedorService.getProveedores().subscribe({
             next: (response) => {
                 this.dataProveedor = response;
+                console.log('aaaa'+response)
             }, error: (err) => {
                 this.dataProveedor = [] as Proveedor[];
                 this.toastr.error(HandleErrorMessage(err), 'Error');
@@ -129,7 +133,7 @@ export class ProveedorComponent implements OnInit, OnDestroy {
                             Swal.showLoading()
                         }
                     });
-                    this.proveedorService.deleteProveedor(pk).subscribe({
+                    this.proveedorService.deleteProveedor(Number(pk)).subscribe({
                         next: (response) => {
                             this.toastr.success('Acción realizada de manera correcta', 'Registro eliminado');
                             this.getAllProveedores();

@@ -1,44 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Almacen, AlmacenResponse } from '../models/almacen.model';
-
+import { Almacen } from '../models/almacen.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AlmacenService {
-
     private apiUrl = environment.apiUrl;
 
-    constructor(
-        private http: HttpClient
-    ) { }
+    constructor(private http: HttpClient) { }
 
     public getAlmacenes(): Observable<Almacen[]> {
-        return this.http.get<Almacen[]>(`${this.apiUrl}/Almacen`);
-    }
-    
-    public postAlmacen(data: Omit<Almacen, 'id'>): Observable<AlmacenResponse> {
-        const requestData = {
-            ...data,
-            entity: 'almacen'
-        };
-
-        return this.http.post<AlmacenResponse>(`${this.apiUrl}/Almacen`, requestData);
-    }
-    
-    public putAlmacen(data: Almacen, pk: string): Observable<AlmacenResponse> {
-        const requestData = {
-            ...data,
-            entity: 'almacen'
-        };
-
-        return this.http.put<AlmacenResponse>(`${this.apiUrl}/Almacen/${pk}/`, requestData);
+        return this.http.get<any>(`${this.apiUrl}/almacenes/`).pipe(
+            map(response => response.data || response)
+        );
     }
 
-    public deleteAlmacen(pk: string): Observable<any> {
-        return this.http.delete(`${this.apiUrl}/Almacen/${pk}/`);
+    public getAlmacenById(id: number): Observable<Almacen> {
+        return this.http.get<any>(`${this.apiUrl}/almacenes/${id}/`).pipe(
+            map(response => response.data || response)
+        );
+    }
+
+    public postAlmacen(data: Omit<Almacen, 'id'>): Observable<Almacen> {
+        return this.http.post<any>(`${this.apiUrl}/almacenes/`, data).pipe(
+            map(response => response.data || response)
+        );
+    }
+
+    public putAlmacen(data: Almacen, pk: number): Observable<Almacen> {
+        return this.http.put<any>(`${this.apiUrl}/almacenes/${pk}/`, data).pipe(
+            map(response => response.data || response)
+        );
+    }
+
+    public deleteAlmacen(pk: number): Observable<any> {
+        return this.http.delete<any>(`${this.apiUrl}/almacenes/${pk}/`).pipe(
+            map(response => response.data || response)
+        );
     }
 }

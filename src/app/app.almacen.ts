@@ -10,8 +10,8 @@ import { SolicitanteFormComponent } from './modules/almacen/bandejas/solicitante
 import { AprobadorComponent } from './modules/almacen/bandejas/aprobador/aprobador.component';
 import { RecepcionadorComponent } from './modules/almacen/bandejas/recepcionador/recepcionador.component';
 import { RendererComponent } from './modules/almacen/bandejas/abrenderer/renderer.component';
-import { CatalogoComponent } from './modules/almacen/parametrizacion/catalogo/catalogo.component';
-import { CatalogoFormComponent } from './modules/almacen/parametrizacion/catalogo/catalogo-form/catalogo-form.component';
+import { CategoriaComponent } from './modules/almacen/parametrizacion/categoria/categoria.component';
+import { CategoriaFormComponent } from './modules/almacen/parametrizacion/categoria/categoria-form/categoria-form.component';
 import { MaterialComponent } from './modules/almacen/parametrizacion/material/material.component';
 import { MaterialFormComponent } from './modules/almacen/parametrizacion/material/material-form/material-form.component';
 import { ResponsableComponent } from './modules/almacen/parametrizacion/responsable/responsable.component';
@@ -27,8 +27,8 @@ export const AppAlmacenConfig = [
     LoginComponent,
     ProveedorComponent,
     ProveedorFormComponent,
-    CatalogoComponent,
-    CatalogoFormComponent,
+    CategoriaComponent,
+    CategoriaFormComponent,
     AlmacenComponent,
     AlmacenFormComponent,
     SubAlmacenFormComponent,

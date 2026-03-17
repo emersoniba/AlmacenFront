@@ -59,16 +59,7 @@ export const NavigationItems: NavigationItem[] = [
         type: 'group',
         icon: 'icon-navigation',
         children: [
-            {
-                id: 'catalogo',
-                title: 'Catálogos',
-                type: 'item',
-                classes: 'nav-item',
-                url: '/catalogo',
-                icon: 'ti ti-package',
-                target: false,
-                breadcrumbs: true
-            },
+            
             {
                 id: 'proveedor',
                 title: 'Proveedores',
@@ -86,6 +77,16 @@ export const NavigationItems: NavigationItem[] = [
                 classes: 'nav-item',
                 url: '/almacen',
                 icon: 'ti ti-truck',
+                target: false,
+                breadcrumbs: true
+            },
+            {
+                id: 'categoria',
+                title: 'Categorias',
+                type: 'item',
+                classes: 'nav-item',
+                url: '/categorias-producto',
+                icon: 'ti ti-package',
                 target: false,
                 breadcrumbs: true
             },

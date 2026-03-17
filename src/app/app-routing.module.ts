@@ -6,7 +6,7 @@ import { AdminComponent } from "./theme/layouts/admin/admin.component";
 import { ProveedorComponent } from "./modules/almacen/parametrizacion/proveedor/proveedor.component";
 import { AlmacenComponent } from './modules/almacen/parametrizacion/almacen/almacen.component';
 import { SolicitanteComponent } from './modules/almacen/bandejas/solicitante/solicitante.component';
-import { CatalogoComponent } from './modules/almacen/parametrizacion/catalogo/catalogo.component';
+import { CategoriaComponent } from './modules/almacen/parametrizacion/categoria/categoria.component';
 import { MaterialComponent } from './modules/almacen/parametrizacion/material/material.component';
 import { ResponsableComponent } from './modules/almacen/parametrizacion/responsable/responsable.component';
 import { AuthGuard } from './modules/authentication/guard/auth.guard';
@@ -37,13 +37,13 @@ const routes: Routes = [
                 path: 'usuario',
                 component: PersonalComponent,
                 canActivate: [AuthGuard, ],
-                data: { roles: ['Admin', 'Almacenero'] }
+                data: { roles: ['Admin'] }
             },
             {
-                path: 'catalogo',
-                component: CatalogoComponent,
+                path: 'categorias-producto',
+                component: CategoriaComponent,
                 canActivate: [AuthGuard, ],
-                data: { roles: ['administrador', 'Almacenero'] }
+                data: { roles: ['Admin', 'Almacenero'] }
             },
             {
                 path: 'proveedor',
@@ -55,7 +55,7 @@ const routes: Routes = [
                 path: 'almacen',
                 component: AlmacenComponent,
                 canActivate: [AuthGuard,],
-                data: { roles: ['administrador',] }
+                data: { roles: ['Admin', 'Almacenero',] }
             },
             {
                 path: 'responsable',
