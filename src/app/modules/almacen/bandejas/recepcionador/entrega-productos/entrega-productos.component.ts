@@ -88,13 +88,13 @@ export class EntregaProductosComponent implements OnInit {
     if (!this.aprobacion) return;
 
     this.productosConStock = this.aprobacion.productos.map(productoSolicitado => {
-      const productoBD = productosBD.find(p => p.id_ui === productoSolicitado.id_ui);
+      const productoBD = productosBD.find(p => p.id === productoSolicitado.id_ui);
 
       return {
         ...productoSolicitado,
-        stock: productoBD ? productoBD.stock : 0,
+        stock: productoBD ? productoBD.stocks : 0,
         cantidad_entregar: productoSolicitado.cantidad,
-        stock_suficiente: productoBD ? (productoBD.stock >= productoSolicitado.cantidad) : false
+        stock_suficiente: productoBD ? (productoBD.stock_maximo >= productoSolicitado.cantidad) : false
       };
     });
   }

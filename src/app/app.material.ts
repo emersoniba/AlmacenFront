@@ -21,4 +21,5 @@ export const AppMaterialModule = [
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    
 ]

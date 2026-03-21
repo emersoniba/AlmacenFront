@@ -1,20 +1,21 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Almacen, SubAlmacen } from 'src/app/models/almacen.model';
-import { Ingreso, IngresoDetalle } from 'src/app/models/ingreso.model';
-//import { Material } from 'src/app/models/material.model';
+import { Ingreso, IngresoCreate } from 'src/app/models/ingreso.model';
 import { Producto } from 'src/app/models/producto.model';
 import { Proveedor } from 'src/app/models/proveedor.model';
 import { AlmacenService } from 'src/app/services/almacen.service';
 import { IngresoService } from 'src/app/services/ingreso.service';
+import { ProductoService } from 'src/app/services/producto.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { SubAlmacenService } from 'src/app/services/subAlmacen.service';
 import { HandleErrorMessage } from 'src/app/utils/handle.errors';
 import { SwalAlertService } from 'src/app/utils/util.swal';
 import Swal from 'sweetalert2';
+
 
 @Component({
     selector: 'app-ingreso-form',
@@ -22,17 +23,18 @@ import Swal from 'sweetalert2';
     styleUrl: './ingreso-form.component.css'
 })
 export class IngresoFormComponent implements OnInit, OnDestroy {
-
-    @Input('pk') pk: string = '';
-    @Input('objeto') objeto: Ingreso;
-
-    public labelForm: string = 'Registrar Datos';
+    public labelForm: string = 'Registrar Ingreso';
     public formRegistro: FormGroup;
     private formSubscription: Subscription | undefined;
-    public dataAlmacen: Almacen[] = [] as Almacen[];
-    public dataSubAlmacen: SubAlmacen[] = [] as SubAlmacen[];
-    public dataProveedor: Proveedor[] = [] as Proveedor[];
-    public dataMaterial: Producto[] = [] as Producto[];
+    
+    // Datos para selects
+    public dataAlmacen: Almacen[] = [];
+    public dataSubAlmacen: SubAlmacen[] = [];
+    public dataProveedor: Proveedor[] = [];
+    public dataProductos: Producto[] = [];
+    
+    public productoSeleccionado: Producto | null = null;
+    public modoEdicion: boolean = false;
 
     constructor(
         private fb: FormBuilder,
@@ -41,148 +43,269 @@ export class IngresoFormComponent implements OnInit, OnDestroy {
         private almacenService: AlmacenService,
         private subAlmacenService: SubAlmacenService,
         private proveedorService: ProveedorService,
+        private productoService: ProductoService,
         private alertService: SwalAlertService,
+        @Inject(MAT_DIALOG_DATA) public data: Ingreso,
+        public dialogRef: MatDialogRef<IngresoFormComponent>
     ) {
-        this.formRegistro = new FormGroup({});
+        this.modoEdicion = !!data?.id;
+        this.labelForm = this.modoEdicion ? 'Actualizar Ingreso' : 'Registrar Ingreso';
+        
+        this.formRegistro = this.fb.group({
+            id: [''],
+            descripcion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
+            comprobante: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+            fecha_ingreso: [new Date().toISOString(), Validators.required],
+            proveedor: ['', Validators.required],
+            almacen: ['', Validators.required],
+            subalmacen: [''],
+            detalles: this.fb.array([])
+        });
     }
 
     ngOnInit(): void {
-        this.getAllAlmacenes();
-        this.getAllProveedores();
-        this.getFormBuilderRegistro();
+        this.cargarCatalogos();
+        
+        if (this.modoEdicion && this.data) {
+            this.patchFormValues();
+        } else {
+            // Agregar una fila vacía para nuevo detalle
+            this.agregarDetalleFormulario();
+        }
     }
 
-    public getAllAlmacenes(){
-         this.almacenService.getAlmacenes().subscribe({
+    private cargarCatalogos(): void {
+        // Cargar almacenes
+        this.almacenService.getAlmacenes().subscribe({
             next: (response) => {
                 this.dataAlmacen = response;
-            }, error: (err) => {
+            },
+            error: (err) => {
                 this.toastr.error(HandleErrorMessage(err), 'Error');
             }
         });
-    }
 
-    public getAllProveedores(){
+        // Cargar proveedores
         this.proveedorService.getProveedores().subscribe({
             next: (response) => {
                 this.dataProveedor = response;
-            }, error: (err) => {
+            },
+            error: (err) => {
                 this.toastr.error(HandleErrorMessage(err), 'Error');
-                this.dataProveedor = [] as Proveedor[];
+            }
+        });
+
+        // Cargar productos
+        this.productoService.getProductos().subscribe({
+            next: (response) => {
+                this.dataProductos = response;
+            },
+            error: (err) => {
+                this.toastr.error(HandleErrorMessage(err), 'Error');
             }
         });
     }
-/*
-    public getSubAlmacenes(idAlmacen: string){
-        this.subAlmacenService.getSubAlmacenesAlmacen(idAlmacen).subscribe({
+
+    private patchFormValues(): void {
+        // Solo permitir edición si el ingreso está en estado PENDIENTE
+        if (this.data.estado_codigo !== 'PENDIENTE') {
+            this.toastr.warning('Solo se pueden editar ingresos pendientes', 'Advertencia');
+            this.dialogRef.close(null);
+            return;
+        }
+
+        this.formRegistro.patchValue({
+            id: this.data.id,
+            descripcion: this.data.descripcion,
+            comprobante: this.data.comprobante,
+            fecha_ingreso: this.data.fecha_ingreso,
+            proveedor: this.data.proveedor,
+            almacen: this.data.almacen,
+            subalmacen: this.data.subalmacen
+        });
+
+        // Cargar subalmacenes del almacén seleccionado
+        if (this.data.almacen) {
+            this.cargarSubAlmacenes(this.data.almacen);
+        }
+
+        // Cargar detalles existentes
+        if (this.data.detalles && this.data.detalles.length > 0) {
+            this.data.detalles.forEach(detalle => {
+                this.agregarDetalleFormulario(detalle);
+            });
+        } else {
+            this.agregarDetalleFormulario();
+        }
+    }
+
+    public cargarSubAlmacenes(almacenId: number): void {
+        this.subAlmacenService.getSubAlmacenesByAlmacen(almacenId).subscribe({
             next: (response) => {
                 this.dataSubAlmacen = response;
-            }, error: (err) => {
+            },
+            error: (err) => {
                 this.toastr.error(HandleErrorMessage(err), 'Error');
-                this.dataSubAlmacen = [] as SubAlmacen[];
             }
         });
     }
-    public onChangeAlmacen(e: any){
-        if (e.value) {
-            this.getSubAlmacenes(e.value);
+
+    public onAlmacenChange(event: any): void {
+        const almacenId = event.value;
+        if (almacenId) {
+            this.cargarSubAlmacenes(almacenId);
+            this.formRegistro.patchValue({ subalmacen: '' });
+        } else {
+            this.dataSubAlmacen = [];
         }
+    }
+
+    public onProductoSeleccionado(event: any): void {
+        const productoId = event.value;
+        this.productoSeleccionado = this.dataProductos.find(p => p.id === productoId) || null;
+    }
+
+    // Obtener el FormArray de detalles
+    get detallesArray(): FormArray {
+        return this.formRegistro.get('detalles') as FormArray;
+    }
+
+    // Agregar un nuevo detalle al formulario
+    public agregarDetalleFormulario(detalle?: any): void {
+        const detalleGroup = this.fb.group({
+            producto: [detalle?.producto || '', Validators.required],
+            cantidad: [detalle?.cantidad || 1, [Validators.required, Validators.min(0.01)]],
+            precio_unitario: [detalle?.precio_unitario || 0, [Validators.required, Validators.min(0.01)]]
+        });
         
-    }
-*/
-    public getFormBuilderRegistro() {
-        this.formRegistro = this.fb.group({
-            id          : [''],
-            codigo      : ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-            descripcion : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(300)]],
-            comprobante : ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],
-            fechaIngreso: ['', [Validators.required, ]],
-            idProveedor : ['', [Validators.required, ]],
-            idAlmacen   : ['', [Validators.required, ]],
-            idSubAlmacen: ['', ],
-            //detalles    : this.fb.array([this.formMaterialGroup({} as IngresoDetalle)]),
-        });
+        this.detallesArray.push(detalleGroup);
     }
 
-    public formMaterialGroup(ingresoDetalle: IngresoDetalle): FormGroup{
-        if (ingresoDetalle){
-            return this.fb.group({
-                id: [ingresoDetalle.id ],
-                idProducto: [ingresoDetalle.idMaterial, [Validators.required,]],
-                cantidad  : [ingresoDetalle.cantidad,   [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
-                monto     : [ingresoDetalle.monto,      [Validators.required, Validators.pattern(/^(?!0(\.0+)?$)(\d+(\.\d{2})?)$/)]]
-            });
+    // Eliminar un detalle del formulario
+    public eliminarDetalle(index: number): void {
+        this.detallesArray.removeAt(index);
+    }
+
+    // Calcular subtotal de un detalle
+    public calcularSubtotal(cantidad: number, precio: number): number {
+        return cantidad * precio;
+    }
+
+    // Calcular total del ingreso
+    public calcularTotal(): number {
+        let total = 0;
+        for (let i = 0; i < this.detallesArray.length; i++) {
+            const detalle = this.detallesArray.at(i).value;
+            total += detalle.cantidad * detalle.precio_unitario;
         }
-        return this.fb.group({
-            idProducto: ['', [Validators.required,]],
-            cantidad  : ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
-            monto     : ['', [Validators.required, Validators.pattern(/^(?!0(\.0+)?$)(\d+(\.\d{2})?)$/)]]
-        });
+        return total;
     }
 
-    get materialArray(): FormArray {
-		return this.formRegistro.get('detalles') as FormArray;
-	}
+    public accionRegistrar(): void {
+        if (this.formRegistro.invalid) {
+            this.formRegistro.markAllAsTouched();
+            this.toastr.warning('Complete todos los campos requeridos', 'Validación');
+            return;
+        }
 
-    public accionRegistrar() {
-        if (this.formRegistro.valid) {
-            this.alertService.showConfirmationDialog(this.labelForm, 'Esta usted seguro de realizar esta acción?')
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: 'Espere un momento . .  .',
-                            didOpen: () => {
-                                Swal.showLoading()
+        if (this.detallesArray.length === 0) {
+            this.toastr.warning('Debe agregar al menos un producto', 'Validación');
+            return;
+        }
+
+        this.alertService.showConfirmationDialog(this.labelForm, '¿Está seguro de realizar esta acción?')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Procesando...',
+                        didOpen: () => Swal.showLoading()
+                    });
+
+                    const formValue = this.formRegistro.value;
+                    
+                    const ingresoData: IngresoCreate = {
+                        descripcion: formValue.descripcion,
+                        comprobante: formValue.comprobante,
+                        fecha_ingreso: formValue.fecha_ingreso,
+                        proveedor: formValue.proveedor,
+                        almacen: formValue.almacen,
+                        subalmacen: formValue.subalmacen || null,
+                        detalles: formValue.detalles.map((d: any) => ({
+                            producto: d.producto,
+                            cantidad: d.cantidad,
+                            precio_unitario: d.precio_unitario
+                        }))
+                    };
+
+                    // Si es modo edición, debemos usar los endpoints específicos
+                    if (this.modoEdicion) {
+                        this.actualizarIngresoExistente(ingresoData);
+                    } else {
+                        // Crear nuevo ingreso
+                        this.formSubscription = this.ingresoService.postIngreso(ingresoData).subscribe({
+                            next: (response) => {
+                                this.handleSuccess(response);
+                            },
+                            error: (err) => {
+                                this.handleError(err);
                             }
                         });
-                        if (this.objeto.id) {
-                            this.formSubscription = this.ingresoService.putIngreso(this.pk, this.formRegistro.value).subscribe({
-                                next: (response) => {
-                                    Swal.close();
-                                    this.toastr.success('Actualización de datos, satisfactorio', this.labelForm);
-                                    this.actionClose(response);
-                                }, error: (err) => {
-                                    Swal.close();
-                                    this.toastr.error(HandleErrorMessage(err), this.labelForm);
-                                }
-                            });
-                        } else {
-                            this.formSubscription = this.ingresoService.postIngreso(this.formRegistro.value).subscribe({
-                                next: (response) => {
-                                    Swal.close();
-                                    this.toastr.success('Registro de datos, satisfactorio', this.labelForm);
-                                    this.actionClose(response);
-                                }, error: (err) => {
-                                    Swal.close();
-                                    this.toastr.error(HandleErrorMessage(err), this.labelForm);
-                                }
-                            });
-                        }
+                    }
+                }
+            });
+    }
+
+    /**
+     * Actualizar un ingreso existente (solo funciona con ingresos PENDIENTES)
+     * En lugar de PUT/PATCH, se deben usar los endpoints específicos
+     */
+    private actualizarIngresoExistente(ingresoData: IngresoCreate): void {
+        // Nota: Los ingresos no se actualizan directamente en el backend.
+        // Para modificar un ingreso pendiente, puedes:
+        // 1. Eliminar los detalles existentes y agregar nuevos
+        // 2. O anular el ingreso actual y crear uno nuevo
+        
+        this.alertService.showConfirmationDialog(
+            'Modificar Ingreso',
+            'Para modificar un ingreso existente, se recomienda anularlo y crear uno nuevo. ¿Desea anular este ingreso y crear uno nuevo?'
+        ).then((result) => {
+            if (result.isConfirmed) {
+                // Anular ingreso actual
+                this.ingresoService.anularIngreso(this.data.id, 'Reemplazado por nuevo ingreso').subscribe({
+                    next: () => {
+                        // Crear nuevo ingreso
+                        this.formSubscription = this.ingresoService.postIngreso(ingresoData).subscribe({
+                            next: (response) => {
+                                this.handleSuccess(response);
+                            },
+                            error: (err) => {
+                                this.handleError(err);
+                            }
+                        });
+                    },
+                    error: (err) => {
+                        this.handleError(err);
                     }
                 });
-        } else {
-            this.toastr.warning('Verificar los campos del formulario', this.labelForm);
-        }
+            } else {
+                Swal.close();
+            }
+        });
     }
 
-    public accionAdicionarMaterial(){
-
+    private handleSuccess(response: Ingreso): void {
+        Swal.close();
+        this.toastr.success('Operación realizada correctamente', 'Éxito');
+        this.dialogRef.close(response);
     }
 
-    public accionEliminarMaterial(){
-
+    private handleError(error: any): void {
+        Swal.close();
+        this.toastr.error(HandleErrorMessage(error), 'Error');
     }
 
-    public actionClose(data: Ingreso | null) {
-        if (data) {
-            //this.dialogRef.close(data);
-        } else {
-            //this.dialogRef.close(null);
-        }
-    }
-
-    public accionCancel() {
-        this.actionClose(null);
+    public accionCancel(): void {
+        this.dialogRef.close(null);
     }
 
     ngOnDestroy(): void {

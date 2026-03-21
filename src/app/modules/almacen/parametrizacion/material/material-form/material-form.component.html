@@ -1,111 +1,148 @@
 <h3 mat-dialog-title>
     <b>{{labelForm}}</b>
 </h3>
-<div class="row" mat-dialog-content>
-    <form [formGroup]="formRegistro">
-        <div class="col-lg-12 col-md-12 col-sm-12">
+
+<div mat-dialog-content>
+    <form [formGroup]="formRegistro" class="row">
+        <!-- Código del Producto -->
+        <div class="col-12 mb-3">
             <mat-form-field class="w-100" appearance="fill">
-                <mat-label>Seleccione Almacén</mat-label>
-                <mat-icon matPrefix>store</mat-icon>
-                <mat-select formControlName="id_almacen" (selectionChange)="onAlmacenChange($event)">
-                    @for(alm of dataAlmacen; track alm.id){
-                        <mat-option [value]="alm.id">{{alm.nombre}}</mat-option>
-                    }
-                </mat-select>
-                @if(formRegistro.get('id_almacen').hasError('required')){
-                    <mat-error>Este campo es requerido</mat-error>
+                <mat-label>Código del Producto</mat-label>
+                <mat-icon matPrefix>tag</mat-icon>
+                <input matInput formControlName="codigo" placeholder="Ej: PROD001"> @if(formRegistro.get('codigo')?.hasError('required') && formRegistro.get('codigo')?.touched){
+                <mat-error>Código requerido</mat-error>
+                } @if(formRegistro.get('codigo')?.hasError('minlength')){
+                <mat-error>Mínimo 3 caracteres</mat-error>
+                } @if(formRegistro.get('codigo')?.hasError('maxlength')){
+                <mat-error>Máximo 50 caracteres</mat-error>
                 }
             </mat-form-field>
         </div>
 
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <!-- Nombre del Producto -->
+        <div class="col-12 mb-3">
             <mat-form-field class="w-100" appearance="fill">
                 <mat-label>Nombre del Producto</mat-label>
                 <mat-icon matPrefix>inventory</mat-icon>
-                <input matInput formControlName="nombre">
-                @if(formRegistro.get('nombre').hasError('required')){
-                    <mat-error>Este campo es requerido</mat-error>
+                <input matInput formControlName="nombre"> @if(formRegistro.get('nombre')?.hasError('required') && formRegistro.get('nombre')?.touched){
+                <mat-error>Nombre requerido</mat-error>
+                } @if(formRegistro.get('nombre')?.hasError('minlength')){
+                <mat-error>Mínimo 3 caracteres</mat-error>
+                } @if(formRegistro.get('nombre')?.hasError('maxlength')){
+                <mat-error>Máximo 200 caracteres</mat-error>
                 }
-                @if(formRegistro.get('nombre').hasError('minlength')){
-                    <mat-error>Mínimo de 3 caracteres</mat-error>
-                }
-                @if(formRegistro.get('nombre').hasError('maxlength')){
-                    <mat-error>Máximo de 100 caracteres</mat-error>
-                }
+            </mat-form-field>
+        </div>
+
+        <!-- Descripción -->
+        <div class="col-12 mb-3">
+            <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Descripción</mat-label>
+                <mat-icon matPrefix>description</mat-icon>
+                <textarea matInput formControlName="descripcion" rows="2"></textarea>
             </mat-form-field>
         </div>
 
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <!-- Unidad de Medida -->
+            <div class="col-md-6 col-sm-12 mb-3">
                 <mat-form-field class="w-100" appearance="fill">
                     <mat-label>Unidad de Medida</mat-label>
                     <mat-icon matPrefix>straighten</mat-icon>
-                    <input matInput formControlName="unidad_de_medida">
-                    @if(formRegistro.get('unidad_de_medida').hasError('required')){
-                        <mat-error>Este campo es requerido</mat-error>
-                    }
-                    @if(formRegistro.get('unidad_de_medida').hasError('maxlength')){
-                        <mat-error>Máximo de 50 caracteres</mat-error>
+                    <mat-select formControlName="unidad_medida">
+                        @for(um of dataUnidadesMedida; track um.id){
+                        <mat-option [value]="um.id">{{um.nombre}} ({{um.abreviatura}})</mat-option>
+                        }
+                    </mat-select>
+                    @if(formRegistro.get('unidad_medida')?.hasError('required')){
+                    <mat-error>Seleccione una unidad</mat-error>
                     }
                 </mat-form-field>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+
+            <!-- Categoría -->
+            <div class="col-md-6 col-sm-12 mb-3">
                 <mat-form-field class="w-100" appearance="fill">
-                    <mat-label>Stock</mat-label>
-                    <mat-icon matPrefix>numbers</mat-icon>
-                    <input matInput type="number" formControlName="stock" min="0">
-                    @if(formRegistro.get('stock').hasError('required')){
-                        <mat-error>Este campo es requerido</mat-error>
-                    }
-                    @if(formRegistro.get('stock').hasError('min')){
-                        <mat-error>El stock no puede ser negativo</mat-error>
+                    <mat-label>Categoría</mat-label>
+                    <mat-icon matPrefix>category</mat-icon>
+                    <mat-select formControlName="categoria">
+                        @for(cat of dataCategorias; track cat.id){
+                        <mat-option [value]="cat.id">{{cat.nombre}}</mat-option>
+                        }
+                    </mat-select>
+                    @if(formRegistro.get('categoria')?.hasError('required')){
+                    <mat-error>Seleccione una categoría</mat-error>
                     }
                 </mat-form-field>
             </div>
         </div>
 
+        <div class="row">
+            <!-- Stock Mínimo -->
+            <div class="col-md-6 col-sm-12 mb-3">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Stock Mínimo</mat-label>
+                    <mat-icon matPrefix>trending_down</mat-icon>
+                    <input matInput type="number" formControlName="stock_minimo" min="0"> @if(formRegistro.get('stock_minimo')?.hasError('required')){
+                    <mat-error>Campo requerido</mat-error>
+                    } @if(formRegistro.get('stock_minimo')?.hasError('min')){
+                    <mat-error>No puede ser negativo</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <!-- Stock Máximo -->
+            <div class="col-md-6 col-sm-12 mb-3">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Stock Máximo</mat-label>
+                    <mat-icon matPrefix>trending_up</mat-icon>
+                    <input matInput type="number" formControlName="stock_maximo" min="0"> @if(formRegistro.get('stock_maximo')?.hasError('required')){
+                    <mat-error>Campo requerido</mat-error>
+                    } @if(formRegistro.get('stock_maximo')?.hasError('min')){
+                    <mat-error>No puede ser negativo</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Activo -->
+        <div class="col-12 mb-3">
+            <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+        </div>
+
         <!-- Campo de carga de imagen -->
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-12 mb-3">
             <div class="image-upload-container">
-                <label class="image-upload-label">
+                <label class="image-upload-label" [class.has-image]="formRegistro.get('imagen')?.value">
                     <mat-icon class="upload-icon">cloud_upload</mat-icon>
                     <span>{{ selectedFileName || 'Seleccionar imagen del producto' }}</span>
                     <input type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" #fileInput>
                 </label>
-                @if(formRegistro.get('imagen').hasError('required')){
-                    <mat-error>Este campo es requerido</mat-error>
-                }
             </div>
         </div>
 
         <!-- Vista previa de imagen -->
-        @if(formRegistro.get('imagen').value){
-            <div class="col-lg-12 col-md-12 col-sm-12 text-center mt-3">
+        @if(formRegistro.get('imagen')?.value){
+        <div class="col-12 text-center mt-2">
             <div class="image-preview-container">
-                <img [src]="formRegistro.get('imagen').value" 
-                 alt="Vista previa" 
-                 class="image-preview"
-                 onerror="this.src='assets/images/producto.png'">
-                <button type="button" class="btn-remove-image" (click)="removeImage()" matTooltip="Eliminacion de imagen!!!">
-                <mat-icon>close</mat-icon>
-                </button>
+                <img [src]="formRegistro.get('imagen')?.value" alt="Vista previa" class="image-preview" onerror="this.src='assets/images/producto.png'">
+                <button type="button" class="btn-remove-image" (click)="removeImage()" matTooltip="Eliminar imagen">
+                        <mat-icon>close</mat-icon>
+                    </button>
             </div>
-            </div>
+        </div>
         }
     </form>
 </div>
 
-<div mat-dialog-actions class="px-4 mb-4">
-    <button type="button" mat-button class="btn btn-primary btn-round mr-2" 
-            (click)="accionRegistrar()" [disabled]="formRegistro.invalid || uploading">
-        <i class="ti ti-send"></i> {{labelForm}}
-        @if(uploading){
-            <mat-spinner diameter="20" class="ml-2"></mat-spinner>
-        }
-    </button>
-    <button type="button" mat-button class="btn btn-danger btn-round" 
-            (click)="accionCancel()" [disabled]="uploading">
+<div mat-dialog-actions align="end" class="px-3 pb-3">
+    <button type="button" mat-button class="btn btn-secondary btn-round" (click)="accionCancel()" [disabled]="uploading">
         <i class="ti ti-x"></i> Cancelar
     </button>
+    <button type="button" mat-button class="btn btn-primary btn-round ms-2" (click)="accionRegistrar()" [disabled]="formRegistro.invalid || uploading">
+        <i class="ti ti-send"></i> {{labelForm}}
+        @if(uploading){
+            <mat-spinner diameter="20" class="ms-2"></mat-spinner>
+        }
+    </button>
 </div>
-

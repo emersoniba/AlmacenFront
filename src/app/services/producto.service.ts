@@ -1,44 +1,75 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Producto } from '../models/producto.model';
+import { Producto, UnidadMedida, CategoriaProducto } from '../models/producto.model';
+
+
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ProductoService {
+    private apiUrl = environment.apiUrl;
 
-  private apiUrl = environment.apiUrl;
+    constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient) { }
+    getProductos(): Observable<Producto[]> {
+        return this.http.get<any>(`${this.apiUrl}/productos/`).pipe(
+            map(response => response.data || response)
+        );
+    }
 
-  getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.apiUrl}/producto`);
-  }
+    getProductoById(id: number): Observable<Producto> {
+        return this.http.get<any>(`${this.apiUrl}/productos/${id}/`).pipe(
+            map(response => response.data || response)
+        );
+    }
 
-  getProductosByAlmacen(almacenId: string): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.apiUrl}/producto?id_almacen=${almacenId}`);
-  }
+    getProductosConStockBajo(): Observable<Producto[]> {
+        return this.http.get<any>(`${this.apiUrl}/productos/con_stock_bajo/`).pipe(
+            map(response => response.data || response)
+        );
+    }
 
-  getProductoById(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/producto/${id}`);
-  }
+    getMovimientosProducto(productoId: number, subalmacenId?: number): Observable<any[]> {
+        let url = `${this.apiUrl}/productos/${productoId}/movimientos/`;
+        if (subalmacenId) {
+            url += `?subalmacen=${subalmacenId}`;
+        }
+        return this.http.get<any>(url).pipe(
+            map(response => response.data || response)
+        );
+    }
 
-  createProducto(producto: Producto): Observable<Producto> {
-    return this.http.post<Producto>(`${this.apiUrl}/producto`, producto);
-  }
+    createProducto(producto: any): Observable<Producto> {
+        return this.http.post<any>(`${this.apiUrl}/productos/`, producto).pipe(
+            map(response => response.data || response)
+        );
+    }
 
-  updateProducto(id: number, producto: Producto): Observable<Producto> {
-    return this.http.put<Producto>(`${this.apiUrl}/producto/${id}`, producto);
-  }
+    updateProducto(id: number, producto: any): Observable<Producto> {
+        return this.http.put<any>(`${this.apiUrl}/productos/${id}/`, producto).pipe(
+            map(response => response.data || response)
+        );
+    }
 
-  deleteProducto(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/producto/${id}`);
-  }
-  //
-  obtenerProductosPorId(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/producto/${id}`);
+    deleteProducto(id: number): Observable<any> {
+        return this.http.delete<any>(`${this.apiUrl}/productos/${id}/`).pipe(
+            map(response => response.data || response)
+        );
+    }
+    // Obtener unidades de medida
+    getUnidadesMedida(): Observable<UnidadMedida[]> {
+        return this.http.get<any>(`${this.apiUrl}/unidades-medida/`).pipe(
+            map(response => response.data || response)
+        );
+    }
 
-  }
+    // Obtener categorías
+    getCategorias(): Observable<CategoriaProducto[]> {
+        return this.http.get<any>(`${this.apiUrl}/categorias-producto/`).pipe(
+            map(response => response.data || response)
+        );
+    }
 }

@@ -22,7 +22,8 @@ import { AuthInterceptor } from './modules/authentication/interceptor/auth.inter
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatDialogModule,
+         MatDatepickerModule,   
+        MatNativeDateModule,
         NgbModule,
         ToastrModule.forRoot({
             timeOut: 5000,

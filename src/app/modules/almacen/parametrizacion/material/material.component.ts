@@ -18,7 +18,6 @@ import { MaterialFormComponent } from './material-form/material-form.component';
     styleUrl: './material.component.scss'
 })
 export class MaterialComponent implements OnInit, OnDestroy {
-
     public dataProductos: Producto[] = [];
     private gridApi!: GridApi<Producto>;
     public gridOptions: GridOptions = <GridOptions>{
@@ -38,12 +37,46 @@ export class MaterialComponent implements OnInit, OnDestroy {
     };
 
     columnDefs: ColDef[] = [
-        { field: 'id_ui', headerName: 'Opciones', filter: false, minWidth: 115, maxWidth: 115, cellRenderer: RendererComponent, pinned: true },
-        { field: 'nombre', headerName: 'Nombre Material', filter: true, minWidth: 200, floatingFilter: true },
-        { field: 'unidad_de_medida', headerName: 'Unidad de medida', filter: true, minWidth: 150, floatingFilter: true },
-        { field: 'imagen', headerName: 'Imagen', filter: false, minWidth: 100, cellRenderer: (params: any) => 
-            `<img src="${params.value}" width="50" height="50" onerror="this.src='assets/images/producto.png'">` 
+        { field: 'id', headerName: 'Opciones', filter: false, minWidth: 115, maxWidth: 115, cellRenderer: RendererComponent, pinned: true },
+        { field: 'codigo', headerName: 'Código', filter: true, minWidth: 120, floatingFilter: true },
+        { field: 'nombre', headerName: 'Material', filter: true, minWidth: 250, floatingFilter: true },
+        { field: 'unidad_medida_abrev', headerName: 'Unidad', filter: true, minWidth: 100, floatingFilter: true },
+        { field: 'categoria_nombre', headerName: 'Categoría', filter: true, minWidth: 150, floatingFilter: true },
+        { 
+            field: 'stock_total', 
+            headerName: 'Stock Total', 
+            filter: true, 
+            minWidth: 120,
+            cellRenderer: (params: any) => {
+                const stock = params.value;
+                const stockMinimo = params.data?.stock_minimo;
+                let clase = 'text-success';
+                if (stock <= 0) {
+                    clase = 'text-danger';
+                } else if (stockMinimo && stock <= stockMinimo) {
+                    clase = 'text-warning';
+                }
+                return `<span class="${clase} fw-bold">${stock}</span>`;
+            }
         },
+        { 
+            field: 'stock_minimo', 
+            headerName: 'Stock Mínimo', 
+            filter: true, 
+            minWidth: 120 
+        },
+        { 
+            field: 'imagen', 
+            headerName: 'Imagen', 
+            filter: false, 
+            minWidth: 100,
+            cellRenderer: (params: any) => {
+                if (params.value) {
+                    return `<img src="${params.value}" width="50" height="50" style="object-fit:cover; border-radius:5px;" onerror="this.src='assets/images/producto.png'">`;
+                }
+                return `<img src="assets/images/producto.png" width="50" height="50" style="object-fit:cover; border-radius:5px;">`;
+            }
+        }
     ];
 
     constructor(
@@ -57,21 +90,21 @@ export class MaterialComponent implements OnInit, OnDestroy {
         this.getAllProductos();
     }
 
-    public getAllProductos() {
+    public getAllProductos(): void {
         this.formSubscription = this.productoService.getProductos().subscribe({
             next: (response) => {
                 this.dataProductos = response;
-            }, error: (err) => {
+            },
+            error: (err) => {
                 this.dataProductos = [];
                 this.toastr.error(HandleErrorMessage(err), 'Error');
-            },
+            }
         });
     }
 
-    public accionNuevo() {
+    public accionNuevo(): void {
         const dialogRef = this.dialog.open(MaterialFormComponent, {
             width: '600px',
-            height: '500px',
             disableClose: true,
             data: {}
         });
@@ -83,7 +116,7 @@ export class MaterialComponent implements OnInit, OnDestroy {
         });
     }
 
-    public OnActionClick(event: any) {
+    public OnActionClick(event: any): void {
         const { action, rowId, data } = event;
         if (action.toLowerCase() === 'edit') {
             this.onActionEditar(data);
@@ -91,12 +124,14 @@ export class MaterialComponent implements OnInit, OnDestroy {
         if (action.toLowerCase() === 'delete') {
             this.onActionEliminar(data);
         }
+        if (action.toLowerCase() === 'view-stock') {
+            this.onActionVerStock(data);
+        }
     }
 
-    public onActionEditar(data: Producto) {
+    public onActionEditar(data: Producto): void {
         const dialogRef = this.dialog.open(MaterialFormComponent, {
             width: '600px',
-            height: '500px',
             disableClose: true,
             data: data
         });
@@ -108,23 +143,22 @@ export class MaterialComponent implements OnInit, OnDestroy {
         });
     }
 
-    public onActionEliminar(data: Producto) {
-        this.alertService.showConfirmationDialog('Eliminar registro', '¿Está seguro de eliminar este producto?')
+    public onActionEliminar(data: Producto): void {
+        this.alertService.showConfirmationDialog('Eliminar Producto', '¿Está seguro de eliminar este producto?')
             .then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
-                        title: 'Espere un momento...',
-                        didOpen: () => {
-                            Swal.showLoading()
-                        }
+                        title: 'Eliminando...',
+                        didOpen: () => Swal.showLoading()
                     });
                     
-                    this.productoService.deleteProducto(data.id_ui).subscribe({
-                        next: (response) => {
+                    this.productoService.deleteProducto(data.id).subscribe({
+                        next: () => {
                             this.toastr.success('Producto eliminado correctamente', 'Éxito');
                             this.getAllProductos();
                             Swal.close();
-                        }, error: (err) => {
+                        },
+                        error: (err) => {
                             this.toastr.error(HandleErrorMessage(err), 'Error');
                             Swal.close();
                         }
@@ -133,9 +167,37 @@ export class MaterialComponent implements OnInit, OnDestroy {
             });
     }
 
-    onGridReady(params: GridReadyEvent<Producto>) {
+    public onActionVerStock(data: Producto): void {
+        // Mostrar modal con detalles de stock por subalmacén
+        if (!data.stocks || data.stocks.length === 0) {
+            this.toastr.info('No hay stock registrado para este producto', 'Información');
+            return;
+        }
+        
+        let mensaje = '<div class="table-responsive"><table class="table table-sm">';
+        mensaje += '<thead><tr><th>Subalmacén</th><th>Cantidad</th><th>Ubicación</th></tr></thead><tbody>';
+        data.stocks.forEach((stock: any) => {
+            mensaje += `<tr>
+                <td>${stock.subalmacen_nombre}</td>
+                <td class="fw-bold">${stock.cantidad}</td>
+                <td>${stock.ubicacion || '-'}</td>
+            </tr>`;
+        });
+        mensaje += '</tbody></table></div>';
+        
+        Swal.fire({
+            title: `Stock de ${data.nombre}`,
+            html: mensaje,
+            icon: 'info',
+            confirmButtonText: 'Cerrar'
+        });
+    }
+
+    onGridReady(params: GridReadyEvent<Producto>): void {
         this.gridApi = params.api;
-        this.gridApi.sizeColumnsToFit();
+        setTimeout(() => {
+            this.gridApi.sizeColumnsToFit();
+        }, 100);
     }
 
     ngOnDestroy(): void {

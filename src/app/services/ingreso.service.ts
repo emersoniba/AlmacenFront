@@ -1,40 +1,74 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IngresoCustom, IngresoDetalle } from '../models/ingreso.model';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
+import { Ingreso, IngresoCreate, IngresoDetalle } from '../models/ingreso.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class IngresoService {
-
     private apiUrl = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
-    getIngresos(): Observable<IngresoCustom[]> {
-        return this.http.get<IngresoCustom[]>(`${this.apiUrl}/ingresos/`);
+    getIngresos(): Observable<Ingreso[]> {
+        return this.http.get<any>(`${this.apiUrl}/ingresos/`).pipe(
+            map(response => response.data || response)
+        );
     }
 
-    getIngresosGestion(gestion: number): Observable<IngresoCustom[]> {
-        return this.http.get<IngresoCustom[]>(`${this.apiUrl}/ingresos/?gestion=${gestion}/`);
+    getIngresoById(id: number): Observable<Ingreso> {
+        return this.http.get<any>(`${this.apiUrl}/ingresos/${id}/`).pipe(
+            map(response => response.data || response)
+        );
     }
 
-    getDetalleIngresoOne(idIngreso: string): Observable<IngresoDetalle[]> {
-        return this.http.get<IngresoDetalle[]>(`${this.apiUrl}/ingresosDetalle/${idIngreso}`);
+    getIngresosByGestion(gestion: number): Observable<Ingreso[]> {
+        return this.http.get<any>(`${this.apiUrl}/ingresos/?gestion=${gestion}`).pipe(
+            map(response => response.data || response)
+        );
     }
 
-    postIngreso(data: IngresoCustom): Observable<IngresoCustom> {
-        return this.http.post<IngresoCustom>(`${this.apiUrl}/ingresos/`, data);
+    getDetallesIngreso(idIngreso: number): Observable<IngresoDetalle[]> {
+        return this.http.get<any>(`${this.apiUrl}/ingresos-detalle/?ingreso=${idIngreso}`).pipe(
+            map(response => response.data || response)
+        );
     }
 
-    putIngreso(idIngreso: string, data: IngresoCustom): Observable<IngresoCustom> {
-        return this.http.put<IngresoCustom>(`${this.apiUrl}/ingresos/${idIngreso}/`, data);
+    postIngreso(data: IngresoCreate): Observable<Ingreso> {
+        return this.http.post<any>(`${this.apiUrl}/ingresos/`, data).pipe(
+            map(response => response.data || response)
+        );
     }
 
-    deleteIngreso(idIngreso: string): Observable<IngresoCustom> {
-        return this.http.delete<IngresoCustom>(`${this.apiUrl}/ingresos/${idIngreso}/`);
+    completarIngreso(id: number): Observable<Ingreso> {
+        return this.http.post<any>(`${this.apiUrl}/ingresos/${id}/completar/`, {}).pipe(
+            map(response => response.data || response)
+        );
+    }
+
+    anularIngreso(id: number, observacion: string): Observable<Ingreso> {
+        return this.http.post<any>(`${this.apiUrl}/ingresos/${id}/anular/`, { observacion }).pipe(
+            map(response => response.data || response)
+        );
+    }
+
+    agregarDetalle(idIngreso: number, detalle: any): Observable<IngresoDetalle> {
+        return this.http.post<any>(`${this.apiUrl}/ingresos/${idIngreso}/agregar_detalle/`, detalle).pipe(
+            map(response => response.data || response)
+        );
+    }
+
+    quitarDetalle(idIngreso: number, detalleId: number): Observable<any> {
+        return this.http.delete<any>(`${this.apiUrl}/ingresos/${idIngreso}/quitar_detalle/?detalle_id=${detalleId}`).pipe(
+            map(response => response.data || response)
+        );
+    }
+
+    deleteIngreso(id: number): Observable<any> {
+        return this.http.delete<any>(`${this.apiUrl}/ingresos/${id}/`).pipe(
+            map(response => response.data || response)
+        );
     }
 }
