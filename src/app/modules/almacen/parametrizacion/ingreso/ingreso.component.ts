@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ColDef, GridApi, GridOptions, PaginationNumberFormatterParams } from 'ag-grid-community';
 import { Ingreso } from 'src/app/models/ingreso.model';
-//import { RendererComponent } from '../../../bandejas/abrenderer/renderer.component';
 import { RendererComponent } from '../../bandejas/abrenderer/renderer.component';
 import { localeEs } from 'src/app/app.locale.es.grid';
 import moment from 'moment';
@@ -9,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { IngresoFormComponent } from './ingreso-form/ingreso-form.component';
+import { CompletarIngresoModalComponent } from './completar-ingreso-modal/completar-ingreso-modal.component';
 import { SwalAlertService } from 'src/app/utils/util.swal';
 import Swal from 'sweetalert2';
 import { IngresoService } from 'src/app/services/ingreso.service';
@@ -27,7 +27,9 @@ export class IngresoComponent implements OnInit, OnDestroy {
         components: {
             actionCellRenderer: RendererComponent
         },
-        context: { componentParent: this }
+        context: { componentParent: this },
+        // Configurar doble clic
+        onRowDoubleClicked: (event) => this.onRowDoubleClick(event)
     };
 
     public dataIngresos: Ingreso[] = [];
@@ -78,7 +80,7 @@ export class IngresoComponent implements OnInit, OnDestroy {
                 let clase = '';
                 let icono = '';
                 if (estado === 'Pendiente') {
-                    clase = 'badge bg-warning';
+                    clase = 'badge bg-warning cursor-pointer';
                     icono = 'ti ti-clock';
                 } else if (estado === 'Completado') {
                     clase = 'badge bg-success';
@@ -129,7 +131,6 @@ export class IngresoComponent implements OnInit, OnDestroy {
             gestion: [this.gestionActual, Validators.required]
         });
 
-        // Generar años desde 2018 hasta actual
         for (let g = 2018; g <= this.gestionActual; g++) {
             this.dataGestiones.push(g);
         }
@@ -138,7 +139,6 @@ export class IngresoComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getIngresos();
 
-        // Escuchar cambios en la gestión
         this.formGestion.get('gestion')?.valueChanges.subscribe(() => {
             this.getIngresos();
         });
@@ -149,7 +149,6 @@ export class IngresoComponent implements OnInit, OnDestroy {
 
         this.subscription = this.ingresoService.getIngresos().subscribe({
             next: (response) => {
-                // Filtrar por gestión si es necesario
                 if (gestion) {
                     this.dataIngresos = response.filter(i => i.gestion === gestion);
                 } else {
@@ -163,13 +162,40 @@ export class IngresoComponent implements OnInit, OnDestroy {
         });
     }
 
+    /**
+     * Manejar doble clic en la fila
+     */
+    public onRowDoubleClick(event: any): void {
+        const ingreso = event.data as Ingreso;
+        
+        // Solo mostrar modal si está pendiente
+        if (ingreso.estado_codigo !== 'PENDIENTE') {
+            if (ingreso.estado_codigo === 'COMPLETADO') {
+                this.toastr.info('Este ingreso ya fue completado', 'Información');
+            } else if (ingreso.estado_codigo === 'ANULADO') {
+                this.toastr.warning('Este ingreso está anulado', 'Advertencia');
+            }
+            return;
+        }
+
+        // Abrir modal de completar
+        const dialogRef = this.dialog.open(CompletarIngresoModalComponent, {
+            width: '800px',
+            maxWidth: '90vw',
+            disableClose: true,
+            data: { ingreso: ingreso }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result && result.completado) {
+                this.getIngresos(); // Recargar lista
+            }
+        });
+    }
+
     public onActionNuevo(): void {
         const dialogRef = this.dialog.open(IngresoFormComponent, {
-            //width: '700px',
             width: '770px',
-            height: '430px',
-            minWidth: '770wv',
-            minHeight: '450hv',
             disableClose: true,
             data: {}
         });
@@ -184,33 +210,32 @@ export class IngresoComponent implements OnInit, OnDestroy {
     public OnActionClick(event: any): void {
         const { action, rowId, data } = event;
 
-        if (action.toLowerCase() === 'edit') {
-            this.onActionEditar(rowId, data);
-        }
-        if (action.toLowerCase() === 'delete') {
-            this.onActionEliminar(rowId, data);
-        }
-        if (action.toLowerCase() === 'complete') {
-            this.onActionCompletar(data);
-        }
-        if (action.toLowerCase() === 'cancel') {
-            this.onActionAnular(data);
+        switch (action.toLowerCase()) {
+            case 'edit':
+                this.onActionEditar(rowId, data);
+                break;
+            case 'delete':
+                this.onActionEliminar(rowId, data);
+                break;
+            case 'cancel':
+                this.onActionAnular(data);
+                break;
+            case 'view':
+                this.onActionVerDetalles(data);
+                break;
+            default:
+                console.warn('Acción no reconocida:', action);
         }
     }
 
     public onActionEditar(pk: string, data: Ingreso): void {
-        // Solo se puede editar si está pendiente
         if (data.estado_codigo !== 'PENDIENTE') {
             this.toastr.warning('Solo se pueden editar ingresos pendientes', 'Advertencia');
             return;
         }
 
         const dialogRef = this.dialog.open(IngresoFormComponent, {
-            // width: '700px',
             width: '770px',
-            height: '430px',
-            minWidth: '770wv',
-            minHeight: '450hv',
             disableClose: true,
             data: data
         });
@@ -223,7 +248,6 @@ export class IngresoComponent implements OnInit, OnDestroy {
     }
 
     public onActionEliminar(pk: string, data: Ingreso): void {
-        // Solo se puede eliminar si está pendiente
         if (data.estado_codigo !== 'PENDIENTE') {
             this.toastr.warning('Solo se pueden eliminar ingresos pendientes', 'Advertencia');
             return;
@@ -240,35 +264,6 @@ export class IngresoComponent implements OnInit, OnDestroy {
                     this.ingresoService.deleteIngreso(Number(pk)).subscribe({
                         next: () => {
                             this.toastr.success('Ingreso eliminado correctamente', 'Éxito');
-                            this.getIngresos();
-                            Swal.close();
-                        },
-                        error: (err) => {
-                            this.toastr.error(HandleErrorMessage(err), 'Error');
-                            Swal.close();
-                        }
-                    });
-                }
-            });
-    }
-
-    public onActionCompletar(data: Ingreso): void {
-        if (data.estado_codigo !== 'PENDIENTE') {
-            this.toastr.warning('Solo se pueden completar ingresos pendientes', 'Advertencia');
-            return;
-        }
-
-        this.alertService.showConfirmationDialog('Completar Ingreso', '¿Está seguro de completar este ingreso? Se actualizará el stock.')
-            .then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Procesando...',
-                        didOpen: () => Swal.showLoading()
-                    });
-
-                    this.ingresoService.completarIngreso(data.id).subscribe({
-                        next: (response) => {
-                            this.toastr.success('Ingreso completado correctamente', 'Éxito');
                             this.getIngresos();
                             Swal.close();
                         },
@@ -310,9 +305,92 @@ export class IngresoComponent implements OnInit, OnDestroy {
             });
     }
 
-    public onSelectionChangedIngreso(event: any): void {
-        // Manejar selección si es necesario
+    public onActionVerDetalles(data: Ingreso): void {
+        let detallesHtml = `
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-sm table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Código</th>
+                            <th class="text-end">Cantidad</th>
+                            <th class="text-end">Precio Unit.</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        if (data.detalles && data.detalles.length > 0) {
+            data.detalles.forEach(d => {
+                detallesHtml += `
+                    <tr>
+                        <td>${d.producto_nombre || '-'}</td>
+                        <td>${d.producto_codigo || '-'}</td>
+                        <td class="text-end">${d.cantidad} ${d.producto_unidad || ''}</td>
+                        <td class="text-end">Bs. ${d.precio_unitario?.toFixed(2) || '0.00'}</td>
+                        <td class="text-end">Bs. ${d.subtotal?.toFixed(2) || '0.00'}</td>
+                    </tr>
+                `;
+            });
+        } else {
+            detallesHtml += `
+                <tr>
+                    <td colspan="5" class="text-center text-muted">
+                        <i class="ti ti-info-circle"></i> No hay productos registrados
+                    </td>
+                </tr>
+            `;
+        }
+        
+        detallesHtml += `
+                    </tbody>
+                    <tfoot class="table-active">
+                        <tr>
+                            <th colspan="4" class="text-end">TOTAL:</th>
+                            <th class="text-end">Bs. ${data.total?.toFixed(2) || '0.00'}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        `;
+        
+        const infoIngreso = `
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Código:</strong> ${data.codigo}<br>
+                    <strong>Comprobante:</strong> ${data.comprobante}<br>
+                    <strong>Fecha:</strong> ${moment(data.fecha_ingreso).format('DD/MM/YYYY HH:mm')}
+                </div>
+                <div class="col-md-6">
+                    <strong>Proveedor:</strong> ${data.proveedor_nombre}<br>
+                    <strong>Almacén:</strong> ${data.almacen_nombre}<br>
+                    <strong>Subalmacén:</strong> ${data.subalmacen_nombre || 'Ninguno'}
+                </div>
+            </div>
+            <hr>
+        `;
+        
+        let estadoBadge = '';
+        if (data.estado_codigo === 'PENDIENTE') {
+            estadoBadge = '<span class="badge bg-warning"><i class="ti ti-clock me-1"></i>Pendiente</span>';
+        } else if (data.estado_codigo === 'COMPLETADO') {
+            estadoBadge = '<span class="badge bg-success"><i class="ti ti-check me-1"></i>Completado</span>';
+        } else {
+            estadoBadge = '<span class="badge bg-danger"><i class="ti ti-ban me-1"></i>Anulado</span>';
+        }
+        
+        Swal.fire({
+            title: `Detalles del Ingreso<br><small class="text-muted">${data.codigo} ${estadoBadge}</small>`,
+            html: infoIngreso + detallesHtml,
+            icon: 'info',
+            width: '800px',
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#3085d6'
+        });
     }
+
+    public onSelectionChangedIngreso(event: any): void {}
 
     public onGridReadyIngreso(params: any): void {
         this.gridApi = params.api;

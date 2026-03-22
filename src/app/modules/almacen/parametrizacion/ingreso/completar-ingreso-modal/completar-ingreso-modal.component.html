@@ -1,0 +1,110 @@
+<h2 mat-dialog-title class="text-center m-0">
+    <i class="ti ti-check-circle text-success fs-1"></i>
+    <br>
+    <b>Completar Ingreso</b>
+</h2>
+
+<mat-dialog-content class="p-3">
+    <!-- Datos del ingreso -->
+    <mat-card class="mb-3">
+        <mat-card-header class="bg-primary text-white">
+            <mat-icon mat-card-avatar>receipt</mat-icon>
+            <mat-card-title>Datos del Ingreso</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="pt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Código:</strong> {{ ingreso.codigo }}</p>
+                    <p><strong>Comprobante:</strong> {{ ingreso.comprobante }}</p>
+                    <p><strong>Fecha:</strong> {{ ingreso.fecha_ingreso | date:'dd/MM/yyyy HH:mm' }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Proveedor:</strong> {{ ingreso.proveedor_nombre }}</p>
+                    <p><strong>Almacén:</strong> {{ ingreso.almacen_nombre }}</p>
+                    <p><strong>Subalmacén:</strong> {{ ingreso.subalmacen_nombre || 'Ninguno' }}</p>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Productos -->
+    <mat-card class="mb-3">
+        <mat-card-header class="bg-info text-white">
+            <mat-icon mat-card-avatar>inventory</mat-icon>
+            <mat-card-title>Productos ({{ totalProductos }} items)</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-0">
+            <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                <table class="table table-sm table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Código</th>
+                            <th class="text-end">Cantidad</th>
+                            <th class="text-end">Precio Unit.</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detalle of ingreso.detalles">
+                            <td>
+                                <i class="ti ti-box me-1 text-primary"></i> {{ detalle.producto_nombre }}
+                            </td>
+                            <td>{{ detalle.producto_codigo }}</td>
+                            <td class="text-end">
+                                {{ detalle.cantidad }}
+                                <small class="text-muted">{{ detalle.producto_unidad }}</small>
+                            </td>
+                            <td class="text-end">Bs. {{ detalle.precio_unitario | number:'1.2-2' }}</td>
+                            <td class="text-end fw-bold">Bs. {{ detalle.subtotal | number:'1.2-2' }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="table-active">
+                        <tr>
+                            <th colspan="4" class="text-end">TOTAL:</th>
+                            <th class="text-end text-primary fs-5">
+                                Bs. {{ totalMonto | number:'1.2-2' }}
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Advertencia -->
+    <mat-card class="mb-3 bg-warning-light">
+        <mat-card-content>
+            <div class="d-flex">
+                <i class="ti ti-alert-triangle fs-4 me-2 text-warning"></i>
+                <div>
+                    <strong>¡Atención!</strong> Al completar este ingreso:
+                    <ul class="mt-2 mb-0">
+                        <li>Se actualizará el stock en el almacén/subalmacén</li>
+                        <li>Los productos quedarán disponibles para solicitudes</li>
+                        <li>Esta acción no se puede deshacer (solo anulando)</li>
+                    </ul>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Confirmación -->
+    <mat-checkbox class="w-100 mb-3" [(ngModel)]="confirmacion" color="primary">
+        <strong>Confirmo que los datos son correctos y deseo completar este ingreso</strong>
+    </mat-checkbox>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="p-3 border-top">
+    <button mat-button class="btn btn-secondary" (click)="cancelar()" [disabled]="cargando">
+        <i class="ti ti-x me-1"></i> Cancelar
+    </button>
+    <button mat-button class="btn btn-success ms-2" (click)="completar()" [disabled]="!confirmacion || cargando" color="primary">
+        <i class="ti ti-check me-1"></i>
+        <span *ngIf="!cargando">Completar Ingreso</span>
+        <span *ngIf="cargando">
+            <mat-spinner diameter="20" class="d-inline-block me-2"></mat-spinner>
+            Procesando...
+        </span>
+    </button>
+</mat-dialog-actions>

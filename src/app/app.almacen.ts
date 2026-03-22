@@ -22,6 +22,7 @@ import { IngresoFormComponent } from './modules/almacen/parametrizacion/ingreso/
 import { PerfilModalComponent } from './modules/perfil-modal/perfil-modal.component';
 import { PersonalComponent } from './modules/almacen/personal/personal.component';
 import { PersonalFormComponent } from './modules/almacen/personal/personal-form/personal-form.component';
+import { CompletarIngresoModalComponent } from './modules/almacen/parametrizacion/ingreso/completar-ingreso-modal/completar-ingreso-modal.component';
 
 export const AppAlmacenConfig = [
     LoginComponent,
@@ -48,4 +49,5 @@ export const AppAlmacenConfig = [
     //nuevos components
     PersonalComponent,
     PersonalFormComponent,
+    CompletarIngresoModalComponent
 ]

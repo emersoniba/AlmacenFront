@@ -24,6 +24,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+//
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card'; // <-- añadir
+import { MatButtonModule } from '@angular/material/button'; // si usas botones de Material
+// ...otros imports...
 
 @NgModule({
     declarations: [
@@ -39,7 +44,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatDialogModule,
-         MatDatepickerModule,   
+        MatDatepickerModule,
         MatNativeDateModule,
         NgbModule,
         ToastrModule.forRoot({
@@ -55,6 +60,10 @@ import { MatNativeDateModule } from '@angular/material/core';
         HttpClientModule,
         SweetAlert2Module,
         NgIf,
+        //
+        FormsModule,
+        MatCardModule,      // <-- añadir
+        MatButtonModule,
     ],
     bootstrap: [AppComponent],
     providers: [
