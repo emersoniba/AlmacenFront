@@ -79,12 +79,12 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
         const productosSeleccionados = this.dataProductos.filter(p =>
             p.selected && p.cantidad > 0
         );
-        
+
         if (productosSeleccionados.length === 0) {
             this.toastr.info('No hay productos en el carrito', 'Carrito vacío');
             return;
         }
-        
+
         const dialogRef = this.dialog.open(CarritoModalComponent, {
             width: '800px',
             height: '500px',
@@ -139,7 +139,7 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
     public cargarProductosPorAlmacen(almacenId: string) {
         this.loadingProductos = true;
         this.solicitudForm.get('buscar')?.setValue('');
-        
+
         // Nota: Necesitas crear este método en tu ProductoService
         // Si no existe, usa getProductos() y filtra por almacén
         this.productoService.getProductosByAlmacen(almacenId)
@@ -193,14 +193,16 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
     private procesarSolicitud(productosSeleccionados: Producto[]) {
-        // Obtener el ID del almacén seleccionado
         const almacenId = this.solicitudForm.get('almacen_id')?.value;
-        
-        // Construir el objeto de solicitud según el modelo SolicitudCreate
+
+        // Obtener el subalmacén por defecto para este almacén
+        // Puedes modificar esto según tu lógica de negocio
+        const subalmacenId = null; // O el ID del subalmacén correspondiente
+
         const solicitudData: SolicitudCreate = {
             objetivo: this.solicitudForm.get('objetivo')?.value,
             almacen: almacenId,
-            subalmacen: null, // Si no usas subalmacenes, puedes dejarlo null
+            subalmacen: subalmacenId,  // Asegurar que se envía
             detalles: productosSeleccionados.map(p => ({
                 producto: p.id,
                 cantidad_solicitada: p.cantidad
@@ -280,7 +282,7 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
             this.sincronizarCantidadProducto(productoPagina.id, productoPagina.cantidad);
             this.cdRef.detectChanges();
         }
-        
+
         // Si la cantidad llega a 0, marcar como no seleccionado
         if (productoPagina.cantidad === 0 && productoPagina.selected) {
             productoPagina.selected = false;
@@ -290,31 +292,31 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
 
     private sincronizarCantidadProducto(productoId: number, cantidad: number) {
         // Sincronizar en todos los arrays
-        this.dataProductos = this.dataProductos.map(p => 
+        this.dataProductos = this.dataProductos.map(p =>
             p.id === productoId ? { ...p, cantidad } : p
         );
-        this.dataProductosOrigen = this.dataProductosOrigen.map(p => 
+        this.dataProductosOrigen = this.dataProductosOrigen.map(p =>
             p.id === productoId ? { ...p, cantidad } : p
         );
-        this.dataProductosFiltrados = this.dataProductosFiltrados.map(p => 
+        this.dataProductosFiltrados = this.dataProductosFiltrados.map(p =>
             p.id === productoId ? { ...p, cantidad } : p
         );
-        this.dataProductosPaginados = this.dataProductosPaginados.map(p => 
+        this.dataProductosPaginados = this.dataProductosPaginados.map(p =>
             p.id === productoId ? { ...p, cantidad } : p
         );
     }
 
     private sincronizarSeleccionProducto(productoId: number, selected: boolean) {
-        this.dataProductos = this.dataProductos.map(p => 
+        this.dataProductos = this.dataProductos.map(p =>
             p.id === productoId ? { ...p, selected } : p
         );
-        this.dataProductosOrigen = this.dataProductosOrigen.map(p => 
+        this.dataProductosOrigen = this.dataProductosOrigen.map(p =>
             p.id === productoId ? { ...p, selected } : p
         );
-        this.dataProductosFiltrados = this.dataProductosFiltrados.map(p => 
+        this.dataProductosFiltrados = this.dataProductosFiltrados.map(p =>
             p.id === productoId ? { ...p, selected } : p
         );
-        this.dataProductosPaginados = this.dataProductosPaginados.map(p => 
+        this.dataProductosPaginados = this.dataProductosPaginados.map(p =>
             p.id === productoId ? { ...p, selected } : p
         );
     }

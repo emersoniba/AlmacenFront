@@ -69,8 +69,25 @@ export class ModalAprobacionComponent implements OnInit, AfterViewInit {
     });
   }
 
-  get totalProductos(): number {
-    return this.solicitud?.detalles?.reduce((total, detalle) => total + detalle.cantidad_solicitada, 0) || 0;
+    get totalProductos(): number {
+    if (!this.solicitud?.detalles) return 0;
+    
+    return this.solicitud.detalles.reduce((total, detalle) => {
+      // Convertir a número por si viene como string
+      const cantidad = typeof detalle.cantidad_solicitada === 'string' 
+        ? parseFloat(detalle.cantidad_solicitada) 
+        : detalle.cantidad_solicitada;
+      return total + (isNaN(cantidad) ? 0 : cantidad);
+    }, 0);
+  }
+  get totalProductosFormateado(): string {
+    const total = this.totalProductos;
+    // Si es un número entero, mostrar sin decimales
+    if (total % 1 === 0) {
+      return total.toString();
+    }
+    // Si tiene decimales, mostrar con 2 decimales
+    return total.toFixed(2);
   }
 
   onAprobar(): void {
