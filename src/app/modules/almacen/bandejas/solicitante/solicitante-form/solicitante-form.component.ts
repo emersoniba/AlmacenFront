@@ -208,7 +208,6 @@ export class SolicitanteFormComponent implements OnInit, OnDestroy, AfterViewIni
                 cantidad_solicitada: p.cantidad
             }))
         };
-
         Swal.fire({
             title: 'Enviando solicitud...',
             allowEscapeKey: false,

@@ -1,0 +1,221 @@
+<div class="modal-content" tabindex="-1" cdkFocusInitial>
+    <div class="modal-header">
+        <h1 class="modal-title">
+            <i class="ti ti-shopping-cart me-2"></i> Detalles de Solicitud
+        </h1>
+    </div>
+
+    <div class="modal-body">
+        <!-- Loading State -->
+        <div *ngIf="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2 text-muted">Cargando detalles de la solicitud...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+            <i class="ti ti-alert-circle me-2"></i>
+            <strong>Error:</strong> No se pudieron cargar los detalles de la solicitud.
+        </div>
+
+        <!-- Content -->
+        <div *ngIf="!loading && !error && solicitud" class="content-wrapper">
+            <!-- Badge de estado -->
+            <div class="text-end mb-3">
+                <span [ngClass]="getEstadoBadgeClass()" class="badge fs-6 p-2">
+            <i [ngClass]="getEstadoIcon()" class="me-1"></i>
+            {{ solicitud.estado_nombre }}
+          </span>
+            </div>
+
+            <!-- Información general -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">
+                        <i class="ti ti-info-circle me-2"></i> Información General
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="text-muted small text-uppercase">Código</label>
+                                <div class="fw-bold">{{ solicitud.codigo }}</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-muted small text-uppercase">Fecha Solicitud</label>
+                                <div>{{ formatDate(solicitud.fecha_solicitud) }}</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-muted small text-uppercase">Solicitante</label>
+                                <div>
+                                    {{ solicitud.solicitante_nombre }}
+                                    <small class="text-muted ms-2">({{ solicitud.solicitante_cargo }})</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="text-muted small text-uppercase">Almacén</label>
+                                <div>{{ solicitud.almacen_nombre }}</div>
+                            </div>
+                            <div *ngIf="solicitud.subalmacen_nombre" class="mb-3">
+                                <label class="text-muted small text-uppercase">Subalmacén</label>
+                                <div>{{ solicitud.subalmacen_nombre }}</div>
+                            </div>
+                            <div *ngIf="solicitud.fecha_envio" class="mb-3">
+                                <label class="text-muted small text-uppercase">Fecha Envío</label>
+                                <div>{{ formatDate(solicitud.fecha_envio) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Objetivo -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">
+                        <i class="ti ti-message-text me-2"></i> Objetivo de la Solicitud
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ solicitud.objetivo }}</p>
+                </div>
+            </div>
+
+            <!-- Productos -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <i class="ti ti-package me-2"></i> Productos Solicitados
+                    </h6>
+                    <span class="badge bg-primary">{{ getTotalProductos() }} unidades totales</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Código</th>
+                                    <th class="text-center">Cantidad Solicitada</th>
+                                    <th class="text-center">Cantidad Entregada</th>
+                                    <th class="text-center">Stock Actual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let detalle of solicitud.detalles">
+                                    <td>
+                                        <i class="ti ti-box me-2 text-muted"></i> {{ detalle.producto_nombre }}
+                                    </td>
+                                    <td>
+                                        <code class="small">{{ detalle.producto_codigo }}</code>
+                                    </td>
+                                    <td class="text-center fw-bold">
+                                        {{ formatCantidad(detalle.cantidad_solicitada) }}
+                                        <small class="text-muted">{{ detalle.producto_unidad }}</small>
+                                    </td>
+                                    <td class="text-center">
+                                        <span [class.text-success]="detalle.cantidad_entregada > 0">
+                        {{ formatCantidad(detalle.cantidad_entregada) }}
+                        <small class="text-muted">{{ detalle.producto_unidad }}</small>
+                      </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span [class.text-danger]="detalle.cantidad_solicitada > detalle.stock_actual" [class.text-warning]="detalle.cantidad_solicitada === detalle.stock_actual">
+                        {{ formatCantidad(detalle.stock_actual) }}
+                      </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot *ngIf="solicitud.detalles && solicitud.detalles.length > 0" class="table-active">
+                                <tr>
+                                    <td colspan="2" class="text-end fw-bold">TOTALES:</td>
+                                    <td class="text-center fw-bold">{{ getTotalProductos() }}</td>
+                                    <td class="text-center fw-bold">{{ getTotalEntregados() }}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div *ngIf="!solicitud.detalles || solicitud.detalles.length === 0" class="text-center py-4">
+                        <i class="ti ti-box-off fs-1 text-muted mb-2 d-block"></i>
+                        <p class="text-muted mb-0">No hay productos registrados en esta solicitud</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información de aprobación (si aplica) -->
+            <div *ngIf="solicitud.fecha_aprobacion || solicitud.fecha_rechazo" class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">
+                        <i class="ti ti-clipboard-check me-2"></i> Información de Aprobación
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div *ngIf="solicitud.aprobador_nombre" class="mb-3">
+                                <label class="text-muted small text-uppercase">Aprobador/Rechazador</label>
+                                <div>{{ solicitud.aprobador_nombre }}</div>
+                            </div>
+                            <div *ngIf="solicitud.fecha_aprobacion" class="mb-3">
+                                <label class="text-muted small text-uppercase">Fecha Aprobación</label>
+                                <div>{{ formatDate(solicitud.fecha_aprobacion) }}</div>
+                            </div>
+                            <div *ngIf="solicitud.fecha_rechazo" class="mb-3">
+                                <label class="text-muted small text-uppercase">Fecha Rechazo</label>
+                                <div>{{ formatDate(solicitud.fecha_rechazo) }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div *ngIf="solicitud.observacion_aprobador" class="mb-3">
+                                <label class="text-muted small text-uppercase">Observación</label>
+                                <div class="text-muted">{{ solicitud.observacion_aprobador }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información de entrega (si aplica) -->
+            <div *ngIf="solicitud.fecha_recepcion" class="card shadow-sm mt-3">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">
+                        <i class="ti ti-truck me-2"></i> Información de Entrega
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div *ngIf="solicitud.almacenero_nombre" class="mb-3">
+                                <label class="text-muted small text-uppercase">Entregado por</label>
+                                <div>{{ solicitud.almacenero_nombre }}</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-muted small text-uppercase">Fecha Entrega</label>
+                                <div>{{ formatDate(solicitud.fecha_recepcion) }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div *ngIf="solicitud.observacion_almacenero" class="mb-3">
+                                <label class="text-muted small text-uppercase">Observación</label>
+                                <div class="text-muted">{{ solicitud.observacion_almacenero }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onClose()">
+        <i class="ti ti-x me-2"></i>
+        Cerrar
+      </button>
+    </div>
+    `,

@@ -14,6 +14,7 @@ import { SolicitanteFormComponent } from './solicitante-form/solicitante-form.co
 import Swal from 'sweetalert2';
 import { SwalAlertService } from 'src/app/utils/util.swal';
 import { AuthService } from 'src/app/services/auth.service';
+import { DetalleSolicitudModalComponent } from './detalle-solicitud-modal/detalle-solicitud-modal.component';
 
 @Component({
     selector: 'app-solicitante',
@@ -320,94 +321,14 @@ export class SolicitanteComponent implements OnInit, OnDestroy {
             });
     }
 
-    public onActionVerDetalles(data: Solicitud): void {
-        let detallesHtml = `
-            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                <table class="table table-sm table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Producto</th>
-                            <th>Código</th>
-                            <th class="text-end">Cantidad Solicitada</th>
-                            <th class="text-end">Cantidad Entregada</th>
-                            <th class="text-end">Stock Actual</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-        
-        if (data.detalles && data.detalles.length > 0) {
-            data.detalles.forEach(d => {
-                detallesHtml += `
-                    <tr>
-                        <td>${d.producto_nombre || '-'}</td>
-                        <td>${d.producto_codigo || '-'}</td>
-                        <td class="text-end">${d.cantidad_solicitada} ${d.producto_unidad || ''}</td>
-                        <td class="text-end">${d.cantidad_entregada || 0}</td>
-                        <td class="text-end">${d.stock_actual || 0}</td>
-                    </tr>
-                `;
-            });
-        } else {
-            detallesHtml += `
-                <tr>
-                    <td colspan="5" class="text-center text-muted">
-                        <i class="ti ti-info-circle"></i> No hay productos registrados
-                    </td>
-                </tr>
-            `;
-        }
-        
-        detallesHtml += `
-                    </tbody>
-                    <tfoot class="table-active">
-                        <tr>
-                            <th colspan="2" class="text-end">TOTAL SOLICITADO:</th>
-                            <th class="text-end">${data.detalles?.reduce((sum, d) => sum + d.cantidad_solicitada, 0) || 0}</th>
-                            <th class="text-end">${data.detalles?.reduce((sum, d) => sum + (d.cantidad_entregada || 0), 0) || 0}</th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        `;
-        
-        const infoSolicitud = `
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Código:</strong> ${data.codigo}<br>
-                    <strong>Fecha:</strong> ${moment(data.fecha_solicitud).format('DD/MM/YYYY HH:mm')}<br>
-                    <strong>Objetivo:</strong> ${data.objetivo}
-                </div>
-                <div class="col-md-6">
-                    <strong>Solicitante:</strong> ${data.solicitante_nombre}<br>
-                    <strong>Cargo:</strong> ${data.solicitante_cargo}<br>
-                    <strong>Almacén:</strong> ${data.almacen_nombre}
-                </div>
-            </div>
-            <hr>
-        `;
-        
-        let estadoBadge = '';
-        if (data.estado_codigo === 'PENDIENTE') {
-            estadoBadge = '<span class="badge bg-warning"><i class="ti ti-clock me-1"></i>Pendiente</span>';
-        } else if (data.estado_codigo === 'ENVIADO') {
-            estadoBadge = '<span class="badge bg-primary"><i class="ti ti-send me-1"></i>Enviado</span>';
-        } else if (data.estado_codigo === 'APROBADO') {
-            estadoBadge = '<span class="badge bg-success"><i class="ti ti-check me-1"></i>Aprobado</span>';
-        } else if (data.estado_codigo === 'RECHAZADO') {
-            estadoBadge = '<span class="badge bg-danger"><i class="ti ti-ban me-1"></i>Rechazado</span>';
-        } else if (data.estado_codigo === 'ENTREGADO') {
-            estadoBadge = '<span class="badge bg-info"><i class="ti ti-truck me-1"></i>Entregado</span>';
-        }
-        
-        Swal.fire({
-            title: `Detalles de Solicitud<br><small class="text-muted">${data.codigo} ${estadoBadge}</small>`,
-            html: infoSolicitud + detallesHtml,
-            icon: 'info',
-            width: '800px',
-            confirmButtonText: 'Cerrar',
-            confirmButtonColor: '#3085d6'
+    public onActionVerDetalles(solicitud: Solicitud): void {
+        const dialogRef = this.dialog.open(DetalleSolicitudModalComponent, {
+            width: '700px',
+            maxWidth: '65vw',
+            maxHeight: '80vh',
+            data: {
+                solicitud: solicitud
+            }
         });
     }
 
