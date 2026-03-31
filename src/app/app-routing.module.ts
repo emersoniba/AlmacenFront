@@ -5,7 +5,7 @@ import LoginComponent from "./modules/authentication/login/login.component";
 import { AdminComponent } from "./theme/layouts/admin/admin.component";
 import { ProveedorComponent } from "./modules/almacen/parametrizacion/proveedor/proveedor.component";
 import { AlmacenComponent } from './modules/almacen/parametrizacion/almacen/almacen.component';
-//import { SolicitanteComponent } from './modules/almacen/bandejas/solicitante/solicitante.component';
+import { SolicitanteComponent } from './modules/almacen/bandejas/solicitante/solicitante.component';
 import { CategoriaComponent } from './modules/almacen/parametrizacion/categoria/categoria.component';
 import { MaterialComponent } from './modules/almacen/parametrizacion/material/material.component';
 import { ResponsableComponent } from './modules/almacen/parametrizacion/responsable/responsable.component';
@@ -75,13 +75,13 @@ const routes: Routes = [
                 canActivate: [AuthGuard, ],
                 data: { roles: ['Admin', 'Almacenero'] }
             },
-           /* {
+            {
                 path: 'solicitud',
                 component: SolicitanteComponent,
                 canActivate: [AuthGuard, ],
                 data: { roles: ['Admin', 'Almacenero'] }
             }, 
-            */{
+            {
                 path: 'aprobar',
                 component: AprobadorComponent,
                 canActivate: [AuthGuard, ],
@@ -114,7 +114,7 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
-        // loadComponent: () => import('./modules/dashboard/dashboard.component'),
+       //  loadComponent: () => import('./modules/dashboard/dashboard.component'),
 
     }
 ];

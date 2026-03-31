@@ -1,151 +1,166 @@
 <div class="modal-content" tabindex="-1" cdkFocusInitial>
-	<div class="modal-header">
-		<h4 class="modal-title">
-			<i class="ti ti-shopping-cart me-2"></i>
-			Detalles de Solicitud
-		</h4>
-	</div>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            <i class="ti ti-shopping-cart me-2"></i> Detalles de Solicitud
+        </h4>
+        <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
+    </div>
 
-	<div class="modal-body" id="modal-description">
-		<div *ngIf="loading" class="loading-spinner" aria-live="polite">
-			<div class="spinner-border" role="status">
-				<span class="visually-hidden">Cargando detalles de la solicitud...</span>
-			</div>
-		</div>
+    <div class="modal-body" id="modal-description">
+        <div *ngIf="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2 text-muted">Cargando detalles de la solicitud...</p>
+        </div>
 
-		<div *ngIf="error && !loading" class="error-message" role="alert">
-			<i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-			<h5>Error al cargar los datos</h5>
-			<p>No se pudieron cargar los detalles de la solicitud.</p>
-			<button class="btn btn-secondary mt-2" (click)="onCancel()">Cerrar</button>
-		</div>
+        <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+            <i class="ti ti-alert-circle me-2"></i>
+            <strong>Error:</strong> No se pudieron cargar los detalles de la solicitud.
+            <button class="btn btn-sm btn-outline-danger mt-2" (click)="onCancel()">Cerrar</button>
+        </div>
 
-		<div *ngIf="!loading && !error && aprobacion" class="content-wrapper">
-			<div class="info-card">
-				<div class="info-row">
-					<span class="info-label">ID Solicitud:</span>
-					<span class="info-value text-primary fw-bold">{{ aprobacion.solicitud_id }}</span>
-				</div>
+        <div *ngIf="!loading && !error && solicitud" class="content-wrapper">
+            <!-- Información básica -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <strong><i class="ti ti-id me-1"></i> Código:</strong>
+                                <span class="ms-2">{{ solicitud.codigo }}</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong><i class="ti ti-calendar me-1"></i> Fecha Solicitud:</strong>
+                                <span class="ms-2">{{ solicitud.fecha_solicitud | date: 'dd/MM/yyyy HH:mm' }}</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong><i class="ti ti-user me-1"></i> Solicitante:</strong>
+                                <span class="ms-2">{{ solicitud.solicitante_nombre }}</span>
+                                <small class="text-muted ms-2">({{ solicitud.solicitante_cargo }})</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <strong><i class="ti ti-building-warehouse me-1"></i> Almacén:</strong>
+                                <span class="ms-2">{{ solicitud.almacen_nombre }}</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong><i class="ti ti-status-change me-1"></i> Estado:</strong>
+                                <span class="ms-2">
+                  <span *ngIf="solicitud.estado_codigo === 'ENVIADO'" class="badge bg-primary">
+                    <i class="ti ti-send me-1"></i> Enviado
+                  </span>
+                                <span *ngIf="solicitud.estado_codigo === 'APROBADO'" class="badge bg-success">
+                    <i class="ti ti-check me-1"></i> Aprobado
+                  </span>
+                                <span *ngIf="solicitud.estado_codigo === 'RECHAZADO'" class="badge bg-danger">
+                    <i class="ti ti-ban me-1"></i> Rechazado
+                  </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-				<div class="info-row">
-					<span class="info-label">Fecha Solicitud:</span>
-					<span class="info-value">{{ aprobacion.fecha_solicitud | date: 'dd/MM/yyyy HH:mm' }}</span>
-				</div>
+            <!-- Objetivo -->
+            <div class="card mb-3">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">
+                        <i class="ti ti-message-text me-2"></i> Objetivo de la Solicitud
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ solicitud.objetivo }}</p>
+                </div>
+            </div>
 
-				<div class="info-row">
-					<span class="info-label">Solicitante:</span>
-					<span class="info-value">
-						<i class="fas fa-user me-1"></i>
-						{{ aprobacion.solicitante.usuario }}
-						<small class="text-muted ms-2">({{ aprobacion.solicitante.cargo }})</small>
-					</span>
-				</div>
+            <!-- Productos -->
+            <div class="card mb-3">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <i class="ti ti-package me-2"></i> Productos Solicitados
+                    </h6>
+                    <span class="badge bg-primary">{{ totalProductos }} unidades totales</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Unidad</th>
+                                    <th class="text-center">Stock Actual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let detalle of solicitud.detalles">
+                                    <td>
+                                        <i class="ti ti-box me-2 text-muted"></i> {{ detalle.producto_nombre }}
+                                    </td>
+                                    <td class="text-center fw-bold">{{ detalle.cantidad_solicitada }}</td>
+                                    <td class="text-center text-muted">{{ detalle.producto_unidad }}</td>
+                                    <td class="text-center">
+                                        <span [class.text-danger]="detalle.cantidad_solicitada > detalle.stock_actual" [class.text-warning]="detalle.cantidad_solicitada === detalle.stock_actual">
+                      {{ detalle.stock_actual }}
+                    </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-				<div class="info-row">
-					<span class="info-label">Almacén:</span>
-					<span class="info-value">
-						<i class="fas fa-warehouse me-1"></i>
-						{{ aprobacion.almacen.nombre }}
-					</span>
-				</div>
+            <!-- Información de aprobación si ya fue aprobada/rechazada -->
+            <div *ngIf="solicitud.fecha_aprobacion" class="card">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">
+                        <i class="ti ti-info-circle me-2"></i> Información de Aprobación
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <strong>Aprobador:</strong>
+                                <span class="ms-2">{{ solicitud.aprobador_nombre || 'N/A' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <strong>Fecha:</strong>
+                                <span class="ms-2">{{ solicitud.fecha_aprobacion | date: 'dd/MM/yyyy HH:mm' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="solicitud.observacion_aprobador">
+                            <div class="mb-2">
+                                <strong>Observación:</strong>
+                                <p class="mt-1 mb-0 text-muted">{{ solicitud.observacion_aprobador }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				<div class="info-row">
-					<span class="info-label">Estado:</span>
-					<span class="info-value">
-						<span
-							[ngClass]="{
-								'badge bg-warning': aprobacion.estado === 'pendiente',
-								'badge bg-success': aprobacion.estado === 'aprobado',
-								'badge bg-danger': aprobacion.estado === 'rechazado'
-							}"
-						>
-							<i class="fas fa-circle me-1" style="font-size: 0.5rem"></i>
-							{{ aprobacion.estado }}
-						</span>
-					</span>
-				</div>
-			</div>
-
-			<!-- Objetivo -->
-			<div class="info-card">
-				<h6 class="mb-3">
-					<i class="fas fa-bullseye me-2"></i>
-					Objetivo de la Solicitud
-				</h6>
-				<div class="objetivo-text">
-					{{ aprobacion.objetivo }}
-				</div>
-			</div>
-
-			<!-- Productos -->
-			<div class="info-card">
-				<h6 class="mb-3">
-					<i class="fas fa-boxes me-2"></i>
-					Productos Solicitados
-					<span class="badge bg-primary ms-2">{{ totalProductos }} unidades totales</span>
-				</h6>
-
-				<div class="products-table">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Producto</th>
-								<th class="text-center">Cantidad</th>
-								<th class="text-center">Unidad</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr *ngFor="let producto of aprobacion.productos">
-								<td>
-									<i class="fas fa-box me-2 text-muted"></i>
-									{{ producto.nombre }}
-								</td>
-								<td class="text-center fw-bold
-								">{{ producto.cantidad }}</td>
-								<td class="text-center text-muted">{{ producto.unidad_de_medida }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div *ngIf="aprobacion.fecha_aprobacion" class="info-card">
-				<h6 class="mb-3">
-					<i class="fas fa-check-circle me-2"></i>
-					Información de Aprobación
-				</h6>
-				<div class="info-row">
-					<span class="info-label">{{ aprobacion.estado | titlecase }} por :</span>
-					<span class="info-value">{{ aprobacion.aprobador }}</span>
-				</div>
-				<div class="info-row">
-					<span class="info-label">En Fecha:</span>
-					<span class="info-value">{{ aprobacion.fecha_aprobacion | date: 'dd/MM/yyyy HH:mm'}}</span>
-				</div>
-
-				<div class="info-row" *ngIf="aprobacion.comentarios">
-					<span class="info-label">Comentarios:</span>
-					<span class="info-value">{{ aprobacion.comentarios }}</span>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="loading" #closeButton>
-			<i class="ti ti-x me-2" aria-hidden="true"></i>
-			Cerrar
-		</button>
-		<ng-container *ngIf="aprobacion?.estado === 'pendiente'">
-			<button type="button" class="btn btn-danger" (click)="onRechazar()" [disabled]="loading">
-				<i class="ti ti-ban me-2" aria-hidden="true"></i>
-				Rechazar
-			</button>
-
-			<button type="button" class="btn btn-primary" (click)="onAprobar()" [disabled]="loading" #primaryAction>
-				<i class="ti ti-send me-2" aria-hidden="true"></i>
-				Aprobar
-			</button>
-		</ng-container>
-	</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="loading" #closeButton>
+      <i class="ti ti-x me-2"></i>
+      Cerrar
+    </button>
+        <ng-container *ngIf="solicitud?.estado_codigo === 'ENVIADO'">
+            <button type="button" class="btn btn-danger" (click)="onRechazar()" [disabled]="loading">
+        <i class="ti ti-ban me-2"></i>
+        Rechazar
+      </button>
+            <button type="button" class="btn btn-success" (click)="onAprobar()" [disabled]="loading" #primaryAction>
+        <i class="ti ti-check me-2"></i>
+        Aprobar
+      </button>
+        </ng-container>
+    </div>
 </div>

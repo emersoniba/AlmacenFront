@@ -72,4 +72,10 @@ export class ProductoService {
             map(response => response.data || response)
         );
     }
+    // En producto.service.ts
+    getProductosByAlmacen(almacenId: string): Observable<Producto[]> {
+        return this.http.get<any>(`${this.apiUrl}/productos/?almacen=${almacenId}`).pipe(
+            map(response => response.data || response)
+        );
+    }
 }

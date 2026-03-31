@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ColDef, GridApi, GridOptions, PaginationNumberFormatterParams } from 'ag-grid-community';
-import { AprobacionService } from 'src/app/services/aprobacion.service';
-import { Aprobacion } from 'src/app/models/aprobacion.model';
+import { SolicitudService } from 'src/app/services/solicitud.service';
+import { Solicitud } from 'src/app/models/solicitud.model';
 import { ModalAprobacionComponent } from './modal-aprobacion/modal-aprobacion.component';
 import * as moment from 'moment';
 import { localeEs } from 'src/app/app.locale.es.grid';
@@ -9,26 +9,27 @@ import { ActionRendererComponent } from './action-renderer/action-renderer.compo
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-aprobador-component',
   templateUrl: './aprobador.component.html',
   styleUrls: ['./aprobador.component.css']
 })
-export class AprobadorComponent implements OnInit {
-  private gridApi!: GridApi<Aprobacion>;
+export class AprobadorComponent implements OnInit, OnDestroy {
+  private gridApi!: GridApi<Solicitud>;
+  private subscriptions: Subscription = new Subscription();
 
   public gridOptions: GridOptions = {
     reactiveCustomComponents: true,
     components: {
       actionCellRenderer: ActionRendererComponent
-
     },
     context: { componentParent: this },
     localeText: localeEs,
     pagination: true,
     paginationPageSize: 10,
-    paginationPageSizeSelector: [10, 50, 1000],
+    paginationPageSizeSelector: [10, 50, 100],
     paginationNumberFormatter: (params: PaginationNumberFormatterParams) => {
       return params.value.toLocaleString();
     }
@@ -37,27 +38,44 @@ export class AprobadorComponent implements OnInit {
   public columnDefs: ColDef[] = [
     {
       headerName: 'Acciones',
-      width: 120,
+      minWidth: 150,
+      maxWidth: 160,
       cellRenderer: 'actionCellRenderer',
     },
     {
       headerName: 'Estado',
-      field: 'estado',
+      field: 'estado_nombre',
       filter: true,
       floatingFilter: true,
       minWidth: 150,
       maxWidth: 160,
-      cellRenderer: (params) => {
+      cellRenderer: (params: any) => {
         const estado = params.value;
+        const codigo = params.data?.estado_codigo;
         let badgeClass = '';
-        if (estado === 'pendiente') {
-          badgeClass = 'badge bg-warning text-dark';
-        } else if (estado === 'rechazado') {
-          badgeClass = 'badge bg-danger';
-        } else if (estado === 'aprobado') {
+        let icono = '';
+        
+        if (codigo === 'PENDIENTE') {
+          badgeClass = 'badge bg-secondary';
+          icono = 'ti ti-file';
+        } else if (codigo === 'ENVIADO') {
+          badgeClass = 'badge bg-primary';
+          icono = 'ti ti-send';
+        } else if (codigo === 'APROBADO') {
           badgeClass = 'badge bg-success';
+          icono = 'ti ti-check';
+        } else if (codigo === 'RECHAZADO') {
+          badgeClass = 'badge bg-danger';
+          icono = 'ti ti-ban';
+        } else if (codigo === 'ENTREGADO') {
+          badgeClass = 'badge bg-info';
+          icono = 'ti ti-truck';
+        } else {
+          badgeClass = 'badge bg-warning';
+          icono = 'ti ti-clock';
         }
-        return `<span class="${badgeClass} estado-badge">${estado}</span>`;
+        
+        return `<span class="${badgeClass}"><i class="${icono} me-1"></i>${estado}</span>`;
       }
     },
     {
@@ -67,149 +85,179 @@ export class AprobadorComponent implements OnInit {
       floatingFilter: true,
       minWidth: 180,
       maxWidth: 190,
-      valueGetter: (p) => {
-        if (p.data.fecha_solicitud) {
-          return moment(p.data.fecha_solicitud).toDate();
-        }
-        return null;
-      },
-      valueFormatter: (p) => {
-        if (p.value) {
-          const f = new Date(p.value);
-          return moment(f).format('DD/MM/YYYY HH:mm:ss');
+      valueFormatter: (params) => {
+        if (params.value) {
+          return moment(params.value).format('DD/MM/YYYY HH:mm');
         }
         return '';
-      },
-      filterParams: {
-        comparator: (filter: any, cellValue: any) => {
-          const cellDate = moment(cellValue).format('DD/MM/YYYY');
-          const filterMoment = moment(filter).format('DD/MM/YYYY');
-          if (cellDate < filterMoment) {
-            return -1;
-          }
-          if (cellDate > filterMoment) {
-            return 1;
-          }
-          return 0;
-        }
       }
     },
-    { headerName: 'Código', field: 'solicitud_id', filter: true, floatingFilter: true, minWidth: 180, maxWidth: 190 },
-    { headerName: 'Objetivo', field: 'objetivo', filter: true, floatingFilter: true, minWidth: 400, maxWidth: 410 },
-    { headerName: 'Solicitante', field: 'solicitante.usuario', filter: true, floatingFilter: true, minWidth: 210, maxWidth: 220 },
-    { headerName: 'Cargo', field: 'solicitante.cargo', filter: true, floatingFilter: true, minWidth: 210, maxWidth: 220 },
-    { headerName: 'Almacén', field: 'almacen.nombre', filter: true, floatingFilter: true, minWidth: 210, maxWidth: 220 },
-    { headerName: 'Productos', field: 'productos_count', filter: true, floatingFilter: true, minWidth: 150, maxWidth: 160 }
-
+    { 
+      headerName: 'Código', 
+      field: 'codigo', 
+      filter: true, 
+      floatingFilter: true, 
+      minWidth: 180, 
+      maxWidth: 190 
+    },
+    { 
+      headerName: 'Objetivo', 
+      field: 'objetivo', 
+      filter: true, 
+      floatingFilter: true, 
+      minWidth: 400, 
+      flex: 1 
+    },
+    { 
+      headerName: 'Solicitante', 
+      field: 'solicitante_nombre', 
+      filter: true, 
+      floatingFilter: true, 
+      minWidth: 210, 
+      maxWidth: 220 
+    },
+    { 
+      headerName: 'Cargo', 
+      field: 'solicitante_cargo', 
+      filter: true, 
+      floatingFilter: true, 
+      minWidth: 210, 
+      maxWidth: 220 
+    },
+    { 
+      headerName: 'Almacén', 
+      field: 'almacen_nombre', 
+      filter: true, 
+      floatingFilter: true, 
+      minWidth: 210, 
+      maxWidth: 220 
+    },
+    { 
+      headerName: 'Productos', 
+      field: 'productos_count', 
+      filter: true, 
+      floatingFilter: true, 
+      minWidth: 150, 
+      maxWidth: 160,
+      valueGetter: (params) => {
+        return params.data?.detalles?.length || 0;
+      }
+    }
   ];
 
-  public rowData: any[] = [];
+  public rowData: Solicitud[] = [];
   public loading = false;
-  private dataSubscription: Subscription;
   public totalSolicitudes: number = 0;
   public solicitudesPendientes: number = 0;
+  public solicitudesEnviadas: number = 0;
   public solicitudesAprobadas: number = 0;
   public solicitudesRechazadas: number = 0;
+  public solicitudesEntregadas: number = 0;
   private gestionActual: number = new Date().getFullYear();
   public formGestion: FormGroup;
   public dataGestiones: number[] = [];
 
   constructor(
-    private aprobacionService: AprobacionService,
+    private solicitudService: SolicitudService,
     private dialog: MatDialog,
     private fb: FormBuilder,
-    
+    private toastr: ToastrService
   ) {
     this.formGestion = this.fb.group({
       gestion: [this.gestionActual, [Validators.required]]
     });
+    
     for (let g = 2018; g <= this.gestionActual; g++) {
       this.dataGestiones.push(g);
     }
   }
 
   ngOnInit(): void {
-    this.cargarAprobaciones(this.gestionActual);
-  }
-   private cargarAprobaciones(gestion: number): void {
-    this.loading = true;
-    this.aprobacionService.obtenerAprobacionesGestion(gestion).subscribe({
-      next: (data) => {
-        this.rowData = data.map(aprob => ({
-          ...aprob,
-          productos_count: aprob.productos.length
-        }));
-        this.calcularEstadisticas(data);
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al cargar aprobaciones:', error);
-        this.loading = false;
-      }
-    });
-  }
-/*
-  private cargarAprobaciones(): void {
-    this.loading = true;
-    this.aprobacionService.obtenerAprobaciones().subscribe({
-      next: (data) => {
-        this.rowData = data.map(aprob => ({
-          ...aprob,
-          productos_count: aprob.productos.length
-        }));
-        this.calcularEstadisticas(data);
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al cargar aprobaciones:', error);
-        this.loading = false;
-      }
-    });
-  }
-*/
-  private calcularEstadisticas(aprobaciones: any[]): void {
-    this.totalSolicitudes = aprobaciones.length;
-    this.solicitudesPendientes = aprobaciones.filter(a => a.estado === 'pendiente').length;
-    this.solicitudesAprobadas = aprobaciones.filter(a => a.estado === 'aprobado').length;
-    this.solicitudesRechazadas = aprobaciones.filter(a => a.estado === 'rechazado').length;
+    this.cargarSolicitudes();
+    
+    this.subscriptions.add(
+      this.formGestion.get('gestion')?.valueChanges.subscribe(() => {
+        this.cargarSolicitudes();
+      })
+    );
   }
 
-  public verDetallesAprobacion(aprobacion: any): void {
+  private cargarSolicitudes(): void {
+    this.loading = true;
+    const gestion = this.formGestion.get('gestion')?.value;
+    
+    // Obtener TODAS las solicitudes (no filtradas por estado)
+    this.subscriptions.add(
+      this.solicitudService.getTodasSolicitudes().subscribe({
+        next: (data) => {
+          let solicitudes = data;
+          if (gestion) {
+            solicitudes = data.filter(s => {
+              const fecha = new Date(s.fecha_solicitud);
+              return fecha.getFullYear() === gestion;
+            });
+          }
+          
+          this.rowData = solicitudes;
+          this.calcularEstadisticas(solicitudes);
+          this.loading = false;
+          
+          if (this.gridApi) {
+            this.gridApi.setRowData(this.rowData);
+          }
+        },
+        error: (error) => {
+          console.error('Error al cargar solicitudes:', error);
+          this.toastr.error('Error al cargar las solicitudes');
+          this.loading = false;
+        }
+      })
+    );
+  }
+
+  private calcularEstadisticas(solicitudes: Solicitud[]): void {
+    this.totalSolicitudes = solicitudes.length;
+    this.solicitudesPendientes = solicitudes.filter(s => s.estado_codigo === 'PENDIENTE').length;
+    this.solicitudesEnviadas = solicitudes.filter(s => s.estado_codigo === 'ENVIADO').length;
+    this.solicitudesAprobadas = solicitudes.filter(s => s.estado_codigo === 'APROBADO').length;
+    this.solicitudesRechazadas = solicitudes.filter(s => s.estado_codigo === 'RECHAZADO').length;
+    this.solicitudesEntregadas = solicitudes.filter(s => s.estado_codigo === 'ENTREGADO').length;
+  }
+
+  public verDetallesSolicitud(solicitud: Solicitud): void {
     const dialogRef = this.dialog.open(ModalAprobacionComponent, {
       width: '800px',
+      maxWidth: '95vw',
+      disableClose: true,
       data: {
-        aprobacion: {
-          ...aprobacion,
-          productos: aprobacion.productos || [],
-          solicitante: aprobacion.solicitante || { usuario: '', cargo: '' },
-          almacen: aprobacion.almacen || { id: '', nombre: '' }
-        }
+        solicitud: solicitud
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.cargarAprobaciones(this.gestionActual);
+        this.cargarSolicitudes(); // Recargar después de aprobar/rechazar
       }
     });
   }
 
- public cargarGestiones() {
-        this.formGestion = this.fb.group({
-            gestion: [this.gestionActual, [Validators.required]]
-        });
+  public verDetallesAprobacion(solicitud: Solicitud): void {
+    this.verDetallesSolicitud(solicitud);
+  }
+
+  public onChangeGestion(event: any): void {
+    if (event.value) {
+      this.cargarSolicitudes();
     }
-   public onChangeGestion(event: any): void {
-        if (event.value) {
-            this.cargarAprobaciones(event.value);
-        }
-    }
+  }
+
+  public onGridReady(params: any): void {
+    this.gridApi = params.api;
+    params.api.sizeColumnsToFit();
+  }
 
   ngOnDestroy(): void {
-    if (this.dataSubscription) {
-      this.dataSubscription.unsubscribe();
-
-    }
+    this.subscriptions.unsubscribe();
     this.dialog.closeAll();
   }
 }

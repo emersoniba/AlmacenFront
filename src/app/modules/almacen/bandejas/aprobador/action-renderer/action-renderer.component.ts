@@ -29,7 +29,7 @@ export class ActionRendererComponent implements ICellRendererAngularComp {
 
   onClick(): void {
     if (this.componentParent) {
-      this.componentParent.verDetallesAprobacion(this.params.data);
+      this.componentParent.verDetallesSolicitud(this.params.data);
     }
   }
 }

@@ -51,8 +51,8 @@ export class IngresoComponent implements OnInit, OnDestroy {
             field: 'id',
             headerName: 'Opciones',
             filter: false,
-            minWidth: 115,
-            maxWidth: 115,
+            minWidth: 215,
+            maxWidth: 215,
             cellRenderer: RendererComponent,
             pinned: true
         },

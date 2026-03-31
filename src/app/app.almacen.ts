@@ -5,8 +5,8 @@ import { ProveedorFormComponent } from './modules/almacen/parametrizacion/provee
 import { AlmacenComponent } from './modules/almacen/parametrizacion/almacen/almacen.component';
 import { AlmacenFormComponent } from './modules/almacen/parametrizacion/almacen/almacen-form/almacen-form.component';
 import { SubAlmacenFormComponent } from './modules/almacen/parametrizacion/almacen/subalmacen-form/subalmacen-form.component';
-//import { SolicitanteComponent } from './modules/almacen/bandejas/solicitante/solicitante.component';
-//import { SolicitanteFormComponent } from './modules/almacen/bandejas/solicitante/solicitante-form/solicitante-form.component';
+import { SolicitanteComponent } from './modules/almacen/bandejas/solicitante/solicitante.component';
+import { SolicitanteFormComponent } from './modules/almacen/bandejas/solicitante/solicitante-form/solicitante-form.component';
 import { AprobadorComponent } from './modules/almacen/bandejas/aprobador/aprobador.component';
 import { RecepcionadorComponent } from './modules/almacen/bandejas/recepcionador/recepcionador.component';
 import { RendererComponent } from './modules/almacen/bandejas/abrenderer/renderer.component';
@@ -39,8 +39,8 @@ export const AppAlmacenConfig = [
     ResponsableFormComponent,
     IngresoComponent,
     IngresoFormComponent,
-    //SolicitanteComponent,
-    //SolicitanteFormComponent,
+    SolicitanteComponent,
+    SolicitanteFormComponent,
     AprobadorComponent,
     RecepcionadorComponent,
     RendererComponent,

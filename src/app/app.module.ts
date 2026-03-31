@@ -62,8 +62,8 @@ import { MatButtonModule } from '@angular/material/button'; // si usas botones d
         NgIf,
         //
         FormsModule,
-        MatCardModule,      // <-- añadir
-        MatButtonModule,
+        MatCardModule, 
+       // MatButtonModule,
     ],
     bootstrap: [AppComponent],
     providers: [

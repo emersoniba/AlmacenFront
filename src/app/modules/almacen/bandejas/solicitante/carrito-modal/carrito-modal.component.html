@@ -1,0 +1,105 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <i class="ti ti-shopping-cart me-2"></i> Mi Carrito de Solicitud
+    </h4>
+    <button type="button" class="btn-close" (click)="onClose()" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    <!-- Resumen del carrito -->
+    <div class="row mb-3 pb-2 border-bottom">
+        <div class="col-6">
+            <div class="card bg-light">
+                <div class="card-body py-2">
+                    <small class="text-muted">Productos seleccionados:</small>
+                    <h5 class="mb-0">{{ getTotalItems() }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card bg-light">
+                <div class="card-body py-2">
+                    <small class="text-muted">Total items solicitados:</small>
+                    <h5 class="mb-0">{{ getTotalCantidad() }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de productos -->
+    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+        <table class="table table-striped table-hover">
+            <thead class="table-primary sticky-top">
+                <tr>
+                    <th style="width: 50px">#</th>
+                    <th>Producto</th>
+                    <th class="text-center" style="width: 120px">Cantidad</th>
+                    <th class="text-center" style="width: 100px">Unidad</th>
+                    <th class="text-center" style="width: 120px">Stock Disp.</th>
+                    <th class="text-center" style="width: 80px">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (producto of data.productos; track producto.id; let idx = $index) { @if (producto.selected && producto.cantidad > 0) {
+                <tr>
+                    <td class="align-middle">{{ idx + 1 }}</td>
+                    <td class="align-middle">
+                        <div class="d-flex align-items-center">
+                            <img [src]="producto.imagen || 'assets/images/producto.png'" alt="{{ producto.nombre }}" class="me-2 rounded" style="width: 40px; height: 40px; object-fit: cover;" onerror="this.src='assets/images/producto.png'">
+                            <div>
+                                <strong>{{ producto.nombre }}</strong><br>
+                                <small class="text-muted">{{ producto.codigo }}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center align-middle">
+                        <span class="fw-bold">{{ producto.cantidad }}</span>
+                    </td>
+                    <td class="text-center align-middle">{{ producto.unidad_medida_abrev }}</td>
+                    <td class="text-center align-middle">
+                        <span [class.text-danger]="producto.cantidad > producto.stock_total" [class.text-warning]="producto.cantidad === producto.stock_total">
+                                    {{ producto.stock_total }}
+                                </span>
+                    </td>
+                    <td class="text-center align-middle">
+                        @if (producto.cantidad > producto.stock_total) {
+                        <span class="badge bg-danger">
+                                        <i class="ti ti-alert-circle"></i> Excede
+                                    </span> } @else if (producto.cantidad === producto.stock_total) {
+                        <span class="badge bg-warning text-dark">
+                                        <i class="ti ti-info-circle"></i> Límite
+                                    </span> } @else {
+                        <span class="badge bg-success">
+                                        <i class="ti ti-check"></i> OK
+                                    </span> }
+                    </td>
+                </tr>
+                } } @empty {
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-4">
+                        <i class="ti ti-shopping-cart-off fs-1 d-block mb-2"></i> No hay productos en el carrito
+                    </td>
+                </tr>
+                }
+            </tbody>
+            @if (getTotalItems() > 0) {
+            <tfoot class="table-active">
+                <tr>
+                    <td colspan="2" class="text-end fw-bold">TOTAL:</td>
+                    <td class="text-center fw-bold">{{ getTotalCantidad() }}</td>
+                    <td colspan="3"></td>
+                </tr>
+            </tfoot>
+            }
+        </table>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-round" (click)="onClose()">
+            <i class="ti ti-arrow-left me-2"></i>Continuar Seleccionando
+        </button>
+        <button type="button" class="btn btn-primary btn-round" (click)="onActionSolicitar()" [disabled]="hasStockIssues()">
+            <i class="ti ti-send me-2"></i>Confirmar Solicitud
+        </button>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        @if (!showForm) {
+        <div class="row mb-3">
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card bg-green">
+                    <div class="card-header">
+                        <span class="card-title">Total Solicitudes</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="mb-0">{{ totalSolicitudes }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card bg-blue">
+                    <div class="card-header">
+                        <span class="card-title">Enviadas</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="mb-0">{{ solicitudesEnviadas }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card bg-orange">
+                    <div class="card-header">
+                        <span class="card-title">Aprobadas</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="mb-0">{{ solicitudesAprobadas }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="card bg-red">
+                    <div class="card-header">
+                        <span class="card-title">Rechazadas</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="mb-0">{{ solicitudesRechazadas }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <app-card cardTitle="Bandeja de Solicitudes" blockClass="pc-component">
+                    @if (!showForm) {
+                    <div class="row align-items-center mb-3">
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <form [formGroup]="formGestion">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Gestión</mat-label>
+                                    <mat-icon matPrefix>calendar_today</mat-icon>
+                                    <mat-select formControlName="gestion">
+                                        @for (g of dataGestiones; track g) {
+                                        <mat-option [value]="g">{{ g }}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <h5 class="mb-0">
+                                <i class="ti ti-shopping-cart fs-4 me-2"></i> Mis Solicitudes
+                            </h5>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 text-end">
+                            <button class="btn btn-primary btn-round" matTooltip="Nueva Solicitud" (click)="onActionNuevo()">
+                                <i class="ti ti-plus"></i> Nueva Solicitud
+                            </button>
+                        </div>
+                    </div>
+
+                    <ag-grid-angular style="width: 100%; height: 550px" class="ag-theme-material" [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="rowData" [pagination]="true" [localeText]="localEs" [rowSelection]="'single'" [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="paginationPageSizeSelector" (selectionChanged)="onSelectionChangedSolicitud($event)" (gridReady)="onGridReadySolicitud($event)">
+                    </ag-grid-angular>
+                    } @else {
+
+                    <app-solicitante-form [pk]="dataObjetoSolicitud?.id?.toString()" [objeto]="dataObjetoSolicitud">
+                    </app-solicitante-form>
+
+                    }
+                </app-card>
+            </div>
+        </div>
+    </div>
+</div>

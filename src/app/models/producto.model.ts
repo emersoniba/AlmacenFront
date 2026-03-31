@@ -47,4 +47,7 @@ export interface Producto {
     } | null;
     creado_por: number;
     fecha_creacion: string;
+    // Propiedes para el carrito de compras
+    selected?: boolean;
+    cantidad?: number;
 }
