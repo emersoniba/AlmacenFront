@@ -3,20 +3,20 @@ import { ICellRendererParams } from 'ag-grid-community';
 import { CommonModule } from '@angular/common';
 import { AtendidasComponent } from '../atendidas.component';
 
-
 @Component({
   selector: 'app-action-detalle',
-   standalone: true,
+  standalone: true,
   imports: [CommonModule],
-    template: `
+  template: `
     <button (click)="onClick()" class="btn btn-primary btn-sm" style="border-radius: 8px;">
+      <i class="ti ti-eye me-1"></i>
       Ver Detalles
     </button>
   `,
-  styleUrl: './action-detalle.component.scss'
+  styleUrls: ['./action-detalle.component.scss']
 })
 export class ActionDetalleComponent {
- private params!: ICellRendererParams;
+  private params!: ICellRendererParams;
   private parentComponent!: AtendidasComponent;
 
   agInit(params: ICellRendererParams): void {

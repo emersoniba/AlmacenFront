@@ -1,84 +1,121 @@
-<div class="modal-content">
-	<div class="modal-header">
-		<h4 class="modal-title">
-			<i class="ti ti-shopping-cart me-2"></i>
-			Detalles de Productos Entregados
-		</h4>
-	</div>
+<div class="modal-content" style="max-height: 80vh; display: flex; flex-direction: column;">
+    <div class="modal-header py-2">
+        <h5 class="modal-title">
+            <i class="ti ti-shopping-cart me-2"></i> Detalles de Solicitud
+        </h5>
+    </div>
 
-	<div class="modal-body">
-		<!-- Vista de tabla para escritorio -->
-		<div class="d-none d-md-block">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Producto</th>
-						<th>Cantidad Solicitada</th>
-						<th>Cantidad Entregada</th>
-						<th>Unidad</th>
-						<th>Estado</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let prod of data.atendida.productos_entregados">
-						<td>{{ prod.nombre }}</td>
-						<td>{{ prod.cantidad_solicitada }}</td>
-						<td>{{ prod.cantidad_entregada }}</td>
-						<td>{{ prod.unidad_de_medida }}</td>
-						<td>
-							<span *ngIf="prod.cantidad_entregada < prod.cantidad_solicitada" 
-									class="badge bg-warning text-dark">
-								Entrega parcial
-							</span>
-							<span *ngIf="prod.cantidad_entregada === prod.cantidad_solicitada" 
-									class="badge bg-success">
-								Completo
-							</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+    <div class="modal-body" style="overflow-y: auto; max-height: calc(80vh - 120px); padding: 1rem;">
+        <!-- Información general compacta -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <small class="text-muted d-block">Código</small>
+                    <strong>{{ data.solicitud.codigo }}</strong>
+                </div>
+                <div class="mb-2">
+                    <small class="text-muted d-block">Solicitante</small>
+                    <strong>{{ data.solicitud.solicitante_nombre }}</strong>
+                    <small class="text-muted ms-2" *ngIf="data.solicitud.solicitante_cargo">
+            ({{ data.solicitud.solicitante_cargo }})
+          </small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <small class="text-muted d-block">Fecha Solicitud</small>
+                    <strong>{{ data.solicitud.fecha_solicitud | date: 'dd/MM/yyyy HH:mm' }}</strong>
+                </div>
+                <div class="mb-2">
+                    <small class="text-muted d-block">Fecha Atención</small>
+                    <strong>{{ data.solicitud.fecha_recepcion | date: 'dd/MM/yyyy HH:mm' }}</strong>
+                </div>
+            </div>
+        </div>
 
-		<!-- Vista de tarjetas para móvil -->
-		<div class="d-md-none">
-			<div *ngFor="let prod of data.atendida.productos_entregados" class="product-card">
-				<div class="product-card-header">
-					<strong>{{ prod.nombre }}</strong>
-				</div>
-				<div class="product-card-body">
-					<div class="product-info">
-						<span class="label">Solicitada:</span>
-						<span class="value">{{ prod.cantidad_solicitada }}</span>
-					</div>
-					<div class="product-info">
-						<span class="label">Entregada:</span>
-						<span class="value" [class.text-success]="prod.cantidad_entregada === prod.cantidad_solicitada"
-									[class.text-warning]="prod.cantidad_entregada < prod.cantidad_solicitada">
-							{{ prod.cantidad_entregada }}
-						</span>
-					</div>
-					<div class="product-info">
-						<span class="label">Unidad:</span>
-						<span class="value">{{ prod.unidad_de_medida }}</span>
-					</div>
-					<div class="product-status" *ngIf="prod.cantidad_entregada < prod.cantidad_solicitada">
-						<i class="ti ti-alert-triangle me-1"></i>
-						Entrega parcial
-					</div>
-					<div class="product-status complete" *ngIf="prod.cantidad_entregada === prod.cantidad_solicitada">
-						<i class="ti ti-check me-1"></i>
-						Entrega completa
-					</div>
-				</div>
-			</div>
-		</div>
+        <!-- Almacén y atendido por -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <small class="text-muted d-block">Almacén</small>
+                    <strong>{{ data.solicitud.almacen_nombre }}</strong>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <small class="text-muted d-block">Atendido por</small>
+                    <strong>{{ data.solicitud.almacenero_nombre || 'N/A' }}</strong>
+                </div>
+            </div>
+        </div>
 
-		<ng-container *ngIf="data.atendida.productos_entregados.length === 0">
-			<p>No se entregaron productos (solicitud rechazada).</p>
-		</ng-container>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" (click)="onClose()">Cerrar</button>
-	</div>
+        <!-- Objetivo (si tiene) -->
+        <div class="mb-3" *ngIf="data.solicitud.objetivo">
+            <small class="text-muted d-block">Objetivo</small>
+            <p class="mb-0 small">{{ data.solicitud.objetivo }}</p>
+        </div>
+
+        <!-- Resumen de productos -->
+        <div class="mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <small class="text-muted">Productos</small>
+                <div>
+                    <span class="badge bg-primary me-1" style="font-size: 11px;">Sol: {{ totalSolicitado }}</span>
+                    <span class="badge bg-success" style="font-size: 11px;">Ent: {{ totalEntregado }}</span>
+                </div>
+            </div>
+
+            <!-- Tabla compacta -->
+            <div class="table-responsive">
+                <table class="table table-sm table-hover mb-0" style="font-size: 13px;">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-center" style="width: 70px">Sol.</th>
+                            <th class="text-center" style="width: 70px">Ent.</th>
+                            <th class="text-center" style="width: 60px">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detalle of data.solicitud.detalles">
+                            <td>
+                                <small>{{ detalle.producto_nombre }}</small>
+                                <small class="text-muted d-block">{{ detalle.producto_unidad }}</small>
+                            </td>
+                            <td class="text-center fw-bold">{{ detalle.cantidad_solicitada }}</td>
+                            <td class="text-center">
+                                <span [class.text-success]="detalle.cantidad_entregada === detalle.cantidad_solicitada" [class.text-warning]="detalle.cantidad_entregada < detalle.cantidad_solicitada && detalle.cantidad_entregada > 0" [class.text-danger]="detalle.cantidad_entregada === 0">
+                  {{ detalle.cantidad_entregada }}
+                </span>
+                            </td>
+                            <td class="text-center">
+                                <span *ngIf="detalle.cantidad_entregada === detalle.cantidad_solicitada" class="badge bg-success" style="font-size: 10px;">
+                  <i class="ti ti-check"></i>
+                </span>
+                                <span *ngIf="detalle.cantidad_entregada < detalle.cantidad_solicitada && detalle.cantidad_entregada > 0" class="badge bg-warning text-dark" style="font-size: 10px;">
+                  <i class="ti ti-alert-triangle"></i>
+                </span>
+                                <span *ngIf="detalle.cantidad_entregada === 0" class="badge bg-danger" style="font-size: 10px;">
+                  <i class="ti ti-ban"></i>
+                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Observación -->
+        <div class="mt-3" *ngIf="data.solicitud.observacion_almacenero">
+            <small class="text-muted d-block">Observación</small>
+            <p class="mb-0 small text-muted">{{ data.solicitud.observacion_almacenero }}</p>
+        </div>
+    </div>
+
+    <div class="modal-footer py-2">
+        <button type="button" class="btn btn-secondary btn-sm" (click)="onClose()">
+      <i class="ti ti-x me-1"></i>
+      Cerrar
+    </button>
+    </div>
 </div>

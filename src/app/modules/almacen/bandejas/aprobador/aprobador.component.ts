@@ -3,7 +3,7 @@ import { ColDef, GridApi, GridOptions, PaginationNumberFormatterParams } from 'a
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { Solicitud } from 'src/app/models/solicitud.model';
 import { ModalAprobacionComponent } from './modal-aprobacion/modal-aprobacion.component';
-import * as moment from 'moment';
+import moment from 'moment';
 import { localeEs } from 'src/app/app.locale.es.grid';
 import { ActionRendererComponent } from './action-renderer/action-renderer.component';
 import { Subscription } from 'rxjs';
@@ -45,13 +45,15 @@ export class AprobadorComponent implements OnInit, OnDestroy {
     {
       headerName: 'Estado',
       field: 'estado_nombre',
+      //field: 'estado_descripcion',
       filter: true,
       floatingFilter: true,
       minWidth: 150,
-      maxWidth: 160,
+      maxWidth: 200,
       cellRenderer: (params: any) => {
-        const estado = params.value;
+       // const estado = params.value;
         const codigo = params.data?.estado_codigo;
+        const descripcion = params.data?.estado_descripcion || params.value;
         let badgeClass = '';
         let icono = '';
         
@@ -75,7 +77,10 @@ export class AprobadorComponent implements OnInit, OnDestroy {
           icono = 'ti ti-clock';
         }
         
-        return `<span class="${badgeClass}"><i class="${icono} me-1"></i>${estado}</span>`;
+       // return `<span class="${badgeClass}"><i class="${icono} me-1"></i>${estado}</span>`;
+        const style = 'style="white-space: normal; word-break: break-word; line-height: 1.4; max-width: 180px; display: inline-block; text-align: center;"';
+        return `<span class="${badgeClass}" ${style}><i class="${icono} me-1"></i>${descripcion || codigo}</span>`;
+
       }
     },
     {

@@ -171,7 +171,7 @@ export class EntregaProductosComponent implements OnInit {
       .subscribe({
         next: () => {
           this.toastr.success('Entrega realizada correctamente');
-          this.router.navigate(['/recepcionador']);
+          this.router.navigate(['/recepcionar']);
         },
         error: (error) => {
           console.error('Error al procesar entrega:', error);

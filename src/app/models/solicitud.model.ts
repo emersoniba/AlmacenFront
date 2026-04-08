@@ -41,6 +41,7 @@ export interface Solicitud {
     estado: number;
     estado_nombre: string;
     estado_codigo: string;
+    estado_descripcion: string;
     observacion_aprobador: string | null;
     observacion_almacenero: string | null;
     detalles?: DetalleSolicitud[];

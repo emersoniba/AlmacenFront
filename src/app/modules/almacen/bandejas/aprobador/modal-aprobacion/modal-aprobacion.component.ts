@@ -41,7 +41,7 @@ export class ModalAprobacionComponent implements OnInit, AfterViewInit {
       this.solicitud = this.data.solicitud;
       
       // Si no tiene los detalles, cargarlos
-      if (!this.solicitud.detalles || this.solicitud.detalles.length === 0) {
+      if (!this.solicitud?.detalles || this.solicitud.detalles.length === 0) {
         this.cargarDetallesSolicitud();
       }
     } else if (this.data.solicitudId) {
@@ -56,6 +56,16 @@ export class ModalAprobacionComponent implements OnInit, AfterViewInit {
     this.solicitudService.getSolicitudById(solicitudId).subscribe({
       next: (solicitudCompleta) => {
         this.solicitud = solicitudCompleta;
+        //
+          console.log('Solicitud cargada:', {
+                id: solicitudCompleta.id,
+                codigo: solicitudCompleta.codigo,
+                solicitante_nombre: solicitudCompleta.solicitante_nombre,
+                solicitante_cargo: solicitudCompleta.solicitante_cargo,
+                detalles: solicitudCompleta.detalles?.length
+            });
+            
+        //
         this.loading = false;
         this.cdRef.detectChanges();
       },
