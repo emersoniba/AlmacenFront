@@ -9,8 +9,8 @@ import moment from 'moment';
 
 @Component({
     selector: 'app-detalle-solicitud-modal',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule],
+   // standalone: true,
+   // imports: [CommonModule, MatButtonModule],
     templateUrl: './detalle-solicitud-modal.component.html',
     styleUrls: ['./detalle-solicitud-modal.component.css']
 })

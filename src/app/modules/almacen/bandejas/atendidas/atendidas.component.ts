@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { SolicitudAtendida } from 'src/app/models/solicitud-atendida.model'; 
 import { MatDialog } from '@angular/material/dialog';
-import { AtendidasApiService } from 'src/app/services/atendidas.service';
+import { AtendidasApiService } from 'src/app/services/XXXatendidas.service';
 import { ModalDetallesAtendidaComponent } from './modal-detalle-atendida/modal-detalle-atendida.component';
 import { ActionDetalleComponent } from './action-detalle/action-detalle.component';
 import { ColDef, GridOptions } from 'ag-grid-community';

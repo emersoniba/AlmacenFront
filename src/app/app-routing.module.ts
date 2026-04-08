@@ -49,7 +49,7 @@ const routes: Routes = [
                 path: 'proveedor',
                 component: ProveedorComponent,
                 //canActivate: [AuthGuard, ],
-                data: { roles: ['responsable'] }
+                data: { roles: ['Almacenero'] }
             },
             {
                 path: 'almacen',
@@ -61,7 +61,7 @@ const routes: Routes = [
                 path: 'responsable',
                 component: ResponsableComponent,
                 canActivate: [AuthGuard,],
-                data: { roles: ['Admin',] }
+                data: { roles: ['Admin','Almacenero'] }
             },
             {
                 path: 'material',
@@ -79,7 +79,7 @@ const routes: Routes = [
                 path: 'solicitud',
                 component: SolicitanteComponent,
                 canActivate: [AuthGuard, ],
-                data: { roles: ['Admin', 'Almacenero'] }
+                data: { roles: ['Admin', 'Solicitante'] }
             }, 
             {
                 path: 'aprobar',

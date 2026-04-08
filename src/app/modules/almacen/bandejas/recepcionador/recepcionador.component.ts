@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef, GridApi, GridOptions, PaginationNumberFormatterParams } from 'ag-grid-community';
-import { RecepcionadorService } from 'src/app/services/recepcionador.service';
-import { Aprobacion } from 'src/app/models/aprobacion.model';
-import * as moment from 'moment';
+import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
+import { SolicitudService } from 'src/app/services/solicitud.service';
+import { Solicitud } from 'src/app/models/solicitud.model';
+import moment from 'moment';
 import { localeEs } from 'src/app/app.locale.es.grid';
-import { Subscription } from 'rxjs';
 import { ActionRendererRecepcionadorComponent } from './action-renderer/action-renderer.component';
 import { Router } from '@angular/router';
 
@@ -14,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./recepcionador.component.css']
 })
 export class RecepcionadorComponent implements OnInit {
-  private gridApi!: GridApi<Aprobacion>;
+  private gridApi!: GridApi<Solicitud>;
 
   public gridOptions: GridOptions = {
     reactiveCustomComponents: true,
@@ -27,9 +26,7 @@ export class RecepcionadorComponent implements OnInit {
   public localEs = localeEs;
   public paginationPageSize = 10;
   public paginationPageSizeSelector: number[] | boolean = [10, 50, 1000];
-  public paginationNumberFormatter: (params: PaginationNumberFormatterParams) => string = (params: PaginationNumberFormatterParams) => {
-    return params.value.toLocaleString();
-  };
+
   public columnDefs: ColDef[] = [
     {
       headerName: 'Acciones',
@@ -37,31 +34,19 @@ export class RecepcionadorComponent implements OnInit {
       cellRenderer: 'actionCellRenderer',
     },
     {
+      headerName: 'Código',
+      field: 'codigo',
+      filter: true,
+      floatingFilter: true,
+      minWidth: 150
+    },
+    {
       headerName: 'Fecha Solicitud',
       field: 'fecha_solicitud',
       filter: 'agDateColumnFilter',
       floatingFilter: true,
       minWidth: 180,
-      valueGetter: (p) => {
-        if (p.data.fecha_solicitud) {
-          return moment(p.data.fecha_solicitud).toDate();
-        }
-        return null;
-      },
-      valueFormatter: (p) => {
-        if (p.value) {
-          const f = new Date(p.value);
-          return moment(f).format('DD/MM/YYYY HH:mm:ss');
-        }
-        return '';
-      }
-    },
-    {
-      headerName: 'Código',
-      field: 'solicitud_id',
-      filter: true,
-      floatingFilter: true,
-      minWidth: 180
+      valueFormatter: (p) => p.value ? moment(p.value).format('DD/MM/YYYY HH:mm:ss') : ''
     },
     {
       headerName: 'Objetivo',
@@ -72,14 +57,14 @@ export class RecepcionadorComponent implements OnInit {
     },
     {
       headerName: 'Solicitante',
-      field: 'solicitante.usuario',
+      field: 'solicitante_nombre',
       filter: true,
       floatingFilter: true,
       minWidth: 150
     },
     {
       headerName: 'Almacén',
-      field: 'almacen.nombre',
+      field: 'almacen_nombre',
       filter: true,
       floatingFilter: true,
       minWidth: 150
@@ -90,55 +75,38 @@ export class RecepcionadorComponent implements OnInit {
       filter: 'agDateColumnFilter',
       floatingFilter: true,
       minWidth: 180,
-      valueGetter: (p) => {
-        if (p.data.fecha_aprobacion) {
-          return moment(p.data.fecha_aprobacion).toDate();
-        }
-        return null;
-      },
-      valueFormatter: (p) => {
-        if (p.value) {
-          const f = new Date(p.value);
-          return moment(f).format('DD/MM/YYYY HH:mm:ss');
-        }
-        return '';
-      }
+      valueFormatter: (p) => p.value ? moment(p.value).format('DD/MM/YYYY HH:mm:ss') : ''
     },
     {
       headerName: 'Aprobador',
-      field: 'aprobador',
+      field: 'aprobador_nombre',
       filter: true,
       floatingFilter: true,
       minWidth: 120
     },
     {
-      headerName: 'Productos',
-      field: 'productos_count',
-      filter: true,
-      floatingFilter: true,
-      minWidth: 100
-    },
-    {
       headerName: 'Estado',
-      field: 'estado',
+      field: 'estado_nombre',
       filter: true,
       floatingFilter: true,
       minWidth: 120,
       cellStyle: (params) => {
-        if (params.value === 'recibido') {
+        if (params.value === 'Entregado') {
           return { color: 'white', backgroundColor: 'green' };
         }
-        return { color: 'white', backgroundColor: 'orange' };
+        if (params.value === 'Aprobado') {
+          return { color: 'white', backgroundColor: '#28a745' };
+        }
+        return { color: 'white', backgroundColor: '#ffc107' };
       }
     }
   ];
 
-  public rowData: any[] = [];
+  public rowData: Solicitud[] = [];
   public loading = false;
-  private dataSubscription: Subscription;
 
   constructor(
-    private recepcionadorService: RecepcionadorService,
+    private solicitudService: SolicitudService,
     private router: Router
   ) { }
 
@@ -148,34 +116,27 @@ export class RecepcionadorComponent implements OnInit {
 
   public cargarSolicitudesAprobadas(): void {
     this.loading = true;
-    this.recepcionadorService.obtenerSolicitudesAprobadas().subscribe({
+    // Usar el método correcto del backend
+    this.solicitudService.getSolicitudes().subscribe({
       next: (data) => {
-        this.rowData = data.map(aprob => ({
-          ...aprob,
-          productos_count: aprob.productos.length
-        }));
+        // Filtrar por estado APROBADO (código = 'APROBADO')
+        this.rowData = data.filter(solicitud => solicitud.estado_codigo === 'APROBADO');
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error al cargar solicitudes aprobadas:', error);
+        console.error('Error al cargar solicitudes:', error);
         this.loading = false;
       }
     });
   }
 
-  public verDetallesRecepcion(aprobacion: Aprobacion): void {
-    if (aprobacion.id) {
-      this.router.navigate(['/entrega-productos', aprobacion.id]);
+  public verDetallesRecepcion(solicitud: Solicitud): void {
+    if (solicitud.id) {
+      this.router.navigate(['/entrega-productos', solicitud.id]);
     }
   }
 
   onGridReady(params: any): void {
     this.gridApi = params.api;
-  }
-
-  ngOnDestroy(): void {
-    if (this.dataSubscription) {
-      this.dataSubscription.unsubscribe();
-    }
   }
 }

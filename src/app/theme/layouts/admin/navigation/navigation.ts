@@ -15,6 +15,7 @@ export interface NavigationItem {
     children?: NavigationItem[];
     link?: string;
     description?: string;
+    roles?: string[];
 }
 
 export const NavigationItems: NavigationItem[] = [
@@ -49,7 +50,8 @@ export const NavigationItems: NavigationItem[] = [
                 url: '/usuario',
                 icon: 'ti ti-user',
                 target: false,
-                breadcrumbs: true
+                breadcrumbs: true,
+                roles: ['Admin']
             }
         ]
     },
@@ -59,7 +61,7 @@ export const NavigationItems: NavigationItem[] = [
         type: 'group',
         icon: 'icon-navigation',
         children: [
-            
+
             {
                 id: 'proveedor',
                 title: 'Proveedores',
@@ -68,7 +70,9 @@ export const NavigationItems: NavigationItem[] = [
                 url: '/proveedor',
                 icon: 'ti ti-user',
                 target: false,
-                breadcrumbs: true
+                breadcrumbs: true,
+                roles: ['Admin','Almacenero']
+
             },
             {
                 id: 'almacen',
@@ -78,7 +82,9 @@ export const NavigationItems: NavigationItem[] = [
                 url: '/almacen',
                 icon: 'ti ti-truck',
                 target: false,
-                breadcrumbs: true
+                breadcrumbs: true,
+                                roles: ['Admin','Almacenero']
+
             },
             {
                 id: 'categoria',
@@ -88,7 +94,9 @@ export const NavigationItems: NavigationItem[] = [
                 url: '/categorias-producto',
                 icon: 'ti ti-package',
                 target: false,
-                breadcrumbs: true
+                breadcrumbs: true,
+                                roles: ['Admin','Almacenero']
+
             },
             {
                 id: 'material',
@@ -98,7 +106,9 @@ export const NavigationItems: NavigationItem[] = [
                 url: '/material',
                 icon: 'ti ti-template',
                 target: false,
-                breadcrumbs: true
+                breadcrumbs: true,                
+                roles: ['Admin','Almacenero']
+
             },
             {
                 id: 'responsable',
@@ -108,7 +118,9 @@ export const NavigationItems: NavigationItem[] = [
                 url: '/responsable',
                 icon: 'ti ti-users',
                 target: false,
-                breadcrumbs: true
+                breadcrumbs: true,
+                                roles: ['Admin','Almacenero']
+
             },
             {
                 id: 'ingreso',
@@ -118,7 +130,9 @@ export const NavigationItems: NavigationItem[] = [
                 url: '/ingreso',
                 icon: 'ti ti-table-import',
                 target: false,
-                breadcrumbs: true
+                breadcrumbs: true,
+                roles: ['Admin','Almacenero']
+
             },
         ]
     },
@@ -134,7 +148,9 @@ export const NavigationItems: NavigationItem[] = [
                 type: 'item',
                 classes: 'nav-item',
                 url: '/solicitud',
-                icon: 'ti ti-shopping-cart'
+                icon: 'ti ti-shopping-cart',
+                 roles: ['Admin','Solicitante']
+
             },
             {
                 id: 'aprobar',
@@ -142,7 +158,9 @@ export const NavigationItems: NavigationItem[] = [
                 type: 'item',
                 classes: 'nav-item',
                 url: '/aprobar',
-                icon: 'ti ti-list-check'
+                icon: 'ti ti-list-check',
+                roles: ['Admin','Aprobador']
+
             },
             {
                 id: 'recepcionar',
@@ -150,7 +168,9 @@ export const NavigationItems: NavigationItem[] = [
                 type: 'item',
                 classes: 'nav-item',
                 url: '/recepcionar',
-                icon: 'ti ti-download'
+                icon: 'ti ti-download',
+                 roles: ['Admin','Almacenero']
+
             },
             {
                 id: 'atender',
@@ -158,7 +178,9 @@ export const NavigationItems: NavigationItem[] = [
                 type: 'item',
                 classes: 'nav-item',
                 url: '/atender',
-                icon: 'ti ti-checks'
+                icon: 'ti ti-checks',
+                roles: ['Admin','Almacenero']
+
             },
             {
                 id: 'reporte',
@@ -166,7 +188,9 @@ export const NavigationItems: NavigationItem[] = [
                 type: 'item',
                 classes: 'nav-item',
                 url: '/reporte',
-                icon: 'ti ti-file-text'
+                icon: 'ti ti-file-text',
+                roles: ['Admin','Almacenero']
+
             },
         ]
     },

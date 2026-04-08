@@ -3,7 +3,6 @@
     <div class="row mt-3" *ngIf="authService.currentUser$ | async as user">
         <div class="col text-center">
             <div class="flex-shrink-0 position-relative d-inline-block">
-                <!-- Avatar con imagen o iniciales -->
                 <div *ngIf="user.persona?.imagen; else avatarIniciales" class="user-avatar-container">
                     <img [src]="user.persona?.imagen" alt="user-image" class="user-avatar" />
                 </div>
@@ -12,8 +11,6 @@
                         {{ iniciales }}
                     </div>
                 </ng-template>
-
-                <!-- Indicador de estado (opcional) -->
                 <span class="status-indicator bg-success"></span>
             </div>
 
@@ -31,18 +28,9 @@
                     </span>
                 </div>
             </div>
-
-            <!-- Botón de cerrar sesión (opcional) 
-            <div class="mt-2">
-                <button class="btn btn-outline-danger btn-sm" (click)="logout()">
-                    <i class="ti ti-logout me-1"></i>Cerrar Sesión
-                </button>
-            </div>
-            -->
         </div>
     </div>
 
-    <!-- Mensaje cuando no hay usuario (por si acaso) -->
     <div class="row mt-3" *ngIf="!(authService.currentUser$ | async)">
         <div class="col text-center">
             <div class="flex-shrink-0">
@@ -55,10 +43,11 @@
         </div>
     </div>
 
-    <!-- Navegación -->
+    <!-- Navegación con menú filtrado -->
     <div class="navbar-content">
         <ul class="nav coded-inner-navbar" (clickOutside)="fireOutClick()" (mouseleave)="navMob()">
-            @for (item of navigation; track item) { @if (item.type === 'group') {
+            <!-- USAR filteredNavigation en lugar de navigation -->
+            @for (item of filteredNavigation; track item) { @if (item.type === 'group') {
             <app-nav-group [item]="item"></app-nav-group>
             } @if (item.type === 'collapse') {
             <app-nav-collapse [item]="item"></app-nav-collapse>

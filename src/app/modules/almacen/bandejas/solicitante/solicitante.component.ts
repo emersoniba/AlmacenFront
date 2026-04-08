@@ -5,7 +5,7 @@ import { localeEs } from 'src/app/app.locale.es.grid';
 import { Solicitud } from 'src/app/models/solicitud.model';
 import moment from 'moment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RendererComponent } from '../abrenderer/renderer.component';
+import { RendererComponent2 } from './abrenderer2/renderer2.component';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { ToastrService } from 'ngx-toastr';
 import { HandleErrorMessage } from 'src/app/utils/handle.errors';
@@ -27,7 +27,7 @@ export class SolicitanteComponent implements OnInit, OnDestroy {
     public gridOptions: GridOptions = <GridOptions>{
         reactiveCustomComponents: true,
         components: {
-            actionCellRenderer: RendererComponent
+            actionCellRenderer: RendererComponent2
         },
         context: { componentParent: this }
     };
@@ -60,7 +60,7 @@ export class SolicitanteComponent implements OnInit, OnDestroy {
             field: 'id', 
             minWidth: 150, 
             maxWidth: 150, 
-            cellRenderer: RendererComponent, 
+            cellRenderer: RendererComponent2, 
             pinned: true 
         },
         {

@@ -1,0 +1,14 @@
+<div class="d-flex gap-1">
+    <button class="btn btn-info btn-sm btn-round" (click)="onActionClicked('view')" matTooltip="Ver Detalles">
+        <i class="ti ti-eye fs-5"></i>
+    </button>
+    <button *ngIf="mostrarEditar" class="btn btn-warning btn-sm btn-round" (click)="onActionClicked('edit')" matTooltip="Editar">
+        <i class="ti ti-edit fs-5"></i>
+    </button>
+    <button *ngIf="mostrarEnviar" class="btn btn-primary btn-sm btn-round" (click)="onActionClicked('send')" matTooltip="Enviar para Aprobación">
+        <i class="ti ti-send fs-5"></i>
+    </button>
+    <button *ngIf="mostrarEliminar" class="btn btn-danger btn-sm btn-round" (click)="onActionClicked('delete')" matTooltip="Eliminar">
+        <i class="ti ti-trash fs-5"></i>
+    </button>
+</div>

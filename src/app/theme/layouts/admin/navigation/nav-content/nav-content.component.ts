@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
-import { NavigationItems } from '../navigation';
+import { NavigationItems, NavigationItem } from '../navigation';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario.models';
 
@@ -13,10 +13,10 @@ export class NavContentComponent implements OnInit {
     @Output() NavCollapsedMob: EventEmitter<string> = new EventEmitter();
     title = 'Almacen';
 
-    navigation = NavigationItems;
+    navigation: NavigationItem[] = []; // Cambiar a array vacío
+    filteredNavigation: NavigationItem[] = []; // <-- NUEVO: menú filtrado
     windowWidth = window.innerWidth;
     
-    // Propiedades para el usuario
     currentUser: Usuario | null = null;
     nombreCompleto: string = '';
     cargo: string = '';
@@ -40,12 +40,90 @@ export class NavContentComponent implements OnInit {
             this.currentUser = user;
             if (user) {
                 this.actualizarDatosUsuario(user);
+                this.filtrarMenuPorRol(user); // <-- NUEVO: filtrar menú
+            } else {
+                this.filteredNavigation = []; // Si no hay usuario, menú vacío
             }
         });
     }
 
+    // <-- NUEVO MÉTODO: Filtrar menú según roles del usuario
+    filtrarMenuPorRol(user: Usuario): void {
+        const userRoles = user.roles?.map(rol => rol.nombre) || [];
+        
+        // Verificar si el usuario tiene Admin (acceso total)
+        const esAdmin = userRoles.includes('Admin');
+        
+        if (esAdmin) {
+            // Admin ve TODO el menú sin filtrar
+            this.filteredNavigation = NavigationItems;
+            return;
+        }
+        
+        // Filtrar grupos y sus hijos según roles
+        this.filteredNavigation = NavigationItems
+            .map(group => this.filtrarGrupo(group, userRoles))
+            .filter(group => group !== null) as NavigationItem[];
+    }
+
+    // Filtrar un grupo y sus hijos
+    private filtrarGrupo(group: NavigationItem, userRoles: string[]): NavigationItem | null {
+        // Verificar si el grupo tiene restricción de roles
+        if (group.roles && !this.tieneRolPermitido(group.roles, userRoles)) {
+            return null; // Grupo no permitido
+        }
+        
+        // Si tiene hijos, filtrarlos también
+        if (group.children && group.children.length > 0) {
+            const childrenFiltrados = group.children
+                .map(child => this.filtrarItem(child, userRoles))
+                .filter(child => child !== null) as NavigationItem[];
+            
+            if (childrenFiltrados.length === 0) {
+                return null; // Si no quedan hijos, ocultar el grupo
+            }
+            
+            return {
+                ...group,
+                children: childrenFiltrados
+            };
+        }
+        
+        return group;
+    }
+
+    // Filtrar un ítem individual
+    private filtrarItem(item: NavigationItem, userRoles: string[]): NavigationItem | null {
+        // Verificar si el ítem tiene restricción de roles
+        if (item.roles && !this.tieneRolPermitido(item.roles, userRoles)) {
+            return null;
+        }
+        
+        // Si tiene hijos recursivos
+        if (item.children && item.children.length > 0) {
+            const childrenFiltrados = item.children
+                .map(child => this.filtrarItem(child, userRoles))
+                .filter(child => child !== null) as NavigationItem[];
+            
+            if (childrenFiltrados.length === 0) {
+                return null;
+            }
+            
+            return {
+                ...item,
+                children: childrenFiltrados
+            };
+        }
+        
+        return item;
+    }
+
+    // Verificar si el usuario tiene al menos uno de los roles permitidos
+    private tieneRolPermitido(rolesPermitidos: string[], userRoles: string[]): boolean {
+        return rolesPermitidos.some(rol => userRoles.includes(rol));
+    }
+
     actualizarDatosUsuario(user: Usuario) {
-        // Nombre completo desde persona
         if (user.persona) {
             this.nombreCompleto = user.persona.nombre_completo || 
                                   `${user.persona.nombres} ${user.persona.apellido_paterno || ''} ${user.persona.apellido_materno || ''}`.trim();
@@ -59,7 +137,6 @@ export class NavContentComponent implements OnInit {
             this.fotoPerfil = null;
         }
         
-        // Iniciales para el avatar
         this.iniciales = this.obtenerIniciales(user);
     }
 

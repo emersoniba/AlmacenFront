@@ -7,6 +7,7 @@ import { AlmacenFormComponent } from './modules/almacen/parametrizacion/almacen/
 import { SubAlmacenFormComponent } from './modules/almacen/parametrizacion/almacen/subalmacen-form/subalmacen-form.component';
 import { SolicitanteComponent } from './modules/almacen/bandejas/solicitante/solicitante.component';
 import { SolicitanteFormComponent } from './modules/almacen/bandejas/solicitante/solicitante-form/solicitante-form.component';
+import { DetalleSolicitudModalComponent } from './modules/almacen/bandejas/solicitante/detalle-solicitud-modal/detalle-solicitud-modal.component';
 import { AprobadorComponent } from './modules/almacen/bandejas/aprobador/aprobador.component';
 import { RecepcionadorComponent } from './modules/almacen/bandejas/recepcionador/recepcionador.component';
 import { RendererComponent } from './modules/almacen/bandejas/abrenderer/renderer.component';
@@ -23,6 +24,7 @@ import { PerfilModalComponent } from './modules/perfil-modal/perfil-modal.compon
 import { PersonalComponent } from './modules/almacen/personal/personal.component';
 import { PersonalFormComponent } from './modules/almacen/personal/personal-form/personal-form.component';
 import { CompletarIngresoModalComponent } from './modules/almacen/parametrizacion/ingreso/completar-ingreso-modal/completar-ingreso-modal.component';
+import { RendererComponent2 } from './modules/almacen/bandejas/solicitante/abrenderer2/renderer2.component';
 
 export const AppAlmacenConfig = [
     LoginComponent,
@@ -41,9 +43,11 @@ export const AppAlmacenConfig = [
     IngresoFormComponent,
     SolicitanteComponent,
     SolicitanteFormComponent,
+    DetalleSolicitudModalComponent,
     AprobadorComponent,
     RecepcionadorComponent,
     RendererComponent,
+    RendererComponent2,
     //ReportesComponent,
     PerfilModalComponent,
     //nuevos components
