@@ -51,11 +51,40 @@ export class ModalDetallesAtendidaComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  // CORREGIDO: Convertir a número correctamente
   get totalSolicitado(): number {
-    return this.solicitud.detalles?.reduce((total, d) => total + d.cantidad_solicitada, 0) || 0;
+    if (!this.solicitud.detalles) return 0;
+    
+    return this.solicitud.detalles.reduce((total, detalle) => {
+      // Asegurar que sea número
+      const cantidad = typeof detalle.cantidad_solicitada === 'number' 
+        ? detalle.cantidad_solicitada 
+        : parseFloat(detalle.cantidad_solicitada as any);
+      return total + (isNaN(cantidad) ? 0 : cantidad);
+    }, 0);
   }
 
+  // CORREGIDO: Convertir a número correctamente
   get totalEntregado(): number {
-    return this.solicitud.detalles?.reduce((total, d) => total + d.cantidad_entregada, 0) || 0;
+    if (!this.solicitud.detalles) return 0;
+    
+    return this.solicitud.detalles.reduce((total, detalle) => {
+      // Asegurar que sea número
+      const cantidad = typeof detalle.cantidad_entregada === 'number' 
+        ? detalle.cantidad_entregada 
+        : parseFloat(detalle.cantidad_entregada as any);
+      return total + (isNaN(cantidad) ? 0 : cantidad);
+    }, 0);
+  }
+
+  // Formatear para mostrar (opcional)
+  get totalSolicitadoFormateado(): string {
+    const total = this.totalSolicitado;
+    return total % 1 === 0 ? total.toString() : total.toFixed(2);
+  }
+
+  get totalEntregadoFormateado(): string {
+    const total = this.totalEntregado;
+    return total % 1 === 0 ? total.toString() : total.toFixed(2);
   }
 }
