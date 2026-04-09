@@ -186,8 +186,10 @@ export class AtendidasComponent implements OnInit {
         maxWidth: '95vw',*/
         width: '550px',  // Tamaño más pequeño
         maxWidth: '90vw',
-        maxHeight: '80vh',
-        data: { solicitud: solicitud }
+        maxHeight: '65vh',
+        data: { solicitud: solicitud },
+        panelClass: 'custom-modal',
+        autoFocus: false
       });
     }
   }

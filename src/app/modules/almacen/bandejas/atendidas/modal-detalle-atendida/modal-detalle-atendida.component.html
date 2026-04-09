@@ -1,114 +1,121 @@
-<div class="modal-content" style="max-height: 80vh; display: flex; flex-direction: column;">
+<div class="modal-content" style="max-height: 85vh; display: flex; flex-direction: column;">
     <div class="modal-header py-2">
         <h5 class="modal-title">
             <i class="ti ti-shopping-cart me-2"></i> Detalles de Solicitud
         </h5>
     </div>
 
-    <div class="modal-body" style="overflow-y: auto; max-height: calc(80vh - 120px); padding: 1rem;">
-        <!-- Información general compacta -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <div class="mb-2">
-                    <small class="text-muted d-block">Código</small>
-                    <strong>{{ data.solicitud.codigo }}</strong>
-                </div>
-                <div class="mb-2">
-                    <small class="text-muted d-block">Solicitante</small>
-                    <strong>{{ data.solicitud.solicitante_nombre }}</strong>
-                    <small class="text-muted ms-2" *ngIf="data.solicitud.solicitante_cargo">
-            ({{ data.solicitud.solicitante_cargo }})
-          </small>
-                </div>
+    <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 1rem 1rem 0.5rem 1rem;">
+        <!-- Loading -->
+        <div *ngIf="loading" class="text-center py-4">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
             </div>
-            <div class="col-md-6">
-                <div class="mb-2">
-                    <small class="text-muted d-block">Fecha Solicitud</small>
-                    <strong>{{ data.solicitud.fecha_solicitud | date: 'dd/MM/yyyy HH:mm' }}</strong>
-                </div>
-                <div class="mb-2">
-                    <small class="text-muted d-block">Fecha Atención</small>
-                    <strong>{{ data.solicitud.fecha_recepcion | date: 'dd/MM/yyyy HH:mm' }}</strong>
-                </div>
-            </div>
+            <p class="mt-2 small text-muted">Cargando detalles...</p>
         </div>
 
-        <!-- Almacén y atendido por -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <div class="mb-2">
-                    <small class="text-muted d-block">Almacén</small>
-                    <strong>{{ data.solicitud.almacen_nombre }}</strong>
+        <div *ngIf="!loading">
+            <!-- Información general - más compacta y con mejor espaciado -->
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <div class="info-item">
+                        <small class="text-muted d-block">Solicitante</small>
+                        <strong class="fs-6">{{ solicitud.solicitante_nombre }}</strong>
+                        <small class="text-muted d-block" *ngIf="solicitud.solicitante_cargo">
+              ({{ solicitud.solicitante_cargo }})
+            </small>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="info-item">
+                        <small class="text-muted d-block">Fecha Atención</small>
+                        <strong class="fs-6">{{ solicitud.fecha_recepcion | date: 'dd/MM/yyyy HH:mm' }}</strong>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="info-item">
+                        <small class="text-muted d-block">Almacén</small>
+                        <strong class="fs-6">{{ solicitud.almacen_nombre }}</strong>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="info-item">
+                        <small class="text-muted d-block">Atendido por</small>
+                        <strong class="fs-6">{{ solicitud.almacenero_nombre || 'N/A' }}</strong>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="mb-2">
-                    <small class="text-muted d-block">Atendido por</small>
-                    <strong>{{ data.solicitud.almacenero_nombre || 'N/A' }}</strong>
+
+            <!-- Objetivo -->
+            <div class="mb-3" *ngIf="solicitud.objetivo">
+                <small class="text-muted d-block">Objetivo</small>
+                <p class="mb-0 small bg-light p-2 rounded" style="font-size: 0.85rem;">{{ solicitud.objetivo }}</p>
+            </div>
+
+            <!-- Productos -->
+            <div class="mb-2">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-muted">Productos</small>
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-primary" style="font-size: 11px;">Solicitado: {{ totalSolicitado }}</span>
+                        <span class="badge bg-success" style="font-size: 11px;">Entregado: {{ totalEntregado }}</span>
+                    </div>
+                </div>
+
+                <!-- Tabla de productos -->
+                <div class="table-responsive" *ngIf="solicitud.detalles && solicitud.detalles.length > 0">
+                    <table class="table table-sm table-bordered mb-0" style="font-size: 0.8rem;">
+                        <thead class="table-light">
+                            <tr class="text-center">
+                                <th style="width: 40%">Producto</th>
+                                <th style="width: 20%">Sol.</th>
+                                <th style="width: 20%">Ent.</th>
+                                <th style="width: 20%">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let detalle of solicitud.detalles">
+                                <td>
+                                    {{ detalle.producto_nombre }}
+                                    <small class="text-muted d-block">{{ detalle.producto_unidad }}</small>
+                                </td>
+                                <td class="text-center fw-bold">{{ detalle.cantidad_solicitada }}</td>
+                                <td class="text-center">
+                                    <span [ngClass]="{
+                    'text-success': detalle.cantidad_entregada === detalle.cantidad_solicitada,
+                    'text-warning': detalle.cantidad_entregada < detalle.cantidad_solicitada && detalle.cantidad_entregada > 0,
+                    'text-danger': detalle.cantidad_entregada === 0
+                  }">
+                    {{ detalle.cantidad_entregada }}
+                  </span>
+                                </td>
+                                <td class="text-center">
+                                    <span *ngIf="detalle.cantidad_entregada === detalle.cantidad_solicitada" class="badge bg-success" style="font-size: 10px;">
+                    <i class="ti ti-check me-1"></i>Completo
+                  </span>
+                                    <span *ngIf="detalle.cantidad_entregada < detalle.cantidad_solicitada && detalle.cantidad_entregada > 0" class="badge bg-warning text-dark" style="font-size: 10px;">
+                    <i class="ti ti-alert-triangle me-1"></i>Parcial
+                  </span>
+                                    <span *ngIf="detalle.cantidad_entregada === 0" class="badge bg-danger" style="font-size: 10px;">
+                    <i class="ti ti-ban me-1"></i>No
+                  </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mensaje si no hay productos -->
+                <div *ngIf="!solicitud.detalles || solicitud.detalles.length === 0" class="alert alert-warning text-center py-2 mb-0">
+                    <small><i class="ti ti-alert-circle me-1"></i> No hay productos registrados</small>
                 </div>
             </div>
-        </div>
 
-        <!-- Objetivo (si tiene) -->
-        <div class="mb-3" *ngIf="data.solicitud.objetivo">
-            <small class="text-muted d-block">Objetivo</small>
-            <p class="mb-0 small">{{ data.solicitud.objetivo }}</p>
-        </div>
-
-        <!-- Resumen de productos -->
-        <div class="mb-2">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <small class="text-muted">Productos</small>
-                <div>
-                    <span class="badge bg-primary me-1" style="font-size: 11px;">Sol: {{ totalSolicitado }}</span>
-                    <span class="badge bg-success" style="font-size: 11px;">Ent: {{ totalEntregado }}</span>
-                </div>
+            <!-- Observación -->
+            <div class="mt-3" *ngIf="solicitud.observacion_almacenero">
+                <small class="text-muted d-block">Observación</small>
+                <p class="mb-0 small bg-light p-2 rounded" style="font-size: 0.85rem;">{{ solicitud.observacion_almacenero }}</p>
             </div>
-
-            <!-- Tabla compacta -->
-            <div class="table-responsive">
-                <table class="table table-sm table-hover mb-0" style="font-size: 13px;">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Producto</th>
-                            <th class="text-center" style="width: 70px">Sol.</th>
-                            <th class="text-center" style="width: 70px">Ent.</th>
-                            <th class="text-center" style="width: 60px">Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let detalle of data.solicitud.detalles">
-                            <td>
-                                <small>{{ detalle.producto_nombre }}</small>
-                                <small class="text-muted d-block">{{ detalle.producto_unidad }}</small>
-                            </td>
-                            <td class="text-center fw-bold">{{ detalle.cantidad_solicitada }}</td>
-                            <td class="text-center">
-                                <span [class.text-success]="detalle.cantidad_entregada === detalle.cantidad_solicitada" [class.text-warning]="detalle.cantidad_entregada < detalle.cantidad_solicitada && detalle.cantidad_entregada > 0" [class.text-danger]="detalle.cantidad_entregada === 0">
-                  {{ detalle.cantidad_entregada }}
-                </span>
-                            </td>
-                            <td class="text-center">
-                                <span *ngIf="detalle.cantidad_entregada === detalle.cantidad_solicitada" class="badge bg-success" style="font-size: 10px;">
-                  <i class="ti ti-check"></i>
-                </span>
-                                <span *ngIf="detalle.cantidad_entregada < detalle.cantidad_solicitada && detalle.cantidad_entregada > 0" class="badge bg-warning text-dark" style="font-size: 10px;">
-                  <i class="ti ti-alert-triangle"></i>
-                </span>
-                                <span *ngIf="detalle.cantidad_entregada === 0" class="badge bg-danger" style="font-size: 10px;">
-                  <i class="ti ti-ban"></i>
-                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Observación -->
-        <div class="mt-3" *ngIf="data.solicitud.observacion_almacenero">
-            <small class="text-muted d-block">Observación</small>
-            <p class="mb-0 small text-muted">{{ data.solicitud.observacion_almacenero }}</p>
         </div>
     </div>
 

@@ -1,3 +1,8 @@
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: var(--mdc-dialog-container-shape, 4px);
+    margin-top: 30px !important;
+}
+
 .modal-content {
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
@@ -176,8 +181,8 @@ ng-container p,
 
 .btn-secondary {
     // width: 100%;
-    width: 34%;
-    padding: 0.75rem;
+    // width: 34%;
+    //padding: 0.75rem;
 }
 
 // Estilos para mejorar la legibilidad en móviles pequeños

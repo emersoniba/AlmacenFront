@@ -120,3 +120,8 @@
                 height: 60%;
             }
         }
+        
+        .mat-mdc-dialog-container .mdc-dialog__surface {
+            border-radius: var(--mdc-dialog-container-shape, 4px);
+            //margin-top: 70px !important;
+        }
