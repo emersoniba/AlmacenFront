@@ -15,7 +15,7 @@ import { AprobadorComponent } from './modules/almacen/bandejas/aprobador/aprobad
 import { RecepcionadorComponent } from './modules/almacen/bandejas/recepcionador/recepcionador.component';
 import { EntregaProductosComponent } from './modules/almacen/bandejas/recepcionador/entrega-productos/entrega-productos.component';
 import { AtendidasComponent } from './modules/almacen/bandejas/atendidas/atendidas.component';
-//import { ReportesComponent } from './modules/almacen/reportes/reportes.component';
+import { ReportesComponent } from './modules/almacen/reportes/reportes.component';
 import { PersonalComponent } from './modules/almacen/personal/personal.component';
 
 const routes: Routes = [
@@ -61,7 +61,7 @@ const routes: Routes = [
                 path: 'responsable',
                 component: ResponsableComponent,
                 canActivate: [AuthGuard,],
-                data: { roles: ['Admin','Almacenero'] }
+                data: { roles: ['Admin', 'Almacenero'] }
             },
             {
                 path: 'material',
@@ -72,49 +72,52 @@ const routes: Routes = [
             {
                 path: 'ingreso',
                 component: IngresoComponent,
-                canActivate: [AuthGuard, ],
+                canActivate: [AuthGuard,],
                 data: { roles: ['Admin', 'Almacenero'] }
             },
             {
                 path: 'solicitud',
                 component: SolicitanteComponent,
-                canActivate: [AuthGuard, ],
+                canActivate: [AuthGuard,],
                 data: { roles: ['Admin', 'Solicitante'] }
-            }, 
+            },
             {
                 path: 'aprobar',
                 component: AprobadorComponent,
-                canActivate: [AuthGuard, ],
+                canActivate: [AuthGuard,],
                 data: { roles: ['Admin', 'Aprobador'] }
             },
             {
                 path: 'recepcionar',
                 component: RecepcionadorComponent,
-                canActivate: [AuthGuard, ],
+                canActivate: [AuthGuard,],
                 data: { roles: ['Admin', 'Almacenero'] }
             },
             {
                 path: 'entrega-productos/:id',
                 component: EntregaProductosComponent,
-                canActivate: [AuthGuard, ],
+                canActivate: [AuthGuard,],
                 data: { roles: ['Admin', 'Almacenero'] }
             },
             {
                 path: 'atender',
                 component: AtendidasComponent,
-                canActivate: [AuthGuard, ],
+                canActivate: [AuthGuard,],
                 data: { roles: ['Admin', 'Almacenero'] }
+            },
+            {
+                path: 'reporte',
+                component: ReportesComponent,
+                canActivate: [AuthGuard,],
+                data: { roles: ['Admin', 'Almacenero'] }
+
             }
-            /*{
-                path:'reporte',
-                component:ReportesComponent
-            }*/
         ]
     },
     {
         path: 'login',
         component: LoginComponent,
-       //  loadComponent: () => import('./modules/dashboard/dashboard.component'),
+        //  loadComponent: () => import('./modules/dashboard/dashboard.component'),
 
     }
 ];

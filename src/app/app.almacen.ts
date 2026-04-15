@@ -19,7 +19,7 @@ import { ResponsableComponent } from './modules/almacen/parametrizacion/responsa
 import { ResponsableFormComponent } from './modules/almacen/parametrizacion/responsable/responsable-form/responsable-form.component';
 import { IngresoComponent } from './modules/almacen/parametrizacion/ingreso/ingreso.component';
 import { IngresoFormComponent } from './modules/almacen/parametrizacion/ingreso/ingreso-form/ingreso-form.component';
-//import { ReportesComponent } from './modules/almacen/reportes/reportes.component';
+import { ReportesComponent } from './modules/almacen/reportes/reportes.component';
 import { PerfilModalComponent } from './modules/perfil-modal/perfil-modal.component';
 import { PersonalComponent } from './modules/almacen/personal/personal.component';
 import { PersonalFormComponent } from './modules/almacen/personal/personal-form/personal-form.component';
@@ -48,7 +48,7 @@ export const AppAlmacenConfig = [
     RecepcionadorComponent,
     RendererComponent,
     RendererComponent2,
-    //ReportesComponent,
+    ReportesComponent,
     PerfilModalComponent,
     //nuevos components
     PersonalComponent,
