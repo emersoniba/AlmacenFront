@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://localhost'
+    apiUrl: 'https://almacenback-0hrh.onrender.com/api'  // Tu backend en Render
 };

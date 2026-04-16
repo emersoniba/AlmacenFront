@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: almacen-frontend
+    runtime: static
+    repo: https://https://github.com/emersoniba/AlmacenFront
+    plan: free
+    region: oregon
+    buildCommand: npm install --legacy-peer-deps && npm run build -- --configuration=production
+    staticPublishPath: dist/front-almacen
+    envVars:
+      - key: API_URL
+        value: https://almacenback-0hrh.onrender.com/api
