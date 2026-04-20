@@ -6,6 +6,12 @@ import { AuthUser, LoginResponse, Usuario } from 'src/app/models/usuario.models'
 import { environment } from 'src/environments/environment';
 import { jwtDecode } from "jwt-decode";
 
+export interface AuthError {
+    message: string;
+    code?: string;
+    field?: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -55,12 +61,54 @@ export class AuthService {
             map((response: LoginResponse) => response),
             catchError((error: HttpErrorResponse) => {
                 let errorMessage = 'Error de autenticación';
-                if (error.status === 400) {
-                    errorMessage = error.error?.message || 'Credenciales inválidas';
-                } else if (error.status === 401) {
-                    errorMessage = 'Credenciales inválidas';
+                let errorCode: string | undefined;
+                
+                console.log('Error de login:', error);
+                
+                // Manejar errores del backend
+                if (error.status === 401 || error.status === 400) {
+                    // Intentar extraer mensaje del response del backend
+                    if (error.error && error.error.message) {
+                        errorMessage = error.error.message;
+                    } else if (error.error && error.error.errors) {
+                        // Si hay errors object, extraer el primer mensaje
+                        const errors = error.error.errors;
+                        if (typeof errors === 'object') {
+                            // Buscar en non_field_errors
+                            if (errors.non_field_errors && errors.non_field_errors[0]) {
+                                const errDetail = errors.non_field_errors[0];
+                                if (typeof errDetail === 'object' && errDetail.message) {
+                                    errorMessage = errDetail.message;
+                                    errorCode = errDetail.code;
+                                } else {
+                                    errorMessage = errDetail;
+                                }
+                            } 
+                            // Buscar errores de campo específico
+                            else if (errors.username && errors.username[0]) {
+                                errorMessage = `Usuario: ${errors.username[0]}`;
+                            } 
+                            else if (errors.password && errors.password[0]) {
+                                errorMessage = `Contraseña: ${errors.password[0]}`;
+                            }
+                            else {
+                                errorMessage = 'Credenciales inválidas';
+                            }
+                        } else if (typeof errors === 'string') {
+                            errorMessage = errors;
+                        }
+                    }
+                } else if (error.status === 0) {
+                    errorMessage = 'Error de conexión con el servidor';
+                } else if (error.status === 500) {
+                    errorMessage = 'Error interno del servidor. Intente más tarde';
                 }
-                return throwError(() => new Error(errorMessage));
+                
+                return throwError(() => ({ 
+                    message: errorMessage, 
+                    code: errorCode,
+                    status: error.status 
+                }));
             })
         );
     }
@@ -90,19 +138,18 @@ export class AuthService {
         return localStorage.getItem('refresh-tkn-almacen');
     }
 
-    /*public verificarToken(): boolean {
-        const token = localStorage.getItem('tkn-almacen');
-        return !!token;
-    }*/
     public verificarToken(): boolean {
         const token = localStorage.getItem('tkn-almacen');
 
         if (!token) return false;
 
-        const decoded: any = jwtDecode(token);
-        const exp = decoded.exp * 1000;
-
-        return Date.now() < exp;
+        try {
+            const decoded: any = jwtDecode(token);
+            const exp = decoded.exp * 1000;
+            return Date.now() < exp;
+        } catch {
+            return false;
+        }
     }
 
     public getCurrentUser(): Usuario | null {
