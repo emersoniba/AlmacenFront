@@ -9,7 +9,9 @@ import { jwtDecode } from "jwt-decode";
 export interface AuthError {
     message: string;
     code?: string;
-    field?: string;
+    status?: number;
+    remaining_attempts?: number | null;
+    wait_minutes?: number | null;
 }
 
 @Injectable({
@@ -21,7 +23,6 @@ export class AuthService {
     private _authenticatedSubject = new BehaviorSubject<boolean>(this.verificarToken());
     authenticated$ = this._authenticatedSubject.asObservable();
 
-    // Almacenar datos del usuario
     private currentUserSubject = new BehaviorSubject<Usuario | null>(this.getUserFromStorage());
     currentUser$ = this.currentUserSubject.asObservable();
 
@@ -49,11 +50,8 @@ export class AuthService {
 
         return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login/`, data).pipe(
             tap((response: LoginResponse) => {
-                // Guardar tokens
                 localStorage.setItem('tkn-almacen', response.data.access);
                 localStorage.setItem('refresh-tkn-almacen', response.data.refresh);
-
-                // Guardar datos del usuario
                 localStorage.setItem('user-almacen', JSON.stringify(response.data.user));
                 this.currentUserSubject.next(response.data.user);
                 this._authenticatedSubject.next(true);
@@ -62,40 +60,58 @@ export class AuthService {
             catchError((error: HttpErrorResponse) => {
                 let errorMessage = 'Error de autenticación';
                 let errorCode: string | undefined;
+                let remainingAttempts: number | null = null;
+                let waitMinutes: number | null = null;
+
+                console.log('=== ERROR COMPLETO ===');
+                console.log('Status:', error.status);
+                console.log('error.error:', error.error);
                 
-                console.log('Error de login:', error);
-                
-                // Manejar errores del backend
                 if (error.status === 401 || error.status === 400) {
-                    // Intentar extraer mensaje del response del backend
-                    if (error.error && error.error.message) {
-                        errorMessage = error.error.message;
-                    } else if (error.error && error.error.errors) {
-                        // Si hay errors object, extraer el primer mensaje
-                        const errors = error.error.errors;
-                        if (typeof errors === 'object') {
-                            // Buscar en non_field_errors
-                            if (errors.non_field_errors && errors.non_field_errors[0]) {
-                                const errDetail = errors.non_field_errors[0];
-                                if (typeof errDetail === 'object' && errDetail.message) {
-                                    errorMessage = errDetail.message;
-                                    errorCode = errDetail.code;
-                                } else {
-                                    errorMessage = errDetail;
-                                }
-                            } 
-                            // Buscar errores de campo específico
-                            else if (errors.username && errors.username[0]) {
-                                errorMessage = `Usuario: ${errors.username[0]}`;
-                            } 
-                            else if (errors.password && errors.password[0]) {
-                                errorMessage = `Contraseña: ${errors.password[0]}`;
+                    if (error.error) {
+                        // Extraer mensaje principal
+                        if (error.error.message) {
+                            errorMessage = error.error.message;
+                        }
+                        
+                        // Buscar en error.error.errors.errors (estructura anidada)
+                        if (error.error.errors && error.error.errors.errors) {
+                            const nestedErrors = error.error.errors.errors;
+                            
+                            // Extraer wait_minutes del array
+                            if (nestedErrors.wait_minutes && nestedErrors.wait_minutes[0]) {
+                                waitMinutes = parseInt(nestedErrors.wait_minutes[0]);
+                                console.log('waitMinutes encontrado:', waitMinutes);
                             }
-                            else {
-                                errorMessage = 'Credenciales inválidas';
+                            
+                            // Extraer remaining_attempts si existe
+                            if (nestedErrors.remaining_attempts && nestedErrors.remaining_attempts[0]) {
+                                remainingAttempts = parseInt(nestedErrors.remaining_attempts[0]);
+                                console.log('remainingAttempts encontrado:', remainingAttempts);
                             }
-                        } else if (typeof errors === 'string') {
-                            errorMessage = errors;
+                            
+                            // Extraer mensaje del error
+                            if (nestedErrors.message && nestedErrors.message[0]) {
+                                errorMessage = nestedErrors.message[0];
+                            }
+                        }
+                        
+                        // También buscar directamente en error.error.errors
+                        if (error.error.errors) {
+                            if (error.error.errors.wait_minutes !== undefined) {
+                                waitMinutes = error.error.errors.wait_minutes;
+                            }
+                            if (error.error.errors.remaining_attempts !== undefined) {
+                                remainingAttempts = error.error.errors.remaining_attempts;
+                            }
+                        }
+                        
+                        // Buscar en error.error directamente
+                        if (error.error.wait_minutes !== undefined) {
+                            waitMinutes = error.error.wait_minutes;
+                        }
+                        if (error.error.remaining_attempts !== undefined) {
+                            remainingAttempts = error.error.remaining_attempts;
                         }
                     }
                 } else if (error.status === 0) {
@@ -103,11 +119,15 @@ export class AuthService {
                 } else if (error.status === 500) {
                     errorMessage = 'Error interno del servidor. Intente más tarde';
                 }
-                
-                return throwError(() => ({ 
-                    message: errorMessage, 
+
+                console.log('Datos extraídos:', { errorMessage, remainingAttempts, waitMinutes });
+
+                return throwError(() => ({
+                    message: errorMessage,
                     code: errorCode,
-                    status: error.status 
+                    status: error.status,
+                    remaining_attempts: remainingAttempts,
+                    wait_minutes: waitMinutes
                 }));
             })
         );

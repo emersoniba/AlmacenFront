@@ -1,8 +1,7 @@
 <div class="auth-main">
     <div class="auth-wrapper v3">
-
         <div class="auth-banner">
-            <img src="/assets/images/fondo-izquierdo.jpg" class="banner-image">
+            <img src="/assets/images/fondo-izquierdo.jpg" class="banner-image" />
         </div>
 
         <div class="auth-form">
@@ -11,7 +10,7 @@
                     <div class="card-body">
                         <form [formGroup]="formAuth" (ngSubmit)="authLogin()">
                             <div class="img-center">
-                                <img src="/assets/images/mopsv.png" class="img-mopsv" alt="vs">
+                                <img src="/assets/images/mopsv.png" class="img-mopsv" alt="vs" />
                             </div>
                             <div class="row text-center">
                                 <div class="saprator mt-3"></div>
@@ -27,16 +26,23 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- Mensaje de intentos restantes -->
+                            <div *ngIf="remainingAttempts !== null && remainingAttempts > 0 && !errorMessage" class="row mt-2 px-3 px-sm-5">
+                                <div class="col-12">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <i class="ti ti-alert-triangle me-2"></i> Intentos restantes: {{ remainingAttempts }}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row mt-4 px-3 px-sm-5">
                                 <mat-form-field class="col-12" appearance="fill">
                                     <mat-label>Cuenta de usuario</mat-label>
                                     <mat-icon matPrefix>person</mat-icon>
-                                    <input matInput formControlName="username" (input)="errorMessage = null" autocomplete="username"> @if(formAuth.controls['username'].hasError('required') && formAuth.controls['username'].touched){
+                                    <input matInput formControlName="username" (input)="errorMessage = null" autocomplete="username" /> @if (formAuth.controls['username'].hasError('required') && formAuth.controls['username'].touched) {
                                     <mat-error>Este campo es requerido</mat-error>
-                                    } @if(formAuth.controls['username'].hasError('minlength') && formAuth.controls['username'].touched){
+                                    } @if (formAuth.controls['username'].hasError('minlength') && formAuth.controls['username'].touched) {
                                     <mat-error>Mínimo de 5 caracteres</mat-error>
-                                    } @if(formAuth.controls['username'].hasError('maxlength') && formAuth.controls['username'].touched){
+                                    } @if (formAuth.controls['username'].hasError('maxlength') && formAuth.controls['username'].touched) {
                                     <mat-error>Máximo de 20 caracteres</mat-error>
                                     }
                                 </mat-form-field>
@@ -44,33 +50,38 @@
                                 <mat-form-field class="col-12" appearance="fill">
                                     <mat-label>Contraseña</mat-label>
                                     <mat-icon matPrefix>lock</mat-icon>
-                                    <input type="password" matInput formControlName="password" (input)="errorMessage = null" autocomplete="current-password"> @if(formAuth.controls['password'].hasError('required') && formAuth.controls['password'].touched){
+                                    <input type="password" matInput formControlName="password" (input)="errorMessage = null" autocomplete="current-password" /> @if (formAuth.controls['password'].hasError('required') && formAuth.controls['password'].touched)
+                                    {
                                     <mat-error>Este campo es requerido</mat-error>
-                                    } @if(formAuth.controls['password'].hasError('minlength') && formAuth.controls['password'].touched){
+                                    } @if (formAuth.controls['password'].hasError('minlength') && formAuth.controls['password'].touched) {
                                     <mat-error>Mínimo de 5 caracteres</mat-error>
-                                    } @if(formAuth.controls['password'].hasError('maxlength') && formAuth.controls['password'].touched){
+                                    } @if (formAuth.controls['password'].hasError('maxlength') && formAuth.controls['password'].touched) {
                                     <mat-error>Máximo de 20 caracteres</mat-error>
                                     }
                                 </mat-form-field>
 
                                 <div class="d-grid mt-4">
                                     <button class="btn btn-primary" mat-button [disabled]="formAuth.invalid || isLoading" type="submit">
-                                        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                        <i *ngIf="!isLoading" class="ti ti-login me-2"></i>
-                                        {{ isLoading ? 'INGRESANDO...' : 'INGRESAR' }}
-                                    </button>
+										<span
+											*ngIf="isLoading"
+											class="spinner-border spinner-border-sm me-2"
+											role="status"
+											aria-hidden="true"
+										></span>
+										<i *ngIf="!isLoading" class="ti ti-login me-2"></i>
+										{{ isLoading ? 'INGRESANDO...' : 'INGRESAR' }}
+									</button>
                                 </div>
                             </div>
 
                             <div class="saprator mt-5"></div>
                             <div class="text-center">
-                                <p class="mt-4">Copyright © {{fecha}} | Unidad de Desarrollo Tecnológico e Información | UDTI</p>
+                                <p class="mt-4">Copyright © {{ fecha }} | Unidad de Desarrollo Tecnológico e Información | UDTI</p>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
